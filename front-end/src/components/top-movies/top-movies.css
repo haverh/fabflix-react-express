@@ -1,0 +1,16 @@
+.page-content {
+    margin: 0% 20%;
+    
+}
+
+.table thead th {
+    color: #8DBA5E;
+}
+
+.table thead {
+    background-color: #858585;
+}
+
+.link {
+    text-decoration: none;
+}
