@@ -1,16 +1,22 @@
 .page-content {
-    margin: 0% 20%;
-    text-align: left;
+    margin: 0% 15%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
 }
 
 .table-img {
     display: grid;
     grid-template-columns: 80% 20%;
-    column-gap: 10px;
+    /* column-gap: 1%; */
 }
 
 .table {
-    justify-self: center;
+    margin: 0 0 ;
+    height: 100%;
+    align-self: center;
 }
 
 .table thead th {
@@ -26,7 +32,15 @@
 }
 
 .image {
-    background-color: aquamarine;
+    width: 100%;
     align-self: center;
     justify-self: center;
+}
+
+.movieTitle {
+    text-align: left;
+}
+
+.movieRating {
+    text-align: right;
 }

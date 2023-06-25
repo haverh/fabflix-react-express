@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import './single-movie.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 function SingleMovie() {
 
@@ -46,7 +48,12 @@ function SingleMovie() {
 
     return (
         <div className="page-content">
-            <h1>{movieInfo.movieTitle} ({movieInfo.movieYear})</h1>
+            <h1 className="header">
+                <span className="movieTitle">{movieInfo.movieTitle} ({movieInfo.movieYear})</span>
+                <span className="movieRating">{movieInfo.movieRating} 
+                    <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" />
+                </span>
+            </h1>
             <div className="table-img">
                 <table className="table table-striped">
                     <tbody>
