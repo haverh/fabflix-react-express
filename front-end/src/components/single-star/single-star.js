@@ -1,10 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 function SingleStar() {
 
+    const [movieList, setMovieList] = useState([]);
+
+    const urlParams = new URLSearchParams(useLocation().search);
+
+    useEffect(() => {
+        fetchData(urlParams.get('starId'));
+    })
+
+    const fetchData = async (starId) => {
+        try {
+
+            const response = await fetch(`http://localhost:5000/api/single-star?starId=${starId}`);
+            const jsonData = await response.json();
+            // console.log(jsonData)
+            setMovieList(jsonData);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
     
     return (
         <div className="page-content">
