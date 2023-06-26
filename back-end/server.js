@@ -19,6 +19,7 @@ const pool = new Pool({
 // Routes
 const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
+const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
 app.use(express.json());
 app.use(cors({
@@ -27,6 +28,7 @@ app.use(cors({
 
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);
+singleStarRoutes(pool, app);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
