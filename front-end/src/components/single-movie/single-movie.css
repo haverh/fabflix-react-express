@@ -15,8 +15,8 @@
 
 .table {
     margin: 0 0 ;
-    height: 100%;
-    align-self: center;
+    /* height: 100%; */
+    /* align-self: center; */
 }
 
 .table thead th {
