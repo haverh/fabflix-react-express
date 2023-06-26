@@ -3,19 +3,22 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import './single-movie.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 function SingleMovie() {
 
     const omdbAPI = "f6cd5e6f";
     
     const [movieInfo, setMovieInfo] = useState({});
-    const [moviePoster, setMoviePoster] = useState({});
+    const [OMDbInfo, setOMDbInfo] = useState({});
 
     const urlParams = new URLSearchParams(useLocation().search);
 
     useEffect(() => {
         fetchData(urlParams.get('movieId'));
-        fetchPoster(urlParams.get('movieId'));
+        fetchOMDb(urlParams.get('movieId'));
     }, [])
 
     // Fetch movie data from backend
@@ -32,13 +35,16 @@ function SingleMovie() {
     }
 
     // Fetch movie poster from OMDd using API call
-    const fetchPoster = async (movieId) => {
+    const fetchOMDb = async (movieId) => {
         try {
 
             const response = await fetch(`http://www.omdbapi.com/?i=${movieId}&apikey=${omdbAPI}`);
             const jsonData = await response.json();
             // console.log(jsonData)
-            setMoviePoster(jsonData.Poster);
+            let OMDbMovieInfo = {}
+            OMDbMovieInfo.plot = jsonData.Plot
+            OMDbMovieInfo.poster = jsonData.Poster
+            setOMDbInfo(OMDbMovieInfo);
           } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -46,10 +52,22 @@ function SingleMovie() {
 
     return (
         <div className="page-content">
-            <h1>{movieInfo.movieTitle} ({movieInfo.movieYear})</h1>
+            <h1 className="header">
+                <span className="movieTitle">{movieInfo.movieTitle} ({movieInfo.movieYear})</span>
+                <span className="movieRating">{movieInfo.movieRating} 
+                    <span className="fa-layers fa-fw">
+                        <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" transform="shrink-6"/>
+                        <FontAwesomeIcon icon={farStar} size="sm" />
+                    </span>
+                </span>
+            </h1>
             <div className="table-img">
                 <table className="table table-striped">
                     <tbody>
+                        <tr>
+                            <th scope="row" >Plot</th>
+                            <td>{OMDbInfo.plot} </td>
+                        </tr>
                         <tr>
                             <th scope="row" >Director</th>
                             <td>{movieInfo.movieDirector} </td>
@@ -78,7 +96,7 @@ function SingleMovie() {
                         </tr>
                     </tbody>
                 </table>
-                <img className="image" src={moviePoster}></img>
+                {OMDbInfo.poster != 'N/A' && <img className="image" src={OMDbInfo.poster}></img>}
             </div>
         </div>
     )
