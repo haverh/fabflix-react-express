@@ -1,13 +1,13 @@
+
 module.exports = function (pool, app) {
     app.get('/api/single-star', async (req, res) => {
         const starId = req.query.starId;
 
         try {
             const client = await pool.connect();
-
             let queryString = {
-                text: 'SELECT name, birthyear, sim.movieid, title, year director, rating  FROM stars s' + 
-                'JOIN stars_in_movies sim ON s.id = sim.starId JOIN movies m ON sim.movieId = m.id' +
+                text: 'SELECT name, birthyear, sim.movieid, title, year, director, rating  FROM stars s ' + 
+                'JOIN stars_in_movies sim ON s.id = sim.starId JOIN movies m ON sim.movieId = m.id ' +
                 'JOIN ratings r ON m.id = r.movieId WHERE starId = $1',
                 values: [starId]
             }
