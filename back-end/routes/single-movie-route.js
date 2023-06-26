@@ -1,6 +1,6 @@
 
 module.exports = function (pool, app) {
-    app.get('/api/single-movie', async (req,res) =>{
+    app.get('/api/single-movie', async (req, res) =>{
         const movieId = req.query.movieId
         
         try {
