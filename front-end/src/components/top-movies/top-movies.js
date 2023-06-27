@@ -39,23 +39,23 @@ function TopMovies() {
                     </tr>
                 </thead>
                 <tbody>
-                    {rows.map((item, index) => (
-                    <tr key={index}>
+                    {rows.map((item) => (
+                    <tr key={item.movieId}>
                         <td><Link to={`/single-movie?movieId=${item.movieId}`} className="link">{item.movieTitle}</Link></td>
                         <td>{item.movieYear}</td>
                         <td>{item.movieDirector}</td>
                         <td>
                             {item.movieGenres.map((gObj, gIndex) => (
-                            <React.Fragment key={gIndex}>
-                                <Link to="#" className="link">{gObj.genreName}</Link>
+                            <React.Fragment>
+                                <Link to="#" className="link" key={gObj.genreId}>{gObj.genreName}</Link>
                                 {gIndex < item.movieGenres.length - 1 && ', '}
                             </React.Fragment>
                             ))}
                         </td>
                         <td>
                             {item.movieStars.map((sObj, sIndex) => (
-                            <React.Fragment key={sIndex}>
-                                <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
+                            <React.Fragment>
+                                <Link to={`/single-star?starId=${sObj.starId}`} className="link" key={sObj.starId}>{sObj.starName}</Link>
                                 {sIndex < item.movieStars.length - 1 && ', '}
                             </React.Fragment>
                             ))}
