@@ -11,7 +11,7 @@ function SingleStar() {
 
     useEffect(() => {
         fetchData(urlParams.get('starId'));
-    },[])
+    },[urlParams])
 
     const fetchData = async (starId) => {
         try {
