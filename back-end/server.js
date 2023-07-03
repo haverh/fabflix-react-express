@@ -44,12 +44,14 @@ const pool = new Pool({
     port: 5432,
 })
 
-
 // Routes
+// const sessionRoute = require('./routes/session-route'); // Session
 const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
+
+// sessionRoute(app);
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);
 singleStarRoutes(pool, app);
