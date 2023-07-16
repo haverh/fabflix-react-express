@@ -76,8 +76,8 @@ function SingleMovie() {
                             <th scope="row" >Genres</th>
                             <td>
                                 {movieInfo.movieGenres && movieInfo.movieGenres.map((gObj, gIndex) => (
-                                <React.Fragment>
-                                    <Link to="#" className="link" key={gObj.genreId}>{gObj.genreName}</Link>
+                                <React.Fragment key={gObj.genreId}>
+                                    <Link to="#" className="link">{gObj.genreName}</Link>
                                     {gIndex < movieInfo.movieGenres.length - 1 && ', '}
                                 </React.Fragment>
                                 ))}
@@ -87,8 +87,8 @@ function SingleMovie() {
                             <th scope="row" >Stars</th>
                             <td>
                                 {movieInfo.movieStars && movieInfo.movieStars.map((sObj, sIndex) => (
-                                <React.Fragment>
-                                    <Link to={`/single-star?starId=${sObj.starId}`} className="link" key={sObj.starId}>{sObj.starName}</Link>
+                                <React.Fragment key={sObj.starId}>
+                                    <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
                                     {sIndex < movieInfo.movieStars.length - 1 && ', '}
                                 </React.Fragment>
                                 ))}

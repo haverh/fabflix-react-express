@@ -1,38 +1,47 @@
 require('dotenv').config();
 const express = require('express');
 const {Pool} = require('pg');
-const cors = require('cors')
-const session = require('express-session');
-const fs = require('fs');
-const path = require('path')
-const crypto = require('crypto');
-
+const cors = require('cors');
+// const session = require('express-session');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const { auth } = require('express-openid-connect');
+require('dotenv').config();
 
 const app = express();
 const port = 5000;
 
-
+// Parse URL-encoded bodies
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: ['http://localhost:3000'],
+    methods: ["GET", "POST"],
+    credentials: true,
   }));
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// Setup Auth0 config
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: process.env.SECRET,
+    baseURL: process.env.BASEURL,
+    clientID: process.env.CLIENTID,
+    issuerBaseURL: process.env.ISSUER,
+};
 
-// Generate session key if it doesn't exist in .env
-const envPath = path.resolve(__dirname, '.env');
-if (!fs.existsSync(envPath) || !fs.readFileSync(envPath, 'utf8').includes('SESSION_SECRET')) {
-    const sessionSecret = crypto.randomBytes(32).toString('hex');
-
-    fs.appendFileSync(envPath, `\nSESSION_SECRET=${sessionSecret}`);
-}
-
+app.use(auth(config));
 
 // Setup session
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-}));
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//         expires: 60 * 60 * 24,
+//       },
+// }));
 
 
 // Setup connection pool
@@ -45,12 +54,15 @@ const pool = new Pool({
 })
 
 // Routes
+const landingRoutes = require('./routes/landing-route');
+// const signinRoutes = require('./routes/signin-route'); // Sign In
 // const sessionRoute = require('./routes/session-route'); // Session
 const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
-
+landingRoutes(app);
+// signinRoutes(pool, app);
 // sessionRoute(app);
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);
