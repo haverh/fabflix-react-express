@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import './navbar.css'
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -41,6 +41,7 @@ const Navbar = () => {
                     <li><button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</button></li>
                 </ul>
             </nav>
+            <Outlet/>
         </div>
     )
 }
