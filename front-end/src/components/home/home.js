@@ -2,9 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 import './home.css';
-import './alpha-select.css';
-// import AlphaSelect from './alpha-select';
-// import GenreSelect from './genre-select';
 
 const Home = () => {
 
@@ -32,7 +29,7 @@ const Home = () => {
         const elements = [];
     
         for (let i = 0; i < 26; i++) {
-            elements.push(<p key={i}><Link className='link-style'>{String.fromCharCode(65 + i)} </Link> </p> );
+            elements.push(<p key={i}><Link className='link-style'>{String.fromCharCode(65 + i)}</Link></p> );
         }
     
         return (
@@ -46,12 +43,12 @@ const Home = () => {
     const GenreSelect = () => {
         const elements = [];
     
-        for (let i = 0; i < 26; i++) {
-            elements.push(<p key={i}>{String.fromCharCode(65 + i)}</p>);
+        for (let i = 0; i < genres.length; i++) {
+            elements.push(<p key={genres[i].id}><Link className='link-style'>{genres[i].name}</Link></p>);
         }
     
         return (
-            <div className="alphaBox">
+            <div className="genreBox">
                 {elements}
             </div>
         )
