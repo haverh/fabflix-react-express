@@ -1,0 +1,47 @@
+.signin-widget {
+    width: 30%;
+    height: 50%;
+    margin: auto;
+    padding: 10px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+
+.signin-widget h1 {
+    height: 19%;
+    text-align: center;
+}
+
+.signin-widget form {
+    width: 100%;
+    height: 79%;
+    text-align: center;
+}
+
+.signin-widget form input {
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    width: 60%;
+    height: 40px;
+    margin-bottom: 30px;
+    border-width: 0 0 1px 0;
+}
+
+.signin-widget form input:focus {
+    outline: none;
+}
+
+.signin-widget form input[type="submit"] {
+    background-color: #8DBA5E;
+    color: whitesmoke;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.signin-message {
+    text-align: center;
+    color: red;
+}

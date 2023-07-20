@@ -46,7 +46,7 @@ module.exports = function (pool, app) {
                 genreObj.genreName = genreResult.rows[k].name;
                 movieObj.movieGenres.push(genreObj);
             }
-            console.log(movieObj);
+            // console.log(movieObj);
             res.json(movieObj);
 
             client.release();

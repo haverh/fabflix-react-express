@@ -4,7 +4,7 @@ import './top-movies.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-function TopMovies() {
+const TopMovies = () => {
 
     const [rows, setRows] = useState([]);
 
@@ -46,16 +46,16 @@ function TopMovies() {
                         <td>{item.movieDirector}</td>
                         <td>
                             {item.movieGenres.map((gObj, gIndex) => (
-                            <React.Fragment>
-                                <Link to="#" className="link" key={gObj.genreId}>{gObj.genreName}</Link>
+                            <React.Fragment key={gObj.genreId}>
+                                <Link to="#" className="link">{gObj.genreName}</Link>
                                 {gIndex < item.movieGenres.length - 1 && ', '}
                             </React.Fragment>
                             ))}
                         </td>
                         <td>
                             {item.movieStars.map((sObj, sIndex) => (
-                            <React.Fragment>
-                                <Link to={`/single-star?starId=${sObj.starId}`} className="link" key={sObj.starId}>{sObj.starName}</Link>
+                            <React.Fragment key={sObj.starId}>
+                                <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
                                 {sIndex < item.movieStars.length - 1 && ', '}
                             </React.Fragment>
                             ))}

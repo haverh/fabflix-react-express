@@ -62,8 +62,7 @@ module.exports = function (pool, app) {
 
                 starInfo.starMoviesList.push(movieObj);
             }
-
-            console.log(starInfo);
+            // console.log(starInfo);
             res.json(starInfo)
 
             client.release();

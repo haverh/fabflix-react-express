@@ -1,5 +1,6 @@
 .navbar {
-    margin: 0 1%;
+    background-color: #6d6c6c;
+    padding: 0 1%;
 }
 
 .navbar-brand {
@@ -8,8 +9,4 @@
 
 .nav-link {
     color: #8DBA5E;
-}
-
-.nav-section {
-    background-color: #6d6c6c;
 }
