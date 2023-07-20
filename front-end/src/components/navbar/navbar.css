@@ -1,12 +1,28 @@
+.nav-section {
+    height: 100%;
+}
 .navbar {
     background-color: #6d6c6c;
     padding: 0 1%;
 }
 
 .navbar-brand {
-    color: #8DBA5E;
+    color: #71dfcf;
+    font-weight: bold;
+}
+
+.navbar-brand:hover {
+    color: #b8efe7;
 }
 
 .nav-link {
-    color: #8DBA5E;
+    color: #71dfcf;
 }
+
+.nav-link:hover {
+    color: #b8efe7;
+}
+
+.nav-item.selected {
+    background-color: #007bff; /* Change this to the highlight color you desire */
+  }
