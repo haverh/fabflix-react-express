@@ -5,3 +5,29 @@
     justify-content: space-evenly;
     align-items: center;
 }
+
+.link-style {
+    text-decoration: none;
+}
+
+.alphaBox {
+    width: 50%;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(13, 1fr);
+
+    font-weight: bold;
+}
+
+.genreBox {
+    width: 50%;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(5, 1fr);
+
+    font-weight: bold;
+}
