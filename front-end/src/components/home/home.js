@@ -29,7 +29,12 @@ const Home = () => {
         const elements = [];
     
         for (let i = 0; i < 26; i++) {
-            elements.push(<p key={i}><Link className='link-style'>{String.fromCharCode(65 + i)}</Link></p> );
+            const alpha = String.fromCharCode(65 + i);
+            elements.push(<p key={`alpha-${i}`}><Link className='link-style' to={`/movies?startCharacter=${alpha}`}>{alpha}</Link></p> );
+        }
+
+        for (let i = 0; i < 10; i++) {
+            elements.push(<p key={`number-${i}`}><Link className='link-style' to={`/movies?startCharacter=${i}`}>{i}</Link></p> );
         }
     
         return (

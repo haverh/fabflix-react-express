@@ -35,7 +35,7 @@ const Navbar = () => {
                         <input className="search-item" type="text" id="full-text" name="full-text" placeholder="Full Text Search"/>
                         <button type="submit"><i className="fa fa-search"></i></button>
                     </form> */}
-                    <form class="d-flex input-group w-auto">
+                    <form className="d-flex input-group w-auto">
                         <input
                             type="search"
                             className="form-control rounded"
