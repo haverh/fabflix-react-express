@@ -10,9 +10,9 @@ const Navbar = () => {
     const { loginWithRedirect, logout } = useAuth0();
     return (
         <div className="nav-section" >
-            <nav className="navbar navbar-expand-lg navbar-light">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="logo">
-                    <Link className="navbar-brand" to="/"><img src={logo} alt='logo' width={50} height={50}/></Link>
+                    <Link className="navbar-brand" to="/home"><img src={logo} alt='logo' width={50} height={50}/>Gotcha Movies</Link>
                 </div>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -21,8 +21,8 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
 
-                        <li className="nav-item active">
-                            <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/home">Home </Link>
                         </li>
 
                         <li className="nav-item">
@@ -31,10 +31,22 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="search-component">
-                    <form id="full-text-form" action="#" method="GET">
+                    {/* <form id="full-text-form" action="#" method="GET">
                         <input className="search-item" type="text" id="full-text" name="full-text" placeholder="Full Text Search"/>
                         <button type="submit"><i className="fa fa-search"></i></button>
-                    </form>
+                    </form> */}
+                    <form class="d-flex input-group w-auto">
+                        <input
+                            type="search"
+                            className="form-control rounded"
+                            placeholder="Search"
+                            aria-label="Search"
+                            aria-describedby="search-addon"
+                        />
+                        <span className="input-group-text text-white border-0" id="search-addon">
+                            <i className="fa fa-search"></i>
+                        </span>
+                        </form>
                 </div>
                 <ul className="navbar-nav mr-auto">
                     <li><button onClick={() => loginWithRedirect()}>Login</button></li>
@@ -43,6 +55,7 @@ const Navbar = () => {
             </nav>
             <Outlet/>
         </div>
+        
     )
 }
 

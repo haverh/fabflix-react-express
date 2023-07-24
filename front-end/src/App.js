@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import axios from 'axios';
 import './App.css';
+import Home from './components/home/home';
 import Login from './components/signin/signin';
 import TopMovies from './components/top-movies/top-movies';
 import Navbar from './components/navbar/navbar';
@@ -22,7 +23,8 @@ function App() {
 		<SessionContext.Provider value={{mySession, setSession}}>
 			<Routes>
 				<Route path="/" element={<Navbar/>}>
-					<React.Fragment className="content">
+					<Route path="/home" element={<Home/>}/>
+					<React.Fragment>
 						<Route path="/top-movies" element={<TopMovies/>}/>
 						<Route path="/single-movie" element={<SingleMovie/>}/>
 						<Route path="/single-star" element={<SingleStar/>}/>

@@ -55,15 +55,13 @@ const pool = new Pool({
 
 // Routes
 const landingRoutes = require('./routes/landing-route');
-// const signinRoutes = require('./routes/signin-route'); // Sign In
-// const sessionRoute = require('./routes/session-route'); // Session
+const homeRoutes = require('./routes/home-route');
 const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
 landingRoutes(app);
-// signinRoutes(pool, app);
-// sessionRoute(app);
+homeRoutes(pool, app);
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);
 singleStarRoutes(pool, app);
