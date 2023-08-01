@@ -16,7 +16,7 @@ const Home = () => {
         try {
             const response = await fetch('http://localhost:5000/api/homeDetails');
             const jsonData = await response.json();
-            console.log(jsonData)
+            // console.log(jsonData)
             setGenres(jsonData);
           } catch (error) {
             console.error('Error fetching data:', error);
