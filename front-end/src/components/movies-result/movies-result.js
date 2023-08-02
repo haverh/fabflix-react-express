@@ -29,9 +29,6 @@ const MoviesResult = () => {
     // }, [movieData]);
 
     useEffect(() => {
-        // console.log("isExhausted =", isExhausted);
-        // console.log("movieData.length =", movieData.length, movieData.length != totalResult, isExhausted && (movieData.length != totalResult));
-        // console.log("totalResult =", totalResult);
         if ( (isExhausted && (movieData.length !== totalResult)) || currentPage === 1 ) {
             
             fetchDataManager(urlParams);
@@ -153,7 +150,7 @@ const MoviesResult = () => {
             <div className='paginationButtons'>
                 <button onClick={prevButtonEvent} disabled={currentPage === 1}>Prev</button>
                 <span>{currentPage}</span>
-                <button onClick={nextButtonEvent}>Next</button>
+                <button onClick={nextButtonEvent} disabled={Math.floor(totalResult/perPage) === currentPage}>Next</button>
             </div>
         </div>
     )
