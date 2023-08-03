@@ -52,14 +52,12 @@ module.exports = function (pool, app) {
             }else { 
                 offset = (currentPage + 1) * perPage;
             }
-            console.log(typeof currentPage);
-            console.log(offset, limit)
             queryString.text = `SELECT rating, movieid, title, year, director FROM movies JOIN ratings ` +
                                 `ON id=movieid WHERE title ILIKE $1 ORDER BY ${sortBy} ${sortOrder} ` +
                                 `OFFSET ${offset} LIMIT ${limit};`
 
             const result = await client.query(queryString)
-
+            console.log(result.rows);
     
             // Iterate through each movie
             // Create object to hold all info (stars, genres, movie info)

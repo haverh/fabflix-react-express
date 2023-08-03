@@ -22,19 +22,6 @@ const MoviesResult = () => {
 
     const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
-
-    // useEffect(() => {
-    //     console.log("total", totalResult);
-    //     console.log("data", movieData);
-    // }, [movieData]);
-
-    useEffect(() => {
-        if ( (isExhausted && (movieData.length !== totalResult)) || currentPage === 1 ) {
-            
-            fetchDataManager(urlParams);
-        }
-    }, [urlParams, currentPage]);
-
     useEffect(() => {
         setMovieData([]);
         setTotal(-1);
@@ -42,12 +29,18 @@ const MoviesResult = () => {
         setIsExhausted(false);
     }, [sortOrder, sortBy])
 
+    useEffect(() => {
+        if ( (isExhausted && (movieData.length !== totalResult)) || currentPage === 1 ) {
+            
+            fetchDataManager(urlParams);
+        }
+    }, [urlParams, currentPage, isExhausted, totalResult]);
+
     const fetchByStartChar = async (startCharacter) => {
         try {
             const params = new URLSearchParams({startCharacter, currentPage, sortOrder, sortBy, perPage, numPage});
             const response = await fetch(`http://localhost:5000/api/byStartCharacter?${params}`);
             const jsonData = await response.json();
-            console.log(jsonData);
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);
             
