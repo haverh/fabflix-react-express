@@ -143,7 +143,7 @@ const MoviesResult = () => {
             <div className='paginationButtons'>
                 <button onClick={prevButtonEvent} disabled={currentPage === 1}>Prev</button>
                 <span>{currentPage}</span>
-                <button onClick={nextButtonEvent} disabled={Math.floor(totalResult/perPage) === currentPage}>Next</button>
+                <button onClick={nextButtonEvent} disabled={Math.floor(totalResult/perPage) + 1 === currentPage}>Next</button>
             </div>
         </div>
     )
