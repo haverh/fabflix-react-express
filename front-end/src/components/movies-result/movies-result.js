@@ -50,10 +50,26 @@ const MoviesResult = () => {
         }
     };
 
+    const fetchByGenre = async (genreId) => {
+        try {
+            const params = new URLSearchParams({genreId, currentPage, sortOrder, sortBy, perPage, numPage});
+            const response = await fetch(`http://localhost:5000/api/byGenre?${params}`);
+            const jsonData = await response.json();
+            if ( currentPage === 1 ) { setTotal(jsonData.total); }
+            setIsExhausted(false);
+            
+            setMovieData([...movieData, ...jsonData.moviesList]);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     // Decide which endpoint to call
     const fetchDataManager = (urlParams) => {
         if (urlParams.get('startCharacter')) {
             fetchByStartChar(urlParams.get('startCharacter'));
+        } else if (urlParams.get('genreid')) {
+            fetchByGenre(Number(urlParams.get('genreid')));
         }
     };
 
@@ -147,6 +163,6 @@ const MoviesResult = () => {
             </div>
         </div>
     )
-}
+};
 
 export default MoviesResult;
