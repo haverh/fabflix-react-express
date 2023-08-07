@@ -16,7 +16,7 @@ const Home = () => {
         try {
             const response = await fetch('http://localhost:5000/api/homeDetails');
             const jsonData = await response.json();
-            // console.log(jsonData)
+            console.log(jsonData)
             setGenres(jsonData);
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -49,7 +49,7 @@ const Home = () => {
         const elements = [];
     
         for (let i = 0; i < genres.length; i++) {
-            elements.push(<p key={genres[i].id}><Link className='link-style' to={`/movies?genreid=${genres[i].id}`}>{genres[i].name}</Link></p>);
+            elements.push(<p key={genres[i].id}><Link className='link-style' to={`/movies?genreId=${genres[i].id}`}>{genres[i].name}</Link></p>);
         }
     
         return (

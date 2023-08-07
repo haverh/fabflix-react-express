@@ -22,19 +22,24 @@ const MoviesResult = () => {
 
     const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
-    useEffect(() => {
+    const reset = () => {
         setMovieData([]);
         setTotal(-1);
         setCurrentPage(1);
         setIsExhausted(false);
-    }, [sortOrder, sortBy])
+    }
 
     useEffect(() => {
+        reset();
+    }, [urlParams])
+
+    useEffect(() => {
+        console.log(movieData)
         if ( (isExhausted && (movieData.length !== totalResult)) || currentPage === 1 ) {
             
             fetchDataManager(urlParams);
         }
-    }, [urlParams, currentPage, isExhausted, totalResult]);
+    }, [currentPage, isExhausted, totalResult]);
 
     const fetchByStartChar = async (startCharacter) => {
         try {
@@ -68,18 +73,18 @@ const MoviesResult = () => {
     const fetchDataManager = (urlParams) => {
         if (urlParams.get('startCharacter')) {
             fetchByStartChar(urlParams.get('startCharacter'));
-        } else if (urlParams.get('genreid')) {
-            fetchByGenre(Number(urlParams.get('genreid')));
+        } else if (urlParams.get('genreId')) {
+            fetchByGenre(Number(urlParams.get('genreId')));
         }
     };
 
     const changeSortOrder = () => {
-        console.log(sortOrder);
         if (sortOrder === "asc") {
             setSortOrder("desc");
         } else {
             setSortOrder("asc");
         }
+        reset();
     };
 
     const prevButtonEvent = () => {
@@ -99,7 +104,7 @@ const MoviesResult = () => {
         <div className="page-content">
             <h1>Movies Result</h1>
             <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
-                <label defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value)} } htmlFor="sortby">Sort By: 
+                <label defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
                 <select name="sortby" id="sortby" style={{height: "27px"}}>
                     <option value="rating">Rating</option>
                     <option value="title">Title</option>
@@ -136,7 +141,7 @@ const MoviesResult = () => {
                         <td>
                             {item.movieGenres.map((gObj, gIndex) => (
                             <React.Fragment key={gObj.genreId}>
-                                <Link to="#" className="link">{gObj.genreName}</Link>
+                                <Link to={`/movies?genreId=${gObj.genreId}`} className="link">{gObj.genreName}</Link>
                                 {gIndex < item.movieGenres.length - 1 && ', '}
                             </React.Fragment>
                             ))}
@@ -145,7 +150,7 @@ const MoviesResult = () => {
                             {item.movieStars.map((sObj, sIndex) => (
                             <React.Fragment key={sObj.starId}>
                                 <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
-                                {sIndex < item.movieStars.length - 1 && ', '}
+                                {sIndex < item.movieStars.length - 1 && ', '}   
                             </React.Fragment>
                             ))}
                         </td>

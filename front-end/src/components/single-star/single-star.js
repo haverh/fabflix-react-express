@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -6,8 +6,9 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 function SingleStar() {
 
     const [starInfo, setStarInfo] = useState({});
+    const location = useLocation()
 
-    const urlParams = new URLSearchParams(useLocation().search);
+    const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
     useEffect(() => {
         fetchData(urlParams.get('starId'));
@@ -48,7 +49,7 @@ function SingleStar() {
                             <td>
                                 {movieInfo.movieGenres.map((gObj, gIndex) => (
                                 <React.Fragment key={gObj.genreId}>
-                                    <Link to="#" className="link">{gObj.genreName}</Link>
+                                    <Link to={`/movies?genreId=${gObj.genreId}`} className="link">{gObj.genreName}</Link>
                                     {gIndex < movieInfo.movieGenres.length - 1 && ', '}
                                 </React.Fragment>
                                 ))}

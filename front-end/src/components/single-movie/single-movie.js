@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -14,12 +14,14 @@ function SingleMovie() {
     const [movieInfo, setMovieInfo] = useState({});
     const [OMDbInfo, setOMDbInfo] = useState({});
 
-    const urlParams = new URLSearchParams(useLocation().search);
+    const location = useLocation()
+
+    const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
     useEffect(() => {
         fetchData(urlParams.get('movieId'));
         fetchOMDb(urlParams.get('movieId'));
-    }, [])
+    }, [urlParams])
 
     // Fetch movie data from backend
     const fetchData = async (movieId) => {
@@ -77,8 +79,8 @@ function SingleMovie() {
                             <td>
                                 {movieInfo.movieGenres && movieInfo.movieGenres.map((gObj, gIndex) => (
                                 <React.Fragment key={gObj.genreId}>
-                                    <Link to="#" className="link">{gObj.genreName}</Link>
-                                    {gIndex < movieInfo.movieGenres.length - 1 && ', '}
+                                    <Link to={`/movies?genreId=${gObj.genreId}`} className="link">{gObj.genreName}</Link>
+                                    {gIndex < movieInfo.movieGenres.length - 1 && ', '}   
                                 </React.Fragment>
                                 ))}
                             </td>
