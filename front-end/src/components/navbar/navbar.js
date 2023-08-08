@@ -2,6 +2,9 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom'
 import './navbar.css'
 import { useAuth0 } from "@auth0/auth0-react";
+import Form from 'react-bootstrap/Form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 // Logo
 import logo from '../../img/logo_transparent-2.png';
@@ -18,7 +21,7 @@ const Navbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <div className="navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
 
                         <li className="nav-item">
@@ -38,14 +41,14 @@ const Navbar = () => {
                     <form className="d-flex input-group w-auto">
                         <input
                             type="search"
-                            className="form-control rounded"
-                            placeholder="Search"
+                            className="me-0 rounded search-input"
+                            placeholder="Fulltext Search"
                             aria-label="Search"
                             aria-describedby="search-addon"
                         />
-                        <span className="input-group-text text-white border-0" id="search-addon">
-                            <i className="fa fa-search"></i>
-                        </span>
+                        <button type='submit' className='rounded' variant='outline-primary'>
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
                         </form>
                 </div>
                 <ul className="navbar-nav mr-auto">

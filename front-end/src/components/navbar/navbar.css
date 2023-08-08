@@ -26,3 +26,11 @@
 .nav-item.selected {
     background-color: #007bff; /* Change this to the highlight color you desire */
   }
+
+.search-input {
+    padding: 0 3px;
+}
+
+.search-input:focus {
+    outline: none;
+}
