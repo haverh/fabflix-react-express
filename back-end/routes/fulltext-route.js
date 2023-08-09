@@ -7,7 +7,7 @@ module.exports = function (pool, app) {
         try {
             const client = await pool.connect();
             let queryString = {
-                text: 'SELECT * FROM movies WHERE ts @@ to_tsquery($1) LIMIT',
+                text: 'SELECT * FROM movies WHERE ts @@ to_tsquery($1) LIMIT 6',
                 values: [newInput]
             }
 
