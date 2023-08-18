@@ -1,15 +1,39 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const FulltextInput = () => {
 
-    const fetchSuggestions = (event) => {
-        event.preventDefault();
-        
-        const inputValue = event.target.value;
+    const [suggestionsMap, setSuggestionsMap] = useState({});
 
-        console.log(inputValue);
+    const fetchSuggestions = async (input) => {
+        return fetch(`http://localhost:5000/api/fulltext?input=${input}`)
+        .then(response => response.json())
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            return null; // Return null or some default value in case of error
+        });
+    }
+
+    const handleSuggestions = async (event) => {
+        const inputValue = event.target.value;
+        console.log(suggestionsMap)
+
+        if ( suggestionsMap[inputValue] ) {
+            console.log("YES");
+            return suggestionsMap[inputValue];
+        } else { // undefined
+            console.log("NO"); 
+            const suggestions = await fetchSuggestions(inputValue);
+            setSuggestionsMap(
+                prevSuggestions => ({
+                    ...prevSuggestions,
+                    [inputValue]: suggestions
+                })
+            )
+            // console.log(suggestions);
+            return suggestions;
+        }
     }
 
     const fetchData = (event) => {
@@ -17,7 +41,7 @@ const FulltextInput = () => {
         
         const inputValue = event.target.fsInput.value;
 
-        console.log();
+        console.log(inputValue);
     }
 
 
@@ -31,7 +55,7 @@ const FulltextInput = () => {
                     placeholder="Fulltext Search"
                     aria-label="Search"
                     aria-describedby="search-addon"
-                    onChange={fetchSuggestions}
+                    onChange={handleSuggestions}
                 />
                 <button type='submit' className='rounded-right search-button' variant='outline-primary'>
                     <FontAwesomeIcon icon={faSearch} />
