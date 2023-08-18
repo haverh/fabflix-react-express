@@ -1,7 +1,7 @@
 module.exports = function (pool, app) {
     app.get('/api/fulltext', async (req, res) => {
         const input = req.query.input;
-        const tokens = temp.trim().split(" ").map((str) => str+":*");
+        const tokens = input.trim().split(" ").map((str) => str+":*");
         const newInput = tokens.join(" & ")
 
         try {
