@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const FulltextInput = () => {
-
-    const [suggestionsMap, setSuggestionsMap] = useState({});
+    const [suggestions, setSuggestions] = useState([]);
+    const [suggestionsMap, setSuggestionsMap] = useState({"": []});
 
     const fetchSuggestions = async (input) => {
         return fetch(`http://localhost:5000/api/fulltext?input=${input}`)
@@ -17,13 +17,13 @@ const FulltextInput = () => {
 
     const handleSuggestions = async (event) => {
         const inputValue = event.target.value;
-        console.log(suggestionsMap)
-
+        console.log(inputValue);
+        
+        
         if ( suggestionsMap[inputValue] ) {
-            console.log("YES");
+            setSuggestions(suggestionsMap[inputValue])
             return suggestionsMap[inputValue];
         } else { // undefined
-            console.log("NO"); 
             const suggestions = await fetchSuggestions(inputValue);
             setSuggestionsMap(
                 prevSuggestions => ({
@@ -31,6 +31,8 @@ const FulltextInput = () => {
                     [inputValue]: suggestions
                 })
             )
+            console.log(suggestions);
+            setSuggestions(suggestions);
             // console.log(suggestions);
             return suggestions;
         }
@@ -61,6 +63,13 @@ const FulltextInput = () => {
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </form>
+            {suggestions.length > 0 && (
+                <ul>
+                    {suggestions.map((suggestion, index) => (
+                    <li key={index}>{suggestion.movieTitle}</li>
+                    ))}
+                </ul>
+            )}
         </div>
         
     )
