@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
+import './fulltext.css'
+
 const FulltextInput = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [suggestionsMap, setSuggestionsMap] = useState({"": []});
+    const [selectedSuggestion, setSelected] = useState(0);
 
     const fetchSuggestions = async (input) => {
         return fetch(`http://localhost:5000/api/fulltext?input=${input}`)
@@ -46,6 +49,15 @@ const FulltextInput = () => {
         console.log(inputValue);
     }
 
+    const handleKeyDown = (event) => {
+        if ( event.key === "ArrowUp" ) {
+            setSelected(Math.max(selectedSuggestion - 1, 0));
+        } else if ( event.key === "ArrowDown" ) {
+            setSelected(Math.min(selectedSuggestion + 1, suggestions.length - 1));
+        } else if ( event.key === "Enter") {
+            // Fetch data and rediect to single movie page
+        }
+    }
 
     return (
         <div className="search-component h-100">
@@ -53,21 +65,23 @@ const FulltextInput = () => {
                 <input
                     name='fsInput'
                     type="search"
-                    className="me-0 rounded-left search-input"
+                    className="search-input"
                     placeholder="Fulltext Search"
                     aria-label="Search"
                     aria-describedby="search-addon"
                     onChange={handleSuggestions}
+                    onKeyDown={handleKeyDown}
                 />
-                <button type='submit' className='rounded-right search-button' variant='outline-primary'>
+                <button type='submit' className='m-0 search-button' variant='outline-primary'>
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </form>
             {suggestions.length > 0 && (
-                <ul>
+                <ul className='suggestions'>
                     {suggestions.map((suggestion, index) => (
-                    <li key={index}>{suggestion.movieTitle}</li>
-                    ))}
+                    <li key={index} className={index === selectedSuggestion ? 'selected' : ''}>
+                        {suggestion.movieTitle}
+                    </li>))}
                 </ul>
             )}
         </div>
