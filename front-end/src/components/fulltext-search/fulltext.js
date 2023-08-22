@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -89,10 +90,11 @@ const FulltextInput = () => {
                         ? 'hovered'
                         : ''
                     }
+                    
                     onMouseEnter={() => {setHoverSelected(index); setSelected(-1);}}
                     onMouseLeave={() => setHoverSelected(-1)}
                     >
-                        {suggestion.movieTitle}
+                        <Link to={`/single-movie?movieId=${suggestion.movieId}`} className="link">{suggestion.movieTitle}</Link>
                     </li>))}
                 </ul>
             )}
