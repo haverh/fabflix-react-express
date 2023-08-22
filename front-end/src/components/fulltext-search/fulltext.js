@@ -7,7 +7,8 @@ import './fulltext.css'
 const FulltextInput = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [suggestionsMap, setSuggestionsMap] = useState({"": []});
-    const [selectedSuggestion, setSelected] = useState(0);
+    const [selectedSuggestion, setSelected] = useState(-1);
+    const [hoveredSelectedSuggestion, setHoverSelected] = useState(-1);
 
     const fetchSuggestions = async (input) => {
         return fetch(`http://localhost:5000/api/fulltext?input=${input}`)
@@ -51,9 +52,11 @@ const FulltextInput = () => {
 
     const handleKeyDown = (event) => {
         if ( event.key === "ArrowUp" ) {
-            setSelected(Math.max(selectedSuggestion - 1, 0));
+            setSelected(Math.max(selectedSuggestion - 1, -1));
+            setHoverSelected(-1);
         } else if ( event.key === "ArrowDown" ) {
             setSelected(Math.min(selectedSuggestion + 1, suggestions.length - 1));
+            setHoverSelected(-1);
         } else if ( event.key === "Enter") {
             // Fetch data and rediect to single movie page
         }
@@ -79,7 +82,16 @@ const FulltextInput = () => {
             {suggestions.length > 0 && (
                 <ul className='suggestions'>
                     {suggestions.map((suggestion, index) => (
-                    <li key={index} className={index === selectedSuggestion ? 'selected' : ''}>
+                    <li key={index} className={
+                        index === selectedSuggestion 
+                        ? 'selected' 
+                        : index === hoveredSelectedSuggestion
+                        ? 'hovered'
+                        : ''
+                    }
+                    onMouseEnter={() => {setHoverSelected(index); setSelected(-1);}}
+                    onMouseLeave={() => setHoverSelected(-1)}
+                    >
                         {suggestion.movieTitle}
                     </li>))}
                 </ul>
