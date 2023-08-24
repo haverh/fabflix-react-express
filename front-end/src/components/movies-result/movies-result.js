@@ -34,7 +34,6 @@ const MoviesResult = () => {
     }, [urlParams])
 
     useEffect(() => {
-        console.log(movieData)
         if ( (isExhausted && (movieData.length !== totalResult)) || currentPage === 1 ) {
             
             fetchDataManager(urlParams);

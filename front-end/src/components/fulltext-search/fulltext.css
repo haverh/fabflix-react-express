@@ -17,6 +17,7 @@
     background-color: white;
     width: 300px;
     border-radius: 5px;
+    z-index: 2;
 }
 
 .suggestions li {

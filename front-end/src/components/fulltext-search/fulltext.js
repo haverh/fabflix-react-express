@@ -22,7 +22,6 @@ const FulltextInput = () => {
 
     const handleSuggestions = async (event) => {
         const inputValue = event.target.value;
-        console.log(inputValue);
         
         
         if ( suggestionsMap[inputValue] ) {
@@ -36,19 +35,9 @@ const FulltextInput = () => {
                     [inputValue]: suggestions
                 })
             )
-            console.log(suggestions);
             setSuggestions(suggestions);
-            // console.log(suggestions);
             return suggestions;
         }
-    }
-
-    const fetchData = (event) => {
-        event.preventDefault();
-        
-        const inputValue = event.target.fsInput.value;
-
-        console.log(inputValue);
     }
 
     const handleKeyDown = (event) => {
@@ -59,19 +48,21 @@ const FulltextInput = () => {
             setSelected(Math.min(selectedSuggestion + 1, suggestions.length - 1));
             setHoverSelected(-1);
         } else if ( event.key === "Enter") {
-            handleClick();
+            fetchMovie();
+
         }
     }
 
-    const handleClick = (event) => {
-        let movieId;
-        if ( selectedSuggestion !== -1 ) {
-            const movie = suggestions[selectedSuggestion];
-            movieId = movie.movieId;
-        } else {
-            const movie = suggestions[hoveredSelectedSuggestion];
-            movieId = movie.movieId;
-        };
+    const fetchMovie = () => {
+        console.log("PRESSED")
+
+        // Determine if clicked/entered and get movie info from suggestions
+        let movie = (selectedSuggestion !== -1) 
+        ? suggestions[selectedSuggestion] 
+        : suggestions[hoveredSelectedSuggestion];
+
+        const movieId = movie.movieId;
+
         window.location.href = `/single-movie?movieId=${movieId}`
         setSelected(-1);
         setHoverSelected(-1);
@@ -80,7 +71,7 @@ const FulltextInput = () => {
 
     return (
         <div className="search-component h-100">
-            <form className="d-flex input-group w-auto" onSubmit={fetchData}>
+            <form className="d-flex input-group w-auto" onSubmit={(event) => {event.preventDefault();}}>
                 <input
                     name='fsInput'
                     type="search"
@@ -108,7 +99,7 @@ const FulltextInput = () => {
                     
                     onMouseEnter={() => {setHoverSelected(index); setSelected(-1);}}
                     onMouseLeave={() => setHoverSelected(-1)}
-                    onClick={ handleClick }
+                    onClick={ fetchMovie }
                     >
                         {suggestion.movieTitle}
                     </li>))}
