@@ -10,6 +10,7 @@ import SingleStar from './components/single-star/single-star';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import MoviesResult from './components/movies-result/movies-result';
+import CartProvider from './contexts/CartContext';
 
 const SessionContext = createContext();
 
@@ -22,6 +23,7 @@ function App() {
 
 	return (
 		<SessionContext.Provider value={{mySession, setSession}}>
+			<CartProvider>
 			<Routes>
 				<Route path="/" element={<Navbar/>}>
 					<Route path="/home" element={<Home/>}/>
@@ -33,6 +35,7 @@ function App() {
 					</React.Fragment>
 				</Route>
 			</Routes>
+			</CartProvider>
 		</SessionContext.Provider>
 				// <div className="App">
 				// 	<Navbar/>
