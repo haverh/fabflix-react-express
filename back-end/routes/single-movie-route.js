@@ -6,7 +6,7 @@ module.exports = function (pool, app) {
         try {
             const client = await pool.connect();
             let queryString = {
-                text: 'SELECT title, year, director, rating FROM movies JOIN ratings ON id = movieId WHERE id = $1',
+                text: 'SELECT title, year, director, rating FROM movies LEFT JOIN ratings ON id = movieId WHERE id = $1',
                 values: [movieId]
             }
 
@@ -16,7 +16,7 @@ module.exports = function (pool, app) {
             movieObj.movieTitle = result.rows[0].title;
             movieObj.movieYear = result.rows[0].year;
             movieObj.movieDirector = result.rows[0].director;
-            movieObj.movieRating = result.rows[0].rating;
+            movieObj.movieRating = result.rows[0].rating ? result.rows[0].rating : "N/A";
 
             movieObj.movieStars = [];
             movieObj.movieGenres = [];
