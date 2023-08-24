@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './top-movies.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const TopMovies = () => {
 
@@ -36,6 +36,7 @@ const TopMovies = () => {
                     <th scope="col" >Genres</th>
                     <th scope="col" >Stars</th>
                     <th scope="col" >Rating</th>
+                    <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +63,10 @@ const TopMovies = () => {
                         </td>
                         <td>{item.movieRating} 
                         <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
-
+                        <td><button className='addToCart'>
+                            <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
+                            </button>
+                        </td>
                     </tr>
                     ))}
                 </tbody>

@@ -17,3 +17,17 @@
 .link {
     text-decoration: none;
 }
+
+.addToCart {
+    width: fit-content;
+    height: fit-content;
+    border: 0;
+    border-radius: 5px;
+    background-color: #8DBA5E;
+    
+}
+
+.addToCart:hover {
+    width: calc(100% + 20%);
+    height: calc(100% + 20%);
+}
