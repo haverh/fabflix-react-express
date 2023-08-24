@@ -59,8 +59,23 @@ const FulltextInput = () => {
             setSelected(Math.min(selectedSuggestion + 1, suggestions.length - 1));
             setHoverSelected(-1);
         } else if ( event.key === "Enter") {
-            // Fetch data and rediect to single movie page
+            handleClick();
         }
+    }
+
+    const handleClick = (event) => {
+        let movieId;
+        if ( selectedSuggestion !== -1 ) {
+            const movie = suggestions[selectedSuggestion];
+            movieId = movie.movieId;
+        } else {
+            const movie = suggestions[hoveredSelectedSuggestion];
+            movieId = movie.movieId;
+        };
+        window.location.href = `/single-movie?movieId=${movieId}`
+        setSelected(-1);
+        setHoverSelected(-1);
+        setSuggestions([]);
     }
 
     return (
@@ -93,8 +108,9 @@ const FulltextInput = () => {
                     
                     onMouseEnter={() => {setHoverSelected(index); setSelected(-1);}}
                     onMouseLeave={() => setHoverSelected(-1)}
+                    onClick={ handleClick }
                     >
-                        <Link to={`/single-movie?movieId=${suggestion.movieId}`} className="link">{suggestion.movieTitle}</Link>
+                        {suggestion.movieTitle}
                     </li>))}
                 </ul>
             )}
