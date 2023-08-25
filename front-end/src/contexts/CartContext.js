@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 
 
-const CartContext = createContext({
+export const CartContext = createContext({
     items: [],
     getQuantity: () => {},
     addOne: () => {},
@@ -10,7 +10,7 @@ const CartContext = createContext({
     getTotalCost: () => {},
 });
 
-function CartProvider ({ children }) {
+export function CartProvider ({ children }) {
     const [cart, setCart] = useState([]);
 
     // Fetches price from database for specific movie
@@ -75,7 +75,7 @@ function CartProvider ({ children }) {
     const removeFromCart = (id) => {
         setCart(
             cart => cart.filter(currentItem => { // add items into [] that have different id
-                return currentItem.id != id;
+                return currentItem.id !== id;
             })
         )
     }
