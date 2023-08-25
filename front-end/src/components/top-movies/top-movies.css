@@ -19,15 +19,18 @@
 }
 
 .addToCart {
-    width: fit-content;
-    height: fit-content;
+    width: 25px;
+    height: 25px;
     border: 0;
     border-radius: 5px;
     background-color: #8DBA5E;
-    
+    margin: 3px;
 }
 
 .addToCart:hover {
-    width: calc(100% + 20%);
-    height: calc(100% + 20%);
+    transform: scale(1.1);
+}
+
+.addToCart:active {
+    transform: scale(0.9);
 }
