@@ -68,7 +68,7 @@ const TopMovies = () => {
                         <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
                         <td>
                             <button className='addToCart'
-                             onClick={() => cart.addOne(item.movieId)}>
+                             onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
                                 <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
                             </button>
                         </td>

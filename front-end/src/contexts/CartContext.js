@@ -24,6 +24,13 @@ export function CartProvider ({ children }) {
         });
     }
 
+    // Get title of movie given id
+    const getTitle = (id) => {
+        const title = cart.find( item => item.id === id )?.title;
+
+        return title;
+    }
+
     // Return 0 if item not found, else return the quantity
     const getQuantity = (id) => {
         const quantity = cart.find( item => item.id === id)?.quantity;
@@ -36,7 +43,7 @@ export function CartProvider ({ children }) {
     }
 
     // Add 1 quantity of an item to the cart
-    const addOne = async (id) => {
+    const addOne = async (id, title) => {
         const quantity = getQuantity(id);
         
         if ( quantity === 0 ) { // item not in cart
@@ -44,7 +51,7 @@ export function CartProvider ({ children }) {
             setCart(
                 [
                     ...cart, 
-                    { id: id, quantity: 1, price: fetchedPrice }
+                    { id: id, title: title, quantity: 1, price: fetchedPrice }
                 ])
         } else { // item is in cart
             // map over and find id, add 1 to quantity or return same object
