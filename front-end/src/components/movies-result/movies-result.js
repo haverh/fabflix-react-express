@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortUp, faSortDown, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faSortUp, faSortDown, faStar, faPlus  } from '@fortawesome/free-solid-svg-icons';
+import { CartContext } from '../../contexts/CartContext';
 
 import './movies-result.css';
 
 const MoviesResult = () => {
 
+    const cart = useContext(CartContext);
     
     const [movieData, setMovieData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -128,6 +130,7 @@ const MoviesResult = () => {
                         <th scope="col" >Genres</th>
                         <th scope="col" >Stars</th>
                         <th scope="col" >Rating</th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,6 +158,12 @@ const MoviesResult = () => {
                         </td>
                         <td>{item.movieRating} 
                         <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
+                        <td>
+                            <button className='addToCart'
+                             onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
+                                <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
+                            </button>
+                        </td>
 
                     </tr>
                     ))}

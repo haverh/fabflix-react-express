@@ -15,7 +15,7 @@ const ShoppingCart = () => {
         <div className='page-content'>
             <h1>Your Cart</h1>
             <div className="cart-body">
-                <table className="table table-striped cart-items">
+                <table className="cart-items table table-striped">
                     <thead className="thead-dark">
                         <tr>
                         <th scope="col" >Title</th>
@@ -38,7 +38,7 @@ const ShoppingCart = () => {
                 <div className='cart-bottom'>
                     <div className='cart-checkout'>
                         <div className='cart-total'>
-                            <p><b>Sub-Total:</b>  ${cart.getTotalCost()}</p>
+                            <p><b>Sub-Total:</b>  ${cart.getTotalCost().toFixed(2)}</p>
                             <p><b>Sales Tax:</b> ${tax}</p>
                             <p><b>Grand Total:</b> ${grandTotal}</p>
                         </div>
