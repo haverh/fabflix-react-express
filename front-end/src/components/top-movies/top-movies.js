@@ -1,10 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './top-movies.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { CartContext } from '../../contexts/CartContext';
 
 const TopMovies = () => {
+
+    const cart = useContext(CartContext);
 
     const [rows, setRows] = useState([]);
 
@@ -23,7 +26,7 @@ const TopMovies = () => {
         }
     };
 
-
+    console.log(cart.items);
     return (
         <div className="page-content">
             <h1>Top 20 Rated Movies</h1>
@@ -36,6 +39,7 @@ const TopMovies = () => {
                     <th scope="col" >Genres</th>
                     <th scope="col" >Stars</th>
                     <th scope="col" >Rating</th>
+                    <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +66,12 @@ const TopMovies = () => {
                         </td>
                         <td>{item.movieRating} 
                         <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
-
+                        <td>
+                            <button className='addToCart'
+                             onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
+                                <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
+                            </button>
+                        </td>
                     </tr>
                     ))}
                 </tbody>

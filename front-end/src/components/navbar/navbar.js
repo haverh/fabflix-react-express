@@ -29,7 +29,7 @@ const Navbar = () => {
                         <li><button onClick={() => loginWithRedirect()}>Login</button></li>
                         <li><button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</button></li>
                     </ul>
-                    <button className='cartButton'><FontAwesomeIcon icon={faCartShopping} /></button>
+                    <Nav.Link to="/cart" as={NavLink}><button className='cartButton'><FontAwesomeIcon icon={faCartShopping} /></button></Nav.Link>
                 </div>
             </Container>
         </NB>
