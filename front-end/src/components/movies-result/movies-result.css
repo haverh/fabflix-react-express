@@ -1,0 +1,35 @@
+.sortOrderBtn {
+    height: 27px;
+    width: 27px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.paginationButtons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}
+
+.paginationButtons button {
+    width: fit-content;
+    height: fit-content;
+    padding: 0 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.paginationButtons span {
+    background-color: #f0f0f0;
+    width: fit-content;
+    height: fit-content;
+    padding: 0 5px;
+    border: 1px solid;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}

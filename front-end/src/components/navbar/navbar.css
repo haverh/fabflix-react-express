@@ -12,17 +12,61 @@
 }
 
 .navbar-brand:hover {
-    color: #b8efe7;
+    color: inherit;
+
 }
 
 .nav-link {
     color: #71dfcf;
+    
 }
 
 .nav-link:hover {
     color: #b8efe7;
 }
 
-.nav-item.selected {
-    background-color: #007bff; /* Change this to the highlight color you desire */
-  }
+.nav-link.selected {
+    background-color: #007bff; 
+}
+
+.search-component {
+    margin: 0 0.5rem;
+}
+
+.search-input {
+    border: 0;
+    padding: 0 3px;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-button {
+    border: 0;
+    background-color: #71dfcf;
+}
+
+.loggingButtons {
+    margin: 0 0.5rem;
+}
+
+.cartButton {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0.5rem;
+    outline: none;
+    border: 0;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #71dfcf;
+}
+
+.cartButton:focus {
+    outline: none;
+}
+
+.cartButton:hover {
+    width: 2.2rem;
+    height: 2.2rem;
+}

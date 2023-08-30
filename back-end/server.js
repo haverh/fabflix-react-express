@@ -56,12 +56,14 @@ const pool = new Pool({
 // Routes
 const landingRoutes = require('./routes/landing-route');
 const homeRoutes = require('./routes/home-route');
+const fulltextRoutes = require('./routes/fulltext-route');
 const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
 landingRoutes(app);
 homeRoutes(pool, app);
+fulltextRoutes(pool, app);
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);
 singleStarRoutes(pool, app);
