@@ -10,13 +10,19 @@
     text-decoration: none;
 }
 
+.textSelect {
+    margin: 5px;
+
+}
+
 .alphaBox {
     width: 50%;
     display: grid;
     text-align: center;
     grid-template-columns: repeat(13, 1fr);
-
     font-weight: bold;
+    border-radius: 5px;
+    background-color: black;
 }
 
 
@@ -27,6 +33,7 @@
     display: grid;
     text-align: center;
     grid-template-columns: repeat(5, 1fr);
-
     font-weight: bold;
+    border-radius: 5px;
+    background-color: black;
 }

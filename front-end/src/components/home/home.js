@@ -29,11 +29,11 @@ const Home = () => {
     
         for (let i = 0; i < 26; i++) {
             const alpha = String.fromCharCode(65 + i);
-            elements.push(<p key={`alpha-${i}`}><Link className='link-style' to={`/movies?startCharacter=${alpha}`}>{alpha}</Link></p> );
+            elements.push(<p key={`alpha-${i}`} className='textSelect'><Link className='link-style' to={`/movies?startCharacter=${alpha}`}>{alpha}</Link></p> );
         }
 
         for (let i = 0; i < 10; i++) {
-            elements.push(<p key={`number-${i}`}><Link className='link-style' to={`/movies?startCharacter=${i}`}>{i}</Link></p> );
+            elements.push(<p key={`number-${i}`} className='textSelect'><Link className='link-style' to={`/movies?startCharacter=${i}`}>{i}</Link></p> );
         }
     
         return (
@@ -48,7 +48,7 @@ const Home = () => {
         const elements = [];
     
         for (let i = 0; i < genres.length; i++) {
-            elements.push(<p key={genres[i].id}><Link className='link-style' to={`/movies?genreId=${genres[i].id}`}>{genres[i].name}</Link></p>);
+            elements.push(<p key={genres[i].id} className='textSelect'><Link className='link-style' to={`/movies?genreId=${genres[i].id}`}>{genres[i].name}</Link></p>);
         }
     
         return (
