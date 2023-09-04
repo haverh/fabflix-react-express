@@ -51,7 +51,7 @@ export function CartProvider ({ children }) {
             setCart(
                 [
                     ...cart, 
-                    { id: id, title: title, quantity: 1, price: fetchedPrice }
+                    { id: id, title: title, quantity: 1, price: parseFloat(fetchedPrice) }
                 ])
         } else { // item is in cart
             // map over and find id, add 1 to quantity or return same object

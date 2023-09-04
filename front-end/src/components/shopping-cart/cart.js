@@ -11,6 +11,23 @@ const ShoppingCart = () => {
     const [grandTotal, setGrandTotal] = useState(parseFloat(cart.getTotalCost() + tax).toFixed(2));
     console.log("Cart Page -", cart.items);
 
+    const handleCheckout = async () => {
+        try {
+
+            const response = await fetch(`http://localhost:5000/checkout`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cart.items),
+            });
+            const jsonData = await response.json();
+            console.log(jsonData.url)
+          } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
     return (
         <div className='page-content'>
             <h1>Your Cart</h1>
@@ -42,7 +59,7 @@ const ShoppingCart = () => {
                             <p><b>Sales Tax:</b> ${tax}</p>
                             <p><b>Grand Total:</b> ${grandTotal}</p>
                         </div>
-                        <button className='checkout-button'>Checkout</button>
+                        <button className='checkout-button' onClick={ handleCheckout } >Checkout</button>
                     </div>
                 </div>
             </div>
