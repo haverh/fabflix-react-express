@@ -1,10 +1,13 @@
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
+import { useAuth0 } from "@auth0/auth0-react";
 import './cart.css';
 
 
 const ShoppingCart = () => {
+
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     const cart = useContext(CartContext);
     const [tax, setTax] = useState(parseFloat((cart.getTotalCost() * 0.1).toFixed(2)));
@@ -60,7 +63,7 @@ const ShoppingCart = () => {
                             <p><b>Sales Tax:</b> ${tax}</p>
                             <p><b>Grand Total:</b> ${grandTotal}</p>
                         </div>
-                        <button className='checkout-button' onClick={ handleCheckout } >Checkout</button>
+                        <button className='checkout-button' onClick={ isAuthenticated ? handleCheckout : loginWithRedirect } >Checkout</button>
                     </div>
                 </div>
             </div>
