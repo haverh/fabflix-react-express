@@ -4,10 +4,12 @@ import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortUp, faSortDown, faStar, faPlus  } from '@fortawesome/free-solid-svg-icons';
 import { CartContext } from '../../contexts/CartContext';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import './movies-result.css';
 
 const MoviesResult = () => {
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     const cart = useContext(CartContext);
     
@@ -101,7 +103,7 @@ const MoviesResult = () => {
     };
 
 
-    return (
+    return ( isAuthenticated ?
         <div className="page-content">
             <h1>Movies Result</h1>
             <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
@@ -175,6 +177,7 @@ const MoviesResult = () => {
                 <button onClick={nextButtonEvent} disabled={Math.floor(totalResult/perPage) + 1 === currentPage}>Next</button>
             </div>
         </div>
+        : loginWithRedirect()
     )
 };
 

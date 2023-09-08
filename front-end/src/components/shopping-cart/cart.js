@@ -23,6 +23,7 @@ const ShoppingCart = () => {
             });
             const jsonData = await response.json();
             console.log(jsonData.url)
+            window.location.href = jsonData.url;
           } catch (error) {
             console.error('Error fetching data:', error);
         }

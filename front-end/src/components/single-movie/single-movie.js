@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import './single-movie.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +9,8 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 function SingleMovie() {
+
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     const omdbAPI = "f6cd5e6f";
     
@@ -52,7 +55,7 @@ function SingleMovie() {
         }
     }
 
-    return (
+    return ( isAuthenticated ?
         <div className="page-content">
             <h1 className="header">
                 <span className="movieTitle">{movieInfo.movieTitle} ({movieInfo.movieYear})</span>
@@ -101,6 +104,7 @@ function SingleMovie() {
                 {OMDbInfo.poster !== 'N/A' && <img className="image" src={OMDbInfo.poster} alt="Movie Poster"></img>}
             </div>
         </div>
+        : loginWithRedirect()
     )
 }
 

@@ -12,6 +12,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import MoviesResult from './components/movies-result/movies-result';
 import CartProvider from './contexts/CartContext';
 import ShoppingCart from './components/shopping-cart/cart';
+import CheckoutSuccess from './components/checkout/checkout-success'
 
 const SessionContext = createContext();
 
@@ -23,38 +24,41 @@ function App() {
 	axios.defaults.withCredentials = true;
 
 	return (
-		<SessionContext.Provider value={{mySession, setSession}}>
-			<CartProvider>
-			<Routes>
-				<Route path="/" element={<Navbar/>}>
-					<Route path="/home" element={<Home/>}/>
-					<React.Fragment>
-						<Route path="/movies" element={<MoviesResult/>}/>
-						<Route path="/top-movies" element={<TopMovies/>}/>
-						<Route path="/single-movie" element={<SingleMovie/>}/>
-						<Route path="/single-star" element={<SingleStar/>}/>
-						<Route path="/cart" element={<ShoppingCart/>}/>
-					</React.Fragment>
-				</Route>
-			</Routes>
-			</CartProvider>
-		</SessionContext.Provider>
-				// <div className="App">
-				// 	<Navbar/>
-				// 	<div className="content">
-				// 		{/* <Routes>
-				// 			{isAuthenticated
-				// 			? (<>
-				// 			<Route path="/" element={<TopMovies/>}/>
-				// 			<Route path="/top-movies" element={<TopMovies/>}/>
-				// 			<Route path="/single-movie" element={<SingleMovie/>}/>
-				// 			<Route path="/single-star" element={<SingleStar/>}/></>)
-				// 			: 
-				// 			loginWithRedirect()
-				// 			}
-				// 		</Routes> */}
-				// 	</div>
-				// </div>
+		<CartProvider>
+		<Routes>
+			<Route path="/" element={<Navbar/>}>
+				<Route path="/home" element={<Home/>}/>
+				<React.Fragment>
+					<Route path="/movies" element={<MoviesResult/>}/>
+					<Route path="/top-movies" element={<TopMovies/>}/>
+					<Route path="/single-movie" element={<SingleMovie/>}/>
+					<Route path="/single-star" element={<SingleStar/>}/>
+					<Route path="/cart" element={<ShoppingCart/>}/>
+					<Route path="/success" element={<CheckoutSuccess/>}/>
+				</React.Fragment>
+			</Route>
+		</Routes>
+		</CartProvider>	
+
+
+		// <div className="App">
+		// 	<Navbar/>
+		// 	<div className="content">
+		// 		<Routes>
+		// 			<Route path="/" element={<Navbar/>}>
+		// 				<Route path="/home" element={<Home/>}/>
+		// 				<React.Fragment>
+		// 					<Route path="/movies" element={<MoviesResult/>}/>
+		// 					<Route path="/top-movies" element={<TopMovies/>}/>
+		// 					<Route path="/single-movie" element={<SingleMovie/>}/>
+		// 					<Route path="/single-star" element={<SingleStar/>}/>
+		// 					<Route path="/cart" element={<ShoppingCart/>}/>
+		// 					<Route path="/success" element={<CheckoutSuccess/>}/>
+		// 				</React.Fragment>
+		// 			</Route>
+		// 		</Routes>
+		// 	</div>
+		// </div>
 	);
 }
 

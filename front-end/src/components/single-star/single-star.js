@@ -2,8 +2,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function SingleStar() {
+
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     const [starInfo, setStarInfo] = useState({});
     const location = useLocation()
@@ -26,7 +29,7 @@ function SingleStar() {
         }
     }
     
-    return (
+    return ( isAuthenticated ?
         <div className="page-content">
             <h1>{starInfo.starName} ({starInfo.starBirth || 'N/A'})</h1>
             <table className="table table-striped">
@@ -69,6 +72,7 @@ function SingleStar() {
                 </tbody>
             </table>
         </div>
+        : loginWithRedirect()
     )
 }
 
