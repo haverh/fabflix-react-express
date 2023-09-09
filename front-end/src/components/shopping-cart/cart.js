@@ -26,6 +26,9 @@ const ShoppingCart = () => {
             });
             const jsonData = await response.json();
             console.log(jsonData.url)
+            localStorage.setItem('cart', JSON.stringify(cart.items));
+            localStorage.setItem('tax', JSON.stringify(tax));
+            localStorage.setItem('total', JSON.stringify(cart.getTotalCost()));
             window.location.href = jsonData.url;
           } catch (error) {
             console.error('Error fetching data:', error);

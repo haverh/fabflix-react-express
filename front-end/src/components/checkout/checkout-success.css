@@ -1,0 +1,38 @@
+.saleInfo {
+    margin: 5% 25%;
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 25px;
+    background-color: white;
+}
+
+/* .orderDetails {
+
+} */
+
+.orderRow {
+    display: grid;
+    grid-template-columns: repeat(6, 16.66%);
+}
+
+.paymentRow {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+}
+
+.product {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.payment-amount {
+    justify-self: end;
+}
+
+.cart-total {
+    width: fit-content;
+}
+
+br {
+    color: black;
+}
