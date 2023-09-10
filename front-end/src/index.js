@@ -9,6 +9,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 
 const domain = process.env.REACT_APP_DOMAIN;
 const clientid = process.env.REACT_APP_CLIENTID;
+console.log("INDEX")
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,7 +23,7 @@ root.render(
     >
       <BrowserRouter>
         <App />
-      </BrowserRouter>   
+      </BrowserRouter>
     </Auth0Provider>
   </React.StrictMode>
 );

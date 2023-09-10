@@ -11,6 +11,7 @@ import FulltextInput from '../fulltext-search/fulltext';
 import logo from '../../img/logo_transparent-2.png';
 
 const Navbar = () => {
+    console.log("NAVBAR")
     const { loginWithRedirect, logout } = useAuth0();
     return (
         <>

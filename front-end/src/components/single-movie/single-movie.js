@@ -10,6 +10,8 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 function SingleMovie() {
 
+    console.log("SINGLE MOVIE")
+
     const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     const omdbAPI = "f6cd5e6f";
@@ -55,56 +57,62 @@ function SingleMovie() {
         }
     }
 
-    return ( isAuthenticated ?
-        <div className="page-content">
-            <h1 className="header">
-                <span className="movieTitle">{movieInfo.movieTitle} ({movieInfo.movieYear})</span>
-                <span className="movieRating">{movieInfo.movieRating} 
-                    <span className="fa-layers fa-fw">
-                        <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" transform="shrink-6"/>
-                        <FontAwesomeIcon icon={farStar} size="sm" />
+
+    const pageInfo = useMemo(() => {
+        if ( isAuthenticated ) {
+            return <div className="page-content">
+                <h1 className="header">
+                    <span className="movieTitle">{movieInfo.movieTitle} ({movieInfo.movieYear})</span>
+                    <span className="movieRating">{movieInfo.movieRating} 
+                        <span className="fa-layers fa-fw">
+                            <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" transform="shrink-6"/>
+                            <FontAwesomeIcon icon={farStar} size="sm" />
+                        </span>
                     </span>
-                </span>
-            </h1>
-            <div className="table-img">
-                <table className="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th scope="row" >Plot</th>
-                            <td>{OMDbInfo.plot} </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" >Director</th>
-                            <td>{movieInfo.movieDirector} </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" >Genres</th>
-                            <td>
-                                {movieInfo.movieGenres && movieInfo.movieGenres.map((gObj, gIndex) => (
-                                <React.Fragment key={gObj.genreId}>
-                                    <Link to={`/movies?genreId=${gObj.genreId}`} className="link">{gObj.genreName}</Link>
-                                    {gIndex < movieInfo.movieGenres.length - 1 && ', '}   
-                                </React.Fragment>
-                                ))}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" >Stars</th>
-                            <td>
-                                {movieInfo.movieStars && movieInfo.movieStars.map((sObj, sIndex) => (
-                                <React.Fragment key={sObj.starId}>
-                                    <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
-                                    {sIndex < movieInfo.movieStars.length - 1 && ', '}
-                                </React.Fragment>
-                                ))}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                {OMDbInfo.poster !== 'N/A' && <img className="image" src={OMDbInfo.poster} alt="Movie Poster"></img>}
+                </h1>
+                <div className="table-img">
+                    <table className="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th scope="row" >Plot</th>
+                                <td>{OMDbInfo.plot} </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" >Director</th>
+                                <td>{movieInfo.movieDirector} </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" >Genres</th>
+                                <td>
+                                    {movieInfo.movieGenres && movieInfo.movieGenres.map((gObj, gIndex) => (
+                                    <React.Fragment key={gObj.genreId}>
+                                        <Link to={`/movies?genreId=${gObj.genreId}`} className="link">{gObj.genreName}</Link>
+                                        {gIndex < movieInfo.movieGenres.length - 1 && ', '}   
+                                    </React.Fragment>
+                                    ))}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" >Stars</th>
+                                <td>
+                                    {movieInfo.movieStars && movieInfo.movieStars.map((sObj, sIndex) => (
+                                    <React.Fragment key={sObj.starId}>
+                                        <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
+                                        {sIndex < movieInfo.movieStars.length - 1 && ', '}
+                                    </React.Fragment>
+                                    ))}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {OMDbInfo.poster !== 'N/A' && <img className="image" src={OMDbInfo.poster} alt="Movie Poster"></img>}
+                </div>
             </div>
-        </div>
-        : loginWithRedirect()
+        }   
+    }, [isAuthenticated])
+
+    return ( 
+        <div>{pageInfo}</div>
     )
 }
 
