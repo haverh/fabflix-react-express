@@ -13,7 +13,6 @@ console.log("INDEX")
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <Auth0Provider
       domain={domain}
       clientId={clientid}
@@ -25,7 +24,6 @@ root.render(
         <App />
       </BrowserRouter>
     </Auth0Provider>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
