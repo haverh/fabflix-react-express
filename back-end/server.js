@@ -6,7 +6,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { auth } = require('express-openid-connect');
-require('dotenv').config();
 
 const app = express();
 const port = 5000;
@@ -57,6 +56,7 @@ const pool = new Pool({
 const landingRoutes = require('./routes/landing-route');
 const homeRoutes = require('./routes/home-route');
 const cartRoutes = require('./routes/cart-route');
+const checkoutRoutes = require('./routes/checkout-route');
 const fulltextRoutes = require('./routes/fulltext-route');
 const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
@@ -65,6 +65,7 @@ const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 landingRoutes(app);
 homeRoutes(pool, app);
 cartRoutes(pool, app);
+checkoutRoutes(app);
 fulltextRoutes(pool, app);
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);
