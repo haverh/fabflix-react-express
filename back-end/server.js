@@ -65,7 +65,7 @@ const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 landingRoutes(app);
 homeRoutes(pool, app);
 cartRoutes(pool, app);
-checkoutRoutes(app);
+checkoutRoutes(pool, app);
 fulltextRoutes(pool, app);
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);

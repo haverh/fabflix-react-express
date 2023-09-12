@@ -45,6 +45,7 @@ const MoviesResult = () => {
     }, [currentPage, isExhausted, totalResult]);
 
     const fetchByStartChar = async (startCharacter) => {
+        console.log("FETCHING MOVIES BY CHAR")
         try {
             const params = new URLSearchParams({startCharacter, currentPage, sortOrder, sortBy, perPage, numPage});
             const response = await fetch(`http://localhost:5000/api/byStartCharacter?${params}`);
@@ -59,6 +60,7 @@ const MoviesResult = () => {
     };
 
     const fetchByGenre = async (genreId) => {
+        console.log("FETCHING MOVIES BY GENRE")
         try {
             const params = new URLSearchParams({genreId, currentPage, sortOrder, sortBy, perPage, numPage});
             const response = await fetch(`http://localhost:5000/api/byGenre?${params}`);
@@ -102,9 +104,9 @@ const MoviesResult = () => {
         if ( (currentPage % 5) === 4 ) { setIsExhausted(true); }
     };
 
-
-    return ( isAuthenticated ?
-        <div className="page-content">
+    return ( 
+        isAuthenticated
+        ? <div className="page-content">
             <h1>Movies Result</h1>
             <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
                 <label defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
@@ -162,7 +164,7 @@ const MoviesResult = () => {
                         <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
                         <td>
                             <button className='addToCart'
-                             onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
+                            onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
                                 <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
                             </button>
                         </td>

@@ -1,0 +1,42 @@
+
+.gratitude {
+    color: white;
+    background-color: rgb(0, 81, 128);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: fit-content;
+    padding: 10px 25px;
+}
+
+.outerContainer {
+    margin: 5% 25%;
+    border-radius: 25px;
+    background-color: white;
+}
+
+.saleInfo {
+    padding: 10px 25px 25px 25px;
+}
+
+/* .orderDetails {
+
+} */
+
+.orderRow {
+    display: grid;
+    grid-template-columns: repeat(6, 16.66%);
+}
+
+.paymentRow {
+    display: grid;
+    grid-template-columns: 83.34% 16.66%;
+}
+
+.product {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+br {
+    color: black;
+}

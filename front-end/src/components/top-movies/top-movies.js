@@ -16,6 +16,7 @@ const TopMovies = () => {
     }, []);
 
     const fetchData = async () => {
+        console.log("FETCHING TOP MOVIES")
         try {
             const response = await fetch('http://localhost:5000/api/topmovies');
             const jsonData = await response.json();
@@ -26,7 +27,6 @@ const TopMovies = () => {
         }
     };
 
-    console.log(cart.items);
     return (
         <div className="page-content">
             <h1>Top 20 Rated Movies</h1>

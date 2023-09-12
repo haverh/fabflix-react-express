@@ -28,8 +28,8 @@ function SingleMovie() {
 
     // Fetch movie data from backend
     const fetchData = async (movieId) => {
+        console.log("FETCHING MOVIE INFO")
         try {
-
             const response = await fetch(`http://localhost:5000/api/single-movie?movieId=${movieId}`);
             const jsonData = await response.json();
             // console.log(jsonData)
@@ -55,8 +55,9 @@ function SingleMovie() {
         }
     }
 
-    return ( isAuthenticated ?
-        <div className="page-content">
+    return ( 
+        isAuthenticated 
+        ? <div className="page-content">
             <h1 className="header">
                 <span className="movieTitle">{movieInfo.movieTitle} ({movieInfo.movieYear})</span>
                 <span className="movieRating">{movieInfo.movieRating} 

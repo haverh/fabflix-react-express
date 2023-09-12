@@ -18,6 +18,7 @@ function SingleStar() {
     },[urlParams])
 
     const fetchData = async (starId) => {
+        console.log("FETCHING STAR INFO")
         try {
 
             const response = await fetch(`http://localhost:5000/api/single-star?starId=${starId}`);
@@ -29,8 +30,9 @@ function SingleStar() {
         }
     }
     
-    return ( isAuthenticated ?
-        <div className="page-content">
+    return ( 
+        isAuthenticated 
+        ? <div className="page-content">
             <h1>{starInfo.starName} ({starInfo.starBirth || 'N/A'})</h1>
             <table className="table table-striped">
                 <thead className="thead-dark">
