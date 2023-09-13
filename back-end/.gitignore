@@ -24,5 +24,4 @@ yarn-error.log*
 
 
 # env
-/front-end/.env
-/back-end/.env
+/.env
