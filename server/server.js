@@ -1,17 +1,17 @@
-// require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
-// const {Pool} = require('pg');
-// const cors = require('cors');
-// const session = require('express-session');
-// const bodyParser = require('body-parser');
-// const cookieParser = require('cookie-parser');
-// const { auth } = require('express-openid-connect');
+const {Pool} = require('pg');
+const cors = require('cors');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const { auth } = require('express-openid-connect');
 
 const app = express();
 const port = 5000;
 
-// // Parse URL-encoded bodies
-// app.use(express.json());
+// Parse URL-encoded bodies
+app.use(express.json());
 // app.use(cors({
 //     origin: ['gotcha-movies-client.vercel.app'],
 //     methods: ["GET", "POST"],
@@ -53,7 +53,7 @@ const port = 5000;
 // })
 
 // Routes
-// const landingRoutes = require('./routes/landing-route');
+const landingRoutes = require('./routes/landing-route');
 // const homeRoutes = require('./routes/home-route');
 // const cartRoutes = require('./routes/cart-route');
 // const checkoutRoutes = require('./routes/checkout-route');
@@ -62,7 +62,7 @@ const port = 5000;
 // const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 // const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
-// landingRoutes(app);
+landingRoutes(app);
 // homeRoutes(pool, app);
 // cartRoutes(pool, app);
 // checkoutRoutes(pool, app);
@@ -71,9 +71,9 @@ const port = 5000;
 // singleMovieRoutes(pool, app);
 // singleStarRoutes(pool, app);
 
-app.get('/', (req, res) => {
-    res.send("Server is running.");
-})
+// app.get('/', (req, res) => {
+//     res.send("Server is running.");
+// })
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
