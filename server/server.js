@@ -53,7 +53,7 @@ const port = 5000;
 // })
 
 // Routes
-const landingRoutes = require('./routes/landing-route');
+// const landingRoutes = require('./routes/landing-route');
 // const homeRoutes = require('./routes/home-route');
 // const cartRoutes = require('./routes/cart-route');
 // const checkoutRoutes = require('./routes/checkout-route');
@@ -62,7 +62,7 @@ const landingRoutes = require('./routes/landing-route');
 // const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 // const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
-landingRoutes(app);
+// landingRoutes(app);
 // homeRoutes(pool, app);
 // cartRoutes(pool, app);
 // checkoutRoutes(pool, app);
@@ -70,6 +70,10 @@ landingRoutes(app);
 // topMoviesRoutes(pool, app);
 // singleMovieRoutes(pool, app);
 // singleStarRoutes(pool, app);
+
+app.get('/', (req, res) => {
+    res.send("Server is running.");
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
