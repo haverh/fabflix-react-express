@@ -1,11 +1,11 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require('express');
-const {Pool} = require('pg');
-const cors = require('cors');
+// const {Pool} = require('pg');
+// const cors = require('cors');
 // const session = require('express-session');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const { auth } = require('express-openid-connect');
+// const bodyParser = require('body-parser');
+// const cookieParser = require('cookie-parser');
+// const { auth } = require('express-openid-connect');
 
 const app = express();
 const port = 5000;
