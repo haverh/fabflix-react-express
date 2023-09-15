@@ -15,7 +15,7 @@ const Home = () => {
     // Fetch data for GenreSelect
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/homeDetails');
+            const response = await fetch('https://gotcha-movies-server.vercel.app/api/homeDetails');
             const jsonData = await response.json();
             setGenres(jsonData);
           } catch (error) {

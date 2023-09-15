@@ -48,7 +48,7 @@ const MoviesResult = () => {
         console.log("FETCHING MOVIES BY CHAR")
         try {
             const params = new URLSearchParams({startCharacter, currentPage, sortOrder, sortBy, perPage, numPage});
-            const response = await fetch(`http://localhost:5000/api/byStartCharacter?${params}`);
+            const response = await fetch(`https://gotcha-movies-server.vercel.app/api/byStartCharacter?${params}`);
             const jsonData = await response.json();
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);
@@ -63,7 +63,7 @@ const MoviesResult = () => {
         console.log("FETCHING MOVIES BY GENRE")
         try {
             const params = new URLSearchParams({genreId, currentPage, sortOrder, sortBy, perPage, numPage});
-            const response = await fetch(`http://localhost:5000/api/byGenre?${params}`);
+            const response = await fetch(`https://gotcha-movies-server.vercel.app/api/byGenre?${params}`);
             const jsonData = await response.json();
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);

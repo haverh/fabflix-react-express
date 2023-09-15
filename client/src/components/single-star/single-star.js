@@ -21,7 +21,7 @@ function SingleStar() {
         console.log("FETCHING STAR INFO")
         try {
 
-            const response = await fetch(`http://localhost:5000/api/single-star?starId=${starId}`);
+            const response = await fetch(`https://gotcha-movies-server.vercel.app/api/single-star?starId=${starId}`);
             const jsonData = await response.json();
             // console.log(jsonData)
             setStarInfo(jsonData);

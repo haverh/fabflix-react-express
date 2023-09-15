@@ -12,7 +12,7 @@ const FulltextInput = () => {
     const [hoveredSelectedSuggestion, setHoverSelected] = useState(-1);
 
     const fetchSuggestions = async (input) => {
-        return fetch(`http://localhost:5000/api/fulltext?input=${input}`)
+        return fetch(`https://gotcha-movies-server.vercel.app/api/fulltext?input=${input}`)
         .then(response => response.json())
         .catch(error => {
             console.error('Error fetching data:', error);

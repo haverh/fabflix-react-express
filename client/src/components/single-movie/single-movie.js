@@ -30,7 +30,7 @@ function SingleMovie() {
     const fetchData = async (movieId) => {
         console.log("FETCHING MOVIE INFO")
         try {
-            const response = await fetch(`http://localhost:5000/api/single-movie?movieId=${movieId}`);
+            const response = await fetch(`https://gotcha-movies-server.vercel.app/api/single-movie?movieId=${movieId}`);
             const jsonData = await response.json();
             // console.log(jsonData)
             setMovieInfo(jsonData);

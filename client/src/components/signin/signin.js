@@ -23,7 +23,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
-        Axios.post("http://localhost:5000/api/login", {
+        Axios.post("https://gotcha-movies-server.vercel.app/api/login", {
             email: email,
             password: password,
         })

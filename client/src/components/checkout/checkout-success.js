@@ -21,7 +21,7 @@ const CheckoutSuccess = () => {
         console.log("INSERTING INTO DATABASE")
         try {
 
-            const response = await fetch(`http://localhost:5000/sale`, {
+            const response = await fetch(`https://gotcha-movies-server.vercel.app/sale`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

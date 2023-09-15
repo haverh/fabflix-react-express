@@ -18,7 +18,7 @@ const TopMovies = () => {
     const fetchData = async () => {
         console.log("FETCHING TOP MOVIES")
         try {
-            const response = await fetch('http://localhost:5000/api/topmovies');
+            const response = await fetch('https://gotcha-movies-server.vercel.app/api/topmovies');
             const jsonData = await response.json();
             // console.log(jsonData)
             setRows(jsonData);

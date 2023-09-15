@@ -17,7 +17,7 @@ const ShoppingCart = () => {
     const handleCheckout = async () => {
         try {
 
-            const response = await fetch(`http://localhost:5000/checkout`, {
+            const response = await fetch(`https://gotcha-movies-server.vercel.app/checkout`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
