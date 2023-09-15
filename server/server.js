@@ -6,6 +6,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { auth } = require('express-openid-connect');
+const { sql } = require("@vercel/postgres");
 
 const app = express();
 const port = 5000;
@@ -45,10 +46,10 @@ app.use(auth(config));
 
 // Setup connection pool
 const pool = new Pool({
-    user: 'myuser',
-    host: 'localhost',
-    database: 'moviedb',
-    password: 'My6Pa$$word',
+    user: process.env.POSTGRES_USER,
+    host: process.env.POSTGRES_HOST,
+    database: process.env.POSTGRES_DATABASE,
+    password: process.env.POSTGRES_PASSWORD,
     port: 5432,
 })
 
