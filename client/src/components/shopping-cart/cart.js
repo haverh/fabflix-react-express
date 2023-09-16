@@ -35,47 +35,44 @@ const ShoppingCart = () => {
         }
     }
 
-    const pageInfo = useMemo(() => {
-        if ( isAuthenticated ) {
-            return <div className='page-content'>
-                <h1>Your Cart</h1>
-                <div className="cart-body">
-                    <table className="cart-items table table-striped rounded rounded-3 overflow-hidden">
-                        <thead className="thead-dark">
-                            <tr>
-                            <th scope="col" >Title</th>
-                            <th scope="col" >Price</th>
-                            <th scope="col" >Quantity</th>
-                            <th scope="col" >Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {cart.items.map((item) => (
-                            <tr key={item.id}>
-                                <td><Link to={`/single-movie?movieId=${item.id}`} className="link">{item.title}</Link></td>
-                                <td>${item.price}</td>
-                                <td>{item.quantity}</td>
-                                <td>${(parseFloat(item.price) * parseInt(item.quantity)).toFixed(2)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                    <div className='cart-bottom'>
-                        <div className='cart-checkout'>
-                            <div className='cart-total'>
-                                <p><b>Sub-Total:</b>  ${cart.getTotalCost().toFixed(2)}</p>
-                                <p><b>Sales Tax:</b> ${tax}</p>
-                                <p><b>Grand Total:</b> ${grandTotal}</p>
-                            </div>
-                            <button className='checkout-button' onClick={ isAuthenticated ? handleCheckout : loginWithRedirect } >Checkout</button>
+    return (
+        isAuthenticated ?
+        <div className='page-content'>
+            <h1>Your Cart</h1>
+            <div className="cart-body">
+                <table className="cart-items table table-striped rounded rounded-3 overflow-hidden">
+                    <thead className="thead-dark">
+                        <tr>
+                        <th scope="col" >Title</th>
+                        <th scope="col" >Price</th>
+                        <th scope="col" >Quantity</th>
+                        <th scope="col" >Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {cart.items.map((item) => (
+                        <tr key={item.id}>
+                            <td><Link to={`/single-movie?movieId=${item.id}`} className="link">{item.title}</Link></td>
+                            <td>${item.price}</td>
+                            <td>{item.quantity}</td>
+                            <td>${(parseFloat(item.price) * parseInt(item.quantity)).toFixed(2)}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+                <div className='cart-bottom'>
+                    <div className='cart-checkout'>
+                        <div className='cart-total'>
+                            <p><b>Sub-Total:</b>  ${cart.getTotalCost().toFixed(2)}</p>
+                            <p><b>Sales Tax:</b> ${tax}</p>
+                            <p><b>Grand Total:</b> ${grandTotal}</p>
                         </div>
+                        <button className='checkout-button' onClick={ isAuthenticated ? handleCheckout : loginWithRedirect } >Checkout</button>
                     </div>
                 </div>
             </div>
-        }
-    }, [isAuthenticated])
-    return (
-        <div>{pageInfo}</div>
+        </div>
+        : loginWithRedirect()
     )
 }
 
