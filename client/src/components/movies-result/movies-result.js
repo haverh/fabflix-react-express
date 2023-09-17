@@ -163,7 +163,7 @@ const MoviesResult = () => {
                         <td>{item.movieRating} 
                         <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
                         <td>
-                            <button className='addToCart'
+                            <button className='addToCart' name='addToCart'
                             onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
                                 <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
                             </button>

@@ -81,7 +81,7 @@ const FulltextInput = () => {
                     onChange={handleSuggestions}
                     onKeyDown={handleKeyDown}
                 />
-                <button type='submit' className='m-0 search-button' variant='outline-primary'>
+                <button type='submit' name='search' className='m-0 search-button' variant='outline-primary'>
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </form>
