@@ -25,8 +25,8 @@ module.exports = function (pool, app) {
                         tax_rates: ['txr_1NljgCEzmVUmdbD6jgXDrmN6']
                     }
                 }),
-                success_url: 'http://localhost:3000/success',
-                cancel_url: 'http://localhost:3000/cancel'
+                success_url: 'https://gotcha-movies-client.vercel.app/success',
+                cancel_url: 'https://gotcha-movies-client.vercel.app/cancel'
             })
             res.json({ url: session.url })
         } catch (e) {
