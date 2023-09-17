@@ -15,7 +15,7 @@ export function CartProvider ({ children }) {
 
     // Fetches price from database for specific movie
     const fetchPrice = async (movieId) => {
-        return fetch(`http://localhost:5000/api/cart/price?movieId=${movieId}`)
+        return fetch(`https://gotcha-movies-server.vercel.app/api/cart/price?movieId=${movieId}`)
         .then(response => response.json())
         .then(jsonData => jsonData.price)
         .catch(error => {

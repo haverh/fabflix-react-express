@@ -23,7 +23,6 @@ const FulltextInput = () => {
     const handleSuggestions = async (event) => {
         const inputValue = event.target.value;
         
-        
         if ( suggestionsMap[inputValue] ) {
             setSuggestions(suggestionsMap[inputValue])
             return suggestionsMap[inputValue];
