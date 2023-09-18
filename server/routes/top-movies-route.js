@@ -5,7 +5,7 @@ module.exports = function (pool, app) {
             console.time("SERVER FETCHING TIME");
             const client = await pool.connect();
             const result = await client.query('SELECT rating, movieId FROM ratings ORDER BY rating DESC LIMIT 20;');
-    
+            console.timeEnd("SERVER FETCHING TIME");
             // Array to hold all movies
             let moviesList = [];
     
@@ -62,7 +62,6 @@ module.exports = function (pool, app) {
     
             }
             // console.log(moviesList)
-            console.timeEnd("SERVER FETCHING TIME");
             res.json(moviesList);
     
             client.release();
