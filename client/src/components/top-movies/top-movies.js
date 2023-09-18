@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './top-movies.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,13 +16,14 @@ const TopMovies = () => {
     }, []);
 
     const fetchData = async () => {
-        console.log("FETCHING TOP MOVIES")
+        console.time("fetchTime");
         try {
             const response = await fetch('https://gotcha-movies-server.vercel.app/api/topmovies');
             const jsonData = await response.json();
             // console.log(jsonData)
             setRows(jsonData);
-          } catch (error) {
+            console.timeEnd("fetchTime");
+        } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
@@ -33,46 +34,46 @@ const TopMovies = () => {
             <table className="table table-striped">
                 <thead className="thead-dark">
                     <tr>
-                    <th scope="col" >Title</th>
-                    <th scope="col" >Release Year</th>
-                    <th scope="col" >Director</th>
-                    <th scope="col" >Genres</th>
-                    <th scope="col" >Stars</th>
-                    <th scope="col" >Rating</th>
-                    <th> </th>
+                        <th scope="col" >Title</th>
+                        <th scope="col" >Release Year</th>
+                        <th scope="col" >Director</th>
+                        <th scope="col" >Genres</th>
+                        <th scope="col" >Stars</th>
+                        <th scope="col" >Rating</th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
                     {rows.map((item) => (
-                    <tr key={item.movieId}>
-                        <td><Link to={`/single-movie?movieId=${item.movieId}`} className="link">{item.movieTitle}</Link></td>
-                        <td>{item.movieYear}</td>
-                        <td>{item.movieDirector}</td>
-                        <td>
-                            {item.movieGenres.map((gObj, gIndex) => (
-                            <React.Fragment key={gObj.genreId}>
-                                <Link to="#" className="link">{gObj.genreName}</Link>
-                                {gIndex < item.movieGenres.length - 1 && ', '}
-                            </React.Fragment>
-                            ))}
-                        </td>
-                        <td>
-                            {item.movieStars.map((sObj, sIndex) => (
-                            <React.Fragment key={sObj.starId}>
-                                <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
-                                {sIndex < item.movieStars.length - 1 && ', '}
-                            </React.Fragment>
-                            ))}
-                        </td>
-                        <td>{item.movieRating} 
-                        <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
-                        <td>
-                            <button className='addToCart' name='addToCart'
-                             onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
-                                <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
-                            </button>
-                        </td>
-                    </tr>
+                        <tr key={item.movieId}>
+                            <td><Link to={`/single-movie?movieId=${item.movieId}`} className="link">{item.movieTitle}</Link></td>
+                            <td>{item.movieYear}</td>
+                            <td>{item.movieDirector}</td>
+                            <td>
+                                {item.movieGenres.map((gObj, gIndex) => (
+                                    <React.Fragment key={gObj.genreId}>
+                                        <Link to="#" className="link">{gObj.genreName}</Link>
+                                        {gIndex < item.movieGenres.length - 1 && ', '}
+                                    </React.Fragment>
+                                ))}
+                            </td>
+                            <td>
+                                {item.movieStars.map((sObj, sIndex) => (
+                                    <React.Fragment key={sObj.starId}>
+                                        <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
+                                        {sIndex < item.movieStars.length - 1 && ', '}
+                                    </React.Fragment>
+                                ))}
+                            </td>
+                            <td>{item.movieRating}
+                                <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
+                            <td>
+                                <button className='addToCart' name='addToCart'
+                                    onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
+                                    <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
+                                </button>
+                            </td>
+                        </tr>
                     ))}
                 </tbody>
             </table>
