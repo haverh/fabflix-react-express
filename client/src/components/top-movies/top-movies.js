@@ -20,7 +20,7 @@ const TopMovies = () => {
         try {
             const response = await fetch('https://gotcha-movies-server.vercel.app/api/topmovies');
             const jsonData = await response.json();
-            // console.log(jsonData)
+            console.log(jsonData)
             setRows(jsonData);
             console.timeEnd("fetchTime");
         } catch (error) {
