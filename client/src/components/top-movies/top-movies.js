@@ -51,8 +51,8 @@ const TopMovies = () => {
                             <td>{item.movieDirector}</td>
                             <td>
                                 {item.movieGenres.map((gObj, gIndex) => (
-                                    <React.Fragment key={gObj.genreId}>
-                                        <Link to="#" className="link">{gObj.genreName}</Link>
+                                    <React.Fragment key={gObj.genreid}>
+                                        <Link to="#" className="link">{gObj.name}</Link>
                                         {gIndex < item.movieGenres.length - 1 && ', '}
                                     </React.Fragment>
                                 ))}
@@ -60,7 +60,7 @@ const TopMovies = () => {
                             <td>
                                 {item.movieStars.map((sObj, sIndex) => (
                                     <React.Fragment key={sObj.starId}>
-                                        <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
+                                        <Link to={`/single-star?starId=${sObj.starid}`} className="link">{sObj.name}</Link>
                                         {sIndex < item.movieStars.length - 1 && ', '}
                                     </React.Fragment>
                                 ))}
