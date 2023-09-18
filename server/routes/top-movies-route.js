@@ -2,16 +2,15 @@
 module.exports = function (pool, app) {
     app.get('/api/topmovies', async (req, res) => {
         try { 
-            console.time("SERVER FETCHING TIME");
             const client = await pool.connect();
             const result = await client.query('SELECT rating, movieId FROM ratings ORDER BY rating DESC LIMIT 20;');
-            console.timeEnd("SERVER FETCHING TIME");
             // Array to hold all movies
             let moviesList = [];
     
             // Iterate through each movie
             // Create object to hold all info (stars, genres, movie info)
             for ( let i=0; i < result.rows.length; ++i ) {
+                console.time("SERVER FETCHING TIME");
                 let movieObj = {}
     
                 movieObj.movieId = result.rows[i].movieid;
@@ -59,6 +58,7 @@ module.exports = function (pool, app) {
                 }
     
                 moviesList.push(movieObj);
+                console.timeEnd("SERVER FETCHING TIME");
     
             }
             // console.log(moviesList)
