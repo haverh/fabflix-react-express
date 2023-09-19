@@ -71,11 +71,11 @@ module.exports = function (pool, app) {
                 const batch = movies.slice(i, i + batchsize);
 
                 const promises = batch.map(async (movie) => {
-                    const movieObj = {movieId: movie.movieId, movieRating: movie.movieRating};
+                    const movieObj = movie;
                     
                     const movieQueryString = {
                         text: 'SELECT title, year, director FROM movies WHERE id = $1',
-                        values: [movieId]
+                        values: [movie.movieId]
                     }
 
                     const moviesResult = await client.query(movieQueryString);
@@ -89,7 +89,7 @@ module.exports = function (pool, app) {
 
                     const starsQueryString = {
                         text: 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1',
-                        values: [movieId],
+                        values: [movie.movieId],
                     };
                 
                     const starsResult = await client.query(starsQueryString);
@@ -97,7 +97,7 @@ module.exports = function (pool, app) {
                 
                     const genresQueryString = {
                         text: 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1',
-                        values: [movieId],
+                        values: [movie.movieId],
                     };
                 
                     const genreResult = await client.query(genresQueryString);
