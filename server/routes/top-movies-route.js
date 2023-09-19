@@ -70,8 +70,8 @@ module.exports = function (pool, app) {
             for (let i = 0; i < movies.length; i += batchsize) {
                 const batch = movies.slice(i, i + batchsize);
 
-                const promises = batch.map(async (movieId) => {
-                    const movieObj = {movieId};
+                const promises = batch.map(async (movie) => {
+                    const movieObj = {movieId: movie.movieId, movieRating: movie.movieRating};
                     
                     const movieQueryString = {
                         text: 'SELECT title, year, director FROM movies WHERE id = $1',
