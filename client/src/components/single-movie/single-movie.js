@@ -42,10 +42,10 @@ function SingleMovie() {
     // Fetch movie poster from OMDd using API call
     const fetchOMDb = async (movieId) => {
         try {
-
+            console.log(`http://www.omdbapi.com/?i=${movieId}&apikey=${omdbAPI}`);
             const response = await fetch(`http://www.omdbapi.com/?i=${movieId}&apikey=${omdbAPI}`);
             const jsonData = await response.json();
-            // console.log(jsonData)
+            console.log(jsonData)
             let OMDbMovieInfo = {}
             OMDbMovieInfo.plot = jsonData.Plot
             OMDbMovieInfo.poster = jsonData.Poster
