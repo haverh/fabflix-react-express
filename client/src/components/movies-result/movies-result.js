@@ -160,7 +160,7 @@ const MoviesResult = () => {
                             </React.Fragment>
                             ))}
                         </td>
-                        <td>{item.movieRating} 
+                        <td>{item.rating} 
                         <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
                         <td>
                             <button className='addToCart' name='addToCart'
