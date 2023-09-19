@@ -63,14 +63,14 @@ module.exports = function (pool, app) {
     
             // }
 
-            const movieIds = result.rows.map((row) => row.movieid);
+            const movies = result.rows.map((row) => { return {movieId:row.movieid, movieRating: row.rating} });
 
             const batchsize = 5;
 
-            for (let i = 0; i < movieIds.length; i += batchsize) {
-                const batchIds = movieIds.slice(i, i + batchsize);
+            for (let i = 0; i < movies.length; i += batchsize) {
+                const batch = movies.slice(i, i + batchsize);
 
-                const promises = batchIds.map(async (movieId) => {
+                const promises = batch.map(async (movieId) => {
                     const movieObj = {movieId};
                     
                     const movieQueryString = {
