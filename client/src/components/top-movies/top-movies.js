@@ -65,7 +65,7 @@ const TopMovies = () => {
                                     </React.Fragment>
                                 ))}
                             </td>
-                            <td>{item.rating}
+                            <td>{item.movieRating}
                                 <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
                             <td>
                                 <button className='addToCart' name='addToCart'
