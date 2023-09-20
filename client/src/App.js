@@ -17,7 +17,6 @@ import CheckoutSuccess from './components/checkout/checkout-success'
 const SessionContext = createContext();
 
 function App() {
-	console.log("APP")
 	const { isAuthenticated, loginWithRedirect } = useAuth0();
 
 	const [mySession, setSession] = useState({});

@@ -6,7 +6,6 @@ import './home.css';
 const Home = () => {
 
     const [genres, setGenres] = useState([]);
-    console.log("HOME")
 
     useEffect(() => {
         fetchData();

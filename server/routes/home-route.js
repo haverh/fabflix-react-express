@@ -26,6 +26,7 @@ module.exports = function (pool, app) {
 
     app.get('/api/byStartCharacter', async (req, res) => {
         try {
+            console.time("fetchTime");
             const { startCharacter, sortOrder, sortBy } = req.query;
             const currentPage = parseInt(req.query.currentPage, 10);
             const perPage = parseInt(req.query.perPage, 10);
@@ -33,7 +34,6 @@ module.exports = function (pool, app) {
             let offset;
             const limit = perPage * numPage;
 
-            console.log(req.query);
             const client = await pool.connect();
 
             let queryString = {
@@ -56,7 +56,6 @@ module.exports = function (pool, app) {
                                 `OFFSET ${offset} LIMIT ${limit};`
 
             const result = await client.query(queryString)
-            console.log(result.rows);
     
             // Iterate through each movie
             // Create object to hold all info (stars, genres, movie info)
@@ -102,6 +101,7 @@ module.exports = function (pool, app) {
     
                 moviesList.push(movieObj);
             }
+            console.timeEnd("fetchTime");
             resultObj.moviesList = moviesList;
             // console.log(resultObj);
             res.json(resultObj);
@@ -115,7 +115,7 @@ module.exports = function (pool, app) {
 
     app.get('/api/byGenre', async (req, res) => {
         try {
-            console.log(req.query)
+            console.time("fetchTime");
             const { genreId, sortOrder, sortBy } = req.query;
             const currentPage = parseInt(req.query.currentPage, 10);
             const perPage = parseInt(req.query.perPage, 10);
@@ -138,7 +138,6 @@ module.exports = function (pool, app) {
                 offset = (currentPage - 1) * perPage;
                 const result = await client.query(queryString);
                 resultObj.total = parseInt(result.rows[0].count);
-                console.log("TOTAL -", resultObj.total);
             }else { 
                 offset = (currentPage + 1) * perPage;
             }
@@ -148,7 +147,6 @@ module.exports = function (pool, app) {
                                 `OFFSET ${offset} LIMIT ${limit}`
 
             const result = await client.query(queryString)
-            console.log(result.rows);
     
             // Iterate through each movie
             // Create object to hold all info (stars, genres, movie info)
@@ -194,6 +192,8 @@ module.exports = function (pool, app) {
     
                 moviesList.push(movieObj);
             }
+
+            console.timeEnd("fetchTime");
             resultObj.moviesList = moviesList;
             // console.log(resultObj);
             res.json(resultObj);
