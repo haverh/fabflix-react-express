@@ -67,47 +67,58 @@ module.exports = function (pool, app) {
 
             const batchsize = 5;
 
-            for (let i = 0; i < movies.length; i += batchsize) {
-                const batch = movies.slice(i, i + batchsize);
+            try {
+                await client.query('BEGIN');
 
-                const promises = batch.map(async (movie) => {
-                    const movieObj = movie;
+                for (let i = 0; i < movies.length; i += batchsize) {
+                    const batch = movies.slice(i, i + batchsize);
+
+                    const promises = batch.map(async (movie) => {
+                        const movieObj = movie;
+                        
+                        const movieQueryString = {
+                            text: 'SELECT title, year, director FROM movies WHERE id = $1',
+                            values: [movie.movieId]
+                        }
+
+                        const moviesResult = await client.query(movieQueryString);
+
+                        if (moviesResult.rows.length > 0) {
+                            const movieData = moviesResult.rows[0];
+                            movieObj.movieTitle = movieData.title;
+                            movieObj.movieYear = movieData.year;
+                            movieObj.movieDirector = movieData.director;
+                        }
+
+                        const starsQueryString = {
+                            text: 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1',
+                            values: [movie.movieId],
+                        };
                     
-                    const movieQueryString = {
-                        text: 'SELECT title, year, director FROM movies WHERE id = $1',
-                        values: [movie.movieId]
-                    }
+                        const starsResult = await client.query(starsQueryString);
+                        movieObj.movieStars = starsResult.rows;
+                    
+                        const genresQueryString = {
+                            text: 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1',
+                            values: [movie.movieId],
+                        };
+                    
+                        const genreResult = await client.query(genresQueryString);
+                        movieObj.movieGenres = genreResult.rows;
+                    
+                        return movieObj;
+                    })
 
-                    const moviesResult = await client.query(movieQueryString);
-
-                    if (moviesResult.rows.length > 0) {
-                        const movieData = moviesResult.rows[0];
-                        movieObj.movieTitle = movieData.title;
-                        movieObj.movieYear = movieData.year;
-                        movieObj.movieDirector = movieData.director;
-                    }
-
-                    const starsQueryString = {
-                        text: 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1',
-                        values: [movie.movieId],
-                    };
+                    const batchResults = await Promise.all(promises);
+                    moviesList.push(...batchResults);
+                }  
                 
-                    const starsResult = await client.query(starsQueryString);
-                    movieObj.movieStars = starsResult.rows;
-                
-                    const genresQueryString = {
-                        text: 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1',
-                        values: [movie.movieId],
-                    };
-                
-                    const genreResult = await client.query(genresQueryString);
-                    movieObj.movieGenres = genreResult.rows;
-                
-                    return movieObj;
-                })
-
-                const batchResults = await Promise.all(promises);
-                moviesList.push(...batchResults);
+                await client.query('COMMIT');
+            } catch (error) {
+                await client.query('ROLLBACK');
+                console.error('Error:', error);
+            } finally {
+                client.end();
             }
 
             // console.log(moviesList)
@@ -115,9 +126,9 @@ module.exports = function (pool, app) {
             res.json(moviesList);
     
             client.release();
-            } catch (error) {
+        } catch (error) {
             console.error('Error executing query:', error);
             res.status(500).json({ error: 'An error occurred' });
-            }
-      });
+        }
+    });
   };
