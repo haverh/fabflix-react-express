@@ -15,6 +15,7 @@ const Home = () => {
     // Fetch data for GenreSelect
     const fetchData = async () => {
         try {
+            console.log(fetchURL)
             const response = await fetch(`${fetchURL}/api/homeDetails`);
             const jsonData = await response.json();
             setGenres(jsonData);
