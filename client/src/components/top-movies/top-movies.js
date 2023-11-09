@@ -11,6 +11,8 @@ const TopMovies = () => {
 
     const [rows, setRows] = useState([]);
 
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -18,7 +20,7 @@ const TopMovies = () => {
     const fetchData = async () => {
         console.time("fetchTime");
         try {
-            const response = await fetch('https://gotcha-movies-server.vercel.app/api/topmovies');
+            const response = await fetch(`${fetchURL}/api/topmovies`);
             const jsonData = await response.json();
             console.log(jsonData)
             setRows(jsonData);

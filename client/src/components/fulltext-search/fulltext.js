@@ -10,9 +10,10 @@ const FulltextInput = () => {
     const [suggestionsMap, setSuggestionsMap] = useState({"": []});
     const [selectedSuggestion, setSelected] = useState(-1);
     const [hoveredSelectedSuggestion, setHoverSelected] = useState(-1);
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
 
     const fetchSuggestions = async (input) => {
-        return fetch(`https://gotcha-movies-server.vercel.app/api/fulltext?input=${input}`)
+        return fetch(`${fetchURL}/api/fulltext?input=${input}`)
         .then(response => response.json())
         .catch(error => {
             console.error('Error fetching data:', error);

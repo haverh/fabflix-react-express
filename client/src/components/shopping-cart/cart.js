@@ -12,12 +12,13 @@ const ShoppingCart = () => {
     const cart = useContext(CartContext);
     const [tax, setTax] = useState(parseFloat((cart.getTotalCost() * 0.1).toFixed(2)));
     const [grandTotal, setGrandTotal] = useState(parseFloat(cart.getTotalCost() + tax).toFixed(2));
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
     console.log("Cart Page -", cart.items);
 
     const handleCheckout = async () => {
         try {
 
-            const response = await fetch(`https://gotcha-movies-server.vercel.app/checkout`, {
+            const response = await fetch(`${fetchURL}/checkout`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -12,10 +12,11 @@ export const CartContext = createContext({
 
 export function CartProvider ({ children }) {
     const [cart, setCart] = useState([]);
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
 
     // Fetches price from database for specific movie
     const fetchPrice = async (movieId) => {
-        return fetch(`https://gotcha-movies-server.vercel.app/api/cart/price?movieId=${movieId}`)
+        return fetch(`${fetchURL}/api/cart/price?movieId=${movieId}`)
         .then(response => response.json())
         .then(jsonData => jsonData.price)
         .catch(error => {

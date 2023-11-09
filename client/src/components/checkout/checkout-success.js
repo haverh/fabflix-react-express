@@ -14,6 +14,7 @@ const CheckoutSuccess = () => {
     const email = user?.email;
     const date = new Date().toISOString().slice(0,10);
     const [orderId, setOrderId] = useState(null);
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
     console.log(date)
     // console.log(email)
 
@@ -21,7 +22,7 @@ const CheckoutSuccess = () => {
         console.log("INSERTING INTO DATABASE")
         try {
 
-            const response = await fetch(`https://gotcha-movies-server.vercel.app/sale`, {
+            const response = await fetch(`${fetchURL}/sale`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

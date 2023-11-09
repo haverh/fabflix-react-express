@@ -13,6 +13,8 @@ function SingleStar() {
 
     const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+
     useEffect(() => {
         fetchData(urlParams.get('starId'));
     },[urlParams])
@@ -21,7 +23,7 @@ function SingleStar() {
         console.log("FETCHING STAR INFO")
         try {
 
-            const response = await fetch(`https://gotcha-movies-server.vercel.app/api/single-star?starId=${starId}`);
+            const response = await fetch(`${fetchURL}/api/single-star?starId=${starId}`);
             const jsonData = await response.json();
             // console.log(jsonData)
             setStarInfo(jsonData);

@@ -11,6 +11,7 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
     // const [myStatus, setMyStatus] = useState();
 
     // Axios.defaults.withCredentials = true;
@@ -23,7 +24,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
-        Axios.post("https://gotcha-movies-server.vercel.app/api/login", {
+        Axios.post(`${fetchURL}/api/login`, {
             email: email,
             password: password,
         })

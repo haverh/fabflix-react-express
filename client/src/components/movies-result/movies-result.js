@@ -33,6 +33,8 @@ const MoviesResult = () => {
         setIsExhausted(false);
     }
 
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+
     useEffect(() => {
         reset();
     }, [urlParams])
@@ -48,7 +50,7 @@ const MoviesResult = () => {
         console.log("FETCHING MOVIES BY CHAR")
         try {
             const params = new URLSearchParams({startCharacter, currentPage, sortOrder, sortBy, perPage, numPage});
-            const response = await fetch(`https://gotcha-movies-server.vercel.app/api/byStartCharacter?${params}`);
+            const response = await fetch(`${fetchURL}/api/byStartCharacter?${params}`);
             const jsonData = await response.json();
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);
@@ -63,7 +65,7 @@ const MoviesResult = () => {
         console.log("FETCHING MOVIES BY GENRE")
         try {
             const params = new URLSearchParams({genreId, currentPage, sortOrder, sortBy, perPage, numPage});
-            const response = await fetch(`https://gotcha-movies-server.vercel.app/api/byGenre?${params}`);
+            const response = await fetch(`${fetchURL}/api/byGenre?${params}`);
             const jsonData = await response.json();
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);

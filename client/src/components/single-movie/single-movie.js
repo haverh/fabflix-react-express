@@ -21,6 +21,8 @@ function SingleMovie() {
 
     const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+
     useEffect(() => {
         fetchData(urlParams.get('movieId'));
         fetchOMDb(urlParams.get('movieId'));
@@ -30,7 +32,7 @@ function SingleMovie() {
     const fetchData = async (movieId) => {
         console.log("FETCHING MOVIE INFO")
         try {
-            const response = await fetch(`https://gotcha-movies-server.vercel.app/api/single-movie?movieId=${movieId}`);
+            const response = await fetch(`${fetchURL}/api/single-movie?movieId=${movieId}`);
             const jsonData = await response.json();
             // console.log(jsonData)
             setMovieInfo(jsonData);

@@ -6,6 +6,7 @@ import './home.css';
 const Home = () => {
 
     const [genres, setGenres] = useState([]);
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
 
     useEffect(() => {
         fetchData();
@@ -14,7 +15,7 @@ const Home = () => {
     // Fetch data for GenreSelect
     const fetchData = async () => {
         try {
-            const response = await fetch('https://gotcha-movies-server.vercel.app/api/homeDetails');
+            const response = await fetch(`${fetchURL}/api/homeDetails`);
             const jsonData = await response.json();
             setGenres(jsonData);
           } catch (error) {
