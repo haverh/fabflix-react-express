@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 import './home.css';
 
+const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+
 const Home = () => {
 
     const [genres, setGenres] = useState([]);
-    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
 
     useEffect(() => {
         fetchData();
