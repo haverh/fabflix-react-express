@@ -37,27 +37,7 @@ function App() {
 				<Route path="/success" element={<CheckoutSuccess/>}/>
 			</Route>
 		</Routes>
-		</CartProvider>	
-
-
-		// <div className="App">
-		// 	<Navbar/>
-		// 	<div className="content">
-		// 		<Routes>
-		// 			<Route path="/" element={<Navbar/>}>
-		// 				<Route path="/home" element={<Home/>}/>
-		// 				<React.Fragment>
-		// 					<Route path="/movies" element={<MoviesResult/>}/>
-		// 					<Route path="/top-movies" element={<TopMovies/>}/>
-		// 					<Route path="/single-movie" element={<SingleMovie/>}/>
-		// 					<Route path="/single-star" element={<SingleStar/>}/>
-		// 					<Route path="/cart" element={<ShoppingCart/>}/>
-		// 					<Route path="/success" element={<CheckoutSuccess/>}/>
-		// 				</React.Fragment>
-		// 			</Route>
-		// 		</Routes>
-		// 	</div>
-		// </div>
+		</CartProvider>
 	);
 }
 

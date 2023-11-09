@@ -4,7 +4,11 @@ module.exports = function (pool, app) {
         try { 
             console.time("FETCH TIME");
             const client = await pool.connect();
-            const result = await client.query('SELECT rating, movieId FROM ratings ORDER BY rating DESC LIMIT 20;');
+            const result = await client.query(`SELECT rating, id, title, year, director
+                                                FROM movies m, ratings r
+                                                WHERE m.id=r.movieId
+                                                ORDER BY rating DESC
+                                                LIMIT 20;`);
             // Array to hold all movies
             let moviesList = [];
     
@@ -63,9 +67,17 @@ module.exports = function (pool, app) {
     
             // }
 
-            const movies = result.rows.map((row) => { return {movieId:row.movieid, movieRating: row.rating} });
+            const movies = result.rows.map((row) => { 
+                return { 
+                    movieId: row.movieid, 
+                    movieRating: row.rating,
+                    movieTitle: row.title,
+                    movieYear: row.year,
+                    movieDirector: row.director
+                } 
+            });
 
-            const batchsize = 5;
+            const batchsize = 10;
 
             try {
                 await client.query('BEGIN');
@@ -76,19 +88,19 @@ module.exports = function (pool, app) {
                     const promises = batch.map(async (movie) => {
                         const movieObj = movie;
                         
-                        const movieQueryString = {
-                            text: 'SELECT title, year, director FROM movies WHERE id = $1',
-                            values: [movie.movieId]
-                        }
+                        // const movieQueryString = {
+                        //     text: 'SELECT title, year, director FROM movies WHERE id = $1',
+                        //     values: [movie.movieId]
+                        // }
 
-                        const moviesResult = await client.query(movieQueryString);
+                        // const moviesResult = await client.query(movieQueryString);
 
-                        if (moviesResult.rows.length > 0) {
-                            const movieData = moviesResult.rows[0];
-                            movieObj.movieTitle = movieData.title;
-                            movieObj.movieYear = movieData.year;
-                            movieObj.movieDirector = movieData.director;
-                        }
+                        // if (moviesResult.rows.length > 0) {
+                        //     const movieData = moviesResult.rows[0];
+                        //     movieObj.movieTitle = movieData.title;
+                        //     movieObj.movieYear = movieData.year;
+                        //     movieObj.movieDirector = movieData.director;
+                        // }
 
                         const starsQueryString = {
                             text: 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1',
