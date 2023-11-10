@@ -54,7 +54,7 @@ const TopMovies = () => {
                             <td>
                                 {item.movieGenres.map((gObj, gIndex) => (
                                     <React.Fragment key={gObj.genreid}>
-                                        <Link to="#" className="link">{gObj.name}</Link>
+                                        <Link to={`/movies?genreId=${gObj.genreid}`} className="link">{gObj.name}</Link>
                                         {gIndex < item.movieGenres.length - 1 && ', '}
                                     </React.Fragment>
                                 ))}
