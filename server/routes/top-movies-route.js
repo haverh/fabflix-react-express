@@ -117,6 +117,8 @@ module.exports = function (pool, app) {
                     
                         const genreResult = await client.query(genresQueryString);
                         movieObj.movieGenres = genreResult.rows;
+
+                        console.log("MOVIE OBJECTS -", movieObj)
                     
                         return movieObj;
                     })
