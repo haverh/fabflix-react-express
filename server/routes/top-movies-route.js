@@ -4,7 +4,7 @@ module.exports = function (pool, app) {
         try { 
             console.time("FETCH TIME");
             const client = await pool.connect();
-            const result = await client.query(`SELECT rating, id, title, year, director
+            const result = await client.query(`SELECT rating, movieid, title, year, director
                                                 FROM movies m, ratings r
                                                 WHERE m.id=r.movieId
                                                 ORDER BY rating DESC
@@ -86,26 +86,11 @@ module.exports = function (pool, app) {
                     const batch = movies.slice(i, i + batchsize);
 
                     const promises = batch.map(async (movie) => {
-                        console.log("MOVIE -", movie)
                         const movieObj = movie;
-                        
-                        // const movieQueryString = {
-                        //     text: 'SELECT title, year, director FROM movies WHERE id = $1',
-                        //     values: [movie.movieId]
-                        // }
-
-                        // const moviesResult = await client.query(movieQueryString);
-
-                        // if (moviesResult.rows.length > 0) {
-                        //     const movieData = moviesResult.rows[0];
-                        //     movieObj.movieTitle = movieData.title;
-                        //     movieObj.movieYear = movieData.year;
-                        //     movieObj.movieDirector = movieData.director;
-                        // }
 
                         const starsQueryString = {
                             text: 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1',
-                            values: [movieObj.movieId],
+                            values: [movie.movieId],
                         };
                     
                         const starsResult = await client.query(starsQueryString);
@@ -113,13 +98,11 @@ module.exports = function (pool, app) {
                     
                         const genresQueryString = {
                             text: 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1',
-                            values: [movieObj.movieId],
+                            values: [movie.movieId],
                         };
                     
                         const genreResult = await client.query(genresQueryString);
                         movieObj.movieGenres = genreResult.rows;
-
-                        // console.log("MOVIE OBJECTS -", movieObj)
                     
                         return movieObj;
                     })
