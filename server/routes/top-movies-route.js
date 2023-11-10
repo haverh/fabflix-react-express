@@ -104,7 +104,7 @@ module.exports = function (pool, app) {
 
                         const starsQueryString = {
                             text: 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1',
-                            values: [movie.movieId],
+                            values: [movieObj.movieId],
                         };
                     
                         const starsResult = await client.query(starsQueryString);
@@ -112,7 +112,7 @@ module.exports = function (pool, app) {
                     
                         const genresQueryString = {
                             text: 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1',
-                            values: [movie.movieId],
+                            values: [movieObj.movieId],
                         };
                     
                         const genreResult = await client.query(genresQueryString);
