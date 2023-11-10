@@ -86,6 +86,7 @@ module.exports = function (pool, app) {
                     const batch = movies.slice(i, i + batchsize);
 
                     const promises = batch.map(async (movie) => {
+                        console.log("MOVIE -", movie)
                         const movieObj = movie;
                         
                         // const movieQueryString = {
@@ -118,7 +119,7 @@ module.exports = function (pool, app) {
                         const genreResult = await client.query(genresQueryString);
                         movieObj.movieGenres = genreResult.rows;
 
-                        console.log("MOVIE OBJECTS -", movieObj)
+                        // console.log("MOVIE OBJECTS -", movieObj)
                     
                         return movieObj;
                     })
