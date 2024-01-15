@@ -1,4 +1,10 @@
-.sortOrderBtn {
+.results-content {
+    width: 100%;
+    height: 100%;
+    padding: 3% 5%;
+}
+
+/* .sortOrderBtn {
     height: 27px;
     width: 27px;
     
@@ -32,4 +38,87 @@
     border-radius: 5px;
     text-align: center;
     font-weight: bold;
+} */
+
+.card-container {
+    width: 100%;
+    height: 100%;
+}
+
+.movie-card {
+    width: 100%;
+    border: 1px solid white;
+    border-radius: 10px;
+    margin: 5px 1px;
+    display: flex;
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.movie-card:hover {
+    border-color: rgb(37, 199, 199);
+}
+
+.movie-poster {
+    width: 100px;
+    height: 150px;
+    margin-right: 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0;
+    margin-right: 5px;
+}
+
+.movie-info h2 {
+    width: 100%;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.movie-info h3 {
+    width: 100%;
+    font-size: 0.9em;
+}
+
+.movie-info:nth-child(1) {
+    color: blue;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 650px) {
+    .movies-grid {
+        width: 510px;
+    }
+}
+
+
+/* Large devices (laptops/desktops, 991px and up) */
+@media only screen and (min-width: 968px) {
+
+    .movies-grid {
+        width: 770px;
+    }
+}
+
+/* Large devices (laptops/desktops, 991px and up) */
+@media only screen and (min-width: 1320px) {
+
+    .movies-grid {
+        width: 1030px;
+    }
+}
+
+/* Extra Extra large devices (large laptops and desktops, 1578px and up) */
+@media only screen and (min-width: 1613px) {
+
+    .movies-grid {
+        width: 1290px;
+    }
 }

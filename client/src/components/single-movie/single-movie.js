@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+/* eslint-disable no-throw-literal */
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 import './single-movie.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +11,7 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 function SingleMovie() {
 
-    const { isAuthenticated, loginWithRedirect } = useAuth0();
+    // const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     const omdbAPI = "f6cd5e6f";
     
@@ -21,25 +22,37 @@ function SingleMovie() {
 
     const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
-    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-
-    useEffect(() => {
-        fetchData(urlParams.get('movieId'));
-        fetchOMDb(urlParams.get('movieId'));
-    }, [urlParams])
+    // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
     // Fetch movie data from backend
-    const fetchData = async (movieId) => {
+    const fetchData = useCallback(async (movieId) => {
         console.log("FETCHING MOVIE INFO")
         try {
-            const response = await fetch(`${fetchURL}/api/single-movie?movieId=${movieId}`);
+            const response = await fetch(`${fetchURL}/api/single-movie?movieId=${movieId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+            });
             const jsonData = await response.json();
+
+            if (!response.ok) {
+                throw {
+                    ...jsonData,
+                    status: response.status,
+                }
+            }
             // console.log(jsonData)
             setMovieInfo(jsonData);
           } catch (error) {
             console.error('Error fetching data:', error);
+            if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
+                window.location.href = "login";
+            }
         }
-    }
+    }, [fetchURL])
 
     // Fetch movie poster from OMDd using API call
     const fetchOMDb = async (movieId) => {
@@ -56,9 +69,14 @@ function SingleMovie() {
         }
     }
 
+    useEffect(() => {
+        fetchData(urlParams.get('movieId'));
+        fetchOMDb(urlParams.get('movieId'));
+    }, [urlParams, fetchData])
+
     return ( 
-        isAuthenticated 
-        ? <div className="page-content">
+        // isAuthenticated ?
+        <div className="single-movie-content">
             <h1 className="header">
                 <span className="movieTitle">{movieInfo.movieTitle} ({movieInfo.movieYear})</span>
                 <span className="movieRating">{movieInfo.movieRating} 
@@ -106,7 +124,7 @@ function SingleMovie() {
                 {OMDbInfo.poster !== 'N/A' && <img className="image" src={OMDbInfo.poster} alt="Movie Poster"></img>}
             </div>
         </div>
-        : loginWithRedirect()
+        // : loginWithRedirect()
     )
 }
 

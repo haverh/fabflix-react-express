@@ -12,7 +12,8 @@ export const CartContext = createContext({
 
 export function CartProvider ({ children }) {
     const [cart, setCart] = useState([]);
-    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
     // Fetches price from database for specific movie
     const fetchPrice = async (movieId) => {

@@ -1,39 +1,112 @@
 .home-content {
-    height: 100%;
+    width: 100%;
+    height: 90%;
+    padding: 3% 10%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 }
 
 .link-style {
     text-decoration: none;
+    color: #2D9596;
 }
 
 .textSelect {
-    margin: 5px;
+    padding: 5px;
+}
 
+.textSelect:hover {
+    color: #56b3b4;
+    background-color: #064663;
+    border-radius: 10px;
+}
+
+section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 0 50px 0;
+}
+
+section h1 {
+    color: #9EC8B9;
+    font-weight: bold;
 }
 
 .alphaBox {
-    width: 50%;
     display: grid;
     text-align: center;
     grid-template-columns: repeat(13, 1fr);
     font-weight: bold;
-    border-radius: 5px;
-    background-color: black;
+    gap: 5px;
+    border-radius: 15px;
+    background-color: #041C32;
 }
 
 
 .genreBox {
-    width: 50%;
-    /* display: flex;
-    justify-content: space-between; */
+    /* width: 50%; */
     display: grid;
     text-align: center;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     font-weight: bold;
-    border-radius: 5px;
-    background-color: black;
+    gap: 5px;
+    border-radius: 15px;
+    background-color: #041C32;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 650px) {
+    .alphaBox {
+        grid-template-columns: repeat(13, 1fr);
+        gap: 10px;
+    }
+    
+    
+    .genreBox {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+    }
+}
+
+
+/* Large devices (laptops/desktops, 991px and up) */
+@media only screen and (min-width: 968px) {
+    .alphaBox {
+        grid-template-columns: repeat(13, 1fr);
+        gap: 20px;
+    }
+    
+    
+    .genreBox {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+    }
+}
+
+/* Large devices (laptops/desktops, 991px and up) */
+@media only screen and (min-width: 1320px) {
+    .alphaBox {
+        grid-template-columns: repeat(13, 1fr);
+        gap: 25px;
+    }
+    
+    
+    .genreBox {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 5px;
+    }
+}
+
+/* Extra Extra large devices (large laptops and desktops, 1578px and up) */
+@media only screen and (min-width: 1613px) {
+
+    .movies-grid {
+        width: 1290px;
+    }
 }

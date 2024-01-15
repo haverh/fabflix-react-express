@@ -1,24 +1,28 @@
-import React, { useState, useEffect, useMemo, useContext } from 'react';
+/* eslint-disable no-throw-literal */
+/* eslint-disable array-callback-return */
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortUp, faSortDown, faStar, faPlus  } from '@fortawesome/free-solid-svg-icons';
-import { CartContext } from '../../contexts/CartContext';
-import { useAuth0 } from "@auth0/auth0-react";
+import { faSortUp, faSortDown, faStar } from '@fortawesome/free-solid-svg-icons';
+// import { CartContext } from '../../contexts/CartContext';
+// import { useAuth0 } from "@auth0/auth0-react";
 
+import posterPlaceholder  from '../../img/img-placeholder.png';
 import './movies-result.css';
 
 const MoviesResult = () => {
-    const { isAuthenticated, loginWithRedirect } = useAuth0();
+    const omdbAPI = "f6cd5e6f";
 
-    const cart = useContext(CartContext);
-    
+    // const { isAuthenticated, loginWithRedirect } = useAuth0();
+
+    // const cart = useContext(CartContext);
     const [movieData, setMovieData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalResult, setTotal] = useState(-1);
     const [sortOrder, setSortOrder] = useState("asc");
     const [sortBy, setSortBy] = useState("rating");
-    const [isExhausted, setIsExhausted] = useState(false);
+    const [isExhausted, setIsExhausted] = useState(true);
 
     const perPage = 10;
     const numPage = 5;
@@ -30,60 +34,109 @@ const MoviesResult = () => {
         setMovieData([]);
         setTotal(-1);
         setCurrentPage(1);
-        setIsExhausted(false);
+        setIsExhausted(true);
     }
 
-    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
-    useEffect(() => {
-        reset();
-    }, [urlParams])
-
-    useEffect(() => {
-        if ( (isExhausted && (movieData.length !== totalResult)) || currentPage === 1 ) {
-            
-            fetchDataManager(urlParams);
-        }
-    }, [currentPage, isExhausted, totalResult]);
-
-    const fetchByStartChar = async (startCharacter) => {
+    const fetchByStartChar = useCallback(async (startCharacter) => {
         console.log("FETCHING MOVIES BY CHAR")
         try {
             const params = new URLSearchParams({startCharacter, currentPage, sortOrder, sortBy, perPage, numPage});
-            const response = await fetch(`${fetchURL}/api/byStartCharacter?${params}`);
+            const response = await fetch(`${fetchURL}/api/byStartCharacter?${params}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+            });
             const jsonData = await response.json();
+            
+            if (!response.ok) {
+                throw {
+                    ...jsonData,
+                    status: response.status,
+                }
+            }
+
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);
-            
+
+            // const topPromises = jsonData.moviesList.map(async (obj) => {
+            //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
+            //     const jsonData = await response.json();
+            //     const poster = jsonData.Poster !== "N/A" ? jsonData.Poster : posterPlaceholder;
+            //     return  {...obj, moviePoster:poster};
+            // })
+
+            // const updatedMovieList = await Promise.all(topPromises);
+            // console.log(updatedMovieList)
+
+            // setMovieData([...movieData, ...updatedMovieList]);
             setMovieData([...movieData, ...jsonData.moviesList]);
           } catch (error) {
             console.error('Error fetching data:', error);
+            if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
+                window.location.href = "login";
+            }
         }
-    };
+    }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
 
-    const fetchByGenre = async (genreId) => {
+    const fetchByGenre = useCallback(async (genreId) => {
         console.log("FETCHING MOVIES BY GENRE")
         try {
             const params = new URLSearchParams({genreId, currentPage, sortOrder, sortBy, perPage, numPage});
-            const response = await fetch(`${fetchURL}/api/byGenre?${params}`);
+            const response = await fetch(`${fetchURL}/api/byGenre?${params}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+            });
             const jsonData = await response.json();
+            console.log(jsonData);
+
+            if (!response.ok) {
+                throw {
+                    ...jsonData,
+                    status: response.status,
+                }
+            }
+            
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);
+
+            // console.time("Poster Fetch Time")
+            // const moviePromises = jsonData.moviesList.map(async (obj) => {
+            //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
+            //     const jsonData = await response.json();
+            //     const poster = jsonData.Poster !== "N/A" ? jsonData.Poster : posterPlaceholder;
+            //     return  {...obj, moviePoster:poster};
+            // })
+
+            // const updatedMovieList = await Promise.all(moviePromises);
+            // console.timeEnd("Poster Fetch Time")
+            // console.log(updatedMovieList)
             
-            setMovieData([...movieData, ...jsonData.moviesList]);
+            // setMovieData([...movieData, ...updatedMovieList]);
+            setMovieData([...movieData, ...jsonData.moviesList])
           } catch (error) {
             console.error('Error fetching data:', error);
+            if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
+                window.location.href = "login";
+            }
         }
-    };
+    }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
 
     // Decide which endpoint to call
-    const fetchDataManager = (urlParams) => {
+    const fetchDataManager = useCallback((urlParams) => {
         if (urlParams.get('startCharacter')) {
             fetchByStartChar(urlParams.get('startCharacter'));
         } else if (urlParams.get('genreId')) {
             fetchByGenre(Number(urlParams.get('genreId')));
         }
-    };
+    }, [fetchByStartChar, fetchByGenre]);
 
     const changeSortOrder = () => {
         if (sortOrder === "asc") {
@@ -95,21 +148,63 @@ const MoviesResult = () => {
     };
 
     const prevButtonEvent = () => {
-        if ( currentPage > 1 ) {
-            setCurrentPage((current) => current - 1)
-        }
-        
+        setCurrentPage(current => (currentPage > 1 ? current - 1 : current))
     };
 
     const nextButtonEvent = () => {
         setCurrentPage((current) => current + 1)
-        if ( (currentPage % 5) === 4 ) { setIsExhausted(true); }
+        setIsExhausted(currentPage % 5 === 4);
     };
 
-    return ( 
-        isAuthenticated
-        ? <div className="page-content">
-            <h1>Movies Result</h1>
+    useEffect(() => {
+        reset();
+    }, [urlParams])
+
+    useEffect(() => {
+        
+        if ( isExhausted && (movieData.length !== totalResult)) {
+            fetchDataManager(urlParams);
+        }
+    }, [urlParams, sortOrder, sortBy]);
+
+    return (
+        <div className="results-content">
+            <h1>Movie Results</h1>
+            <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
+                <label defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
+                <select name="sortby" id="sortby" style={{height: "27px"}}>
+                    <option value="rating">Rating</option>
+                    <option value="title">Title</option>
+                    <option value="year">Release</option>
+                    <option value="director">Director</option>
+                </select> 
+                </label>
+                <button className="sortOrderBtn" onClick={changeSortOrder}>
+                    {(sortOrder === "asc") 
+                    ? <FontAwesomeIcon icon={faSortUp} rotatation={0} style={{color: "#007bff", }} />
+                    : <FontAwesomeIcon icon={faSortDown} rotatation={180} style={{color: "#007bff", }} />
+                    }
+                </button>
+            </div>
+            <div className='card-container'>
+                {movieData.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + 10).map((item, index) => (
+                    <Link to={`/single-movie?movieId=${item.movieId}`} key={item.movieId} className='movie-card'>
+                        <img className='movie-poster' src={item.moviePoster} alt='Movie Poster'></img>
+                        <div className='movie-info'>
+                            <h2>{item.movieTitle}</h2>
+                            <h3><span>{item.movieYear}</span><span>{item.movieRating}<FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></span></h3>
+                            <h3>Directed by: {item.movieDirector}</h3>
+                        </div>
+                    </Link>
+                ))}
+                
+            </div>
+            <div className='paginationButtons'>
+                <button onClick={prevButtonEvent} disabled={currentPage === 1}>Prev</button>
+                <span>{currentPage}</span>
+                <button onClick={nextButtonEvent} disabled={Math.ceil(totalResult/perPage - 1) + 1 === currentPage}>Next</button>
+            </div>
+            {/* <h1>Movies Result</h1>
             <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
                 <label defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
                 <select name="sortby" id="sortby" style={{height: "27px"}}>
@@ -178,10 +273,9 @@ const MoviesResult = () => {
             <div className='paginationButtons'>
                 <button onClick={prevButtonEvent} disabled={currentPage === 1}>Prev</button>
                 <span>{currentPage}</span>
-                <button onClick={nextButtonEvent} disabled={Math.floor(totalResult/perPage) + 1 === currentPage}>Next</button>
-            </div>
+                <button onClick={nextButtonEvent} disabled={Math.ceil(totalResult/perPage - 1) + 1 === currentPage}>Next</button>
+            </div> */}
         </div>
-        : loginWithRedirect()
     )
 };
 

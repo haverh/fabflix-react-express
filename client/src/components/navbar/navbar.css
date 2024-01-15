@@ -2,8 +2,20 @@
     height: 100%;
 }
 .navbar {
-    background-color: #6d6c6c;
+    background-color: #1A1A2E;
     padding: 0 1%;
+}
+
+.navbar-toggler {
+    background-color: #4fbdb9a8;
+    outline: none;
+    border: none;
+    margin: 5px;
+}
+
+.navbar-toggler:active, .navbar-toggler:focus {
+    border: none;
+    outline: none;
 }
 
 .navbar-brand {
@@ -13,20 +25,22 @@
 
 .navbar-brand:hover {
     color: inherit;
-
 }
 
 .nav-link {
-    color: #71dfcf;
-    
+    color: #4FBDBA;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 .nav-link:hover {
     color: #b8efe7;
 }
 
-.nav-link.selected {
-    background-color: #007bff; 
+.active {
+    color: aliceblue;
+    background-color: #aefeffa6;
 }
 
 .search-component {
@@ -52,14 +66,13 @@
 }
 
 .cartButton {
-    width: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 2.3rem;
     height: 2rem;
-    margin: 0 0.5rem;
-    outline: none;
-    border: 0;
-    text-align: center;
-    border-radius: 10px;
-    background-color: #71dfcf;
+    color: #4FBDBA;
 }
 
 .cartButton:focus {
@@ -72,4 +85,10 @@
 
 .cartButton:active {
     transform: scale(0.97);
+}
+
+.cartButton span {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

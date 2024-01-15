@@ -1,8 +1,24 @@
-/* .page-content {
-    margin: 0 20%;
-} */
+.top-movies-content {
+    width: 100%;
+    height: 100%;
+    padding: 3% 10%;
+    text-align: center;
+    
+}
 
-.table {
+.top-movies-content h1 {
+    color: #9EC8B9;
+    font-weight: bold;
+}
+
+#attribution {
+    position: fixed;
+    /* bottom: 0; */
+    width: 100%;
+    background-color: #f0f0f0;
+  }
+
+/* .table {
     border-radius: 10px;
 }
 
@@ -16,21 +32,125 @@
 
 .link {
     text-decoration: none;
+} */
+
+.grid-container {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
+.movies-grid {
+    width: 250px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.grid-item {
+    width: 250px;
+    height: 380px;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
+    color: #9EC8B9;
+    text-decoration: none;
+    font-size: .7em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px #2E4F4F solid;
+    border-bottom: none;
+}
+
+.grid-item:hover {
+    transform: scale(1.02);
+}
+
+.movie-info {
+    flex: 1;
+    width: 100%;
+    padding: 0 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.movie-info h1 {
+    font-size: 2em;
+    text-align: center;
+    font-weight: bold;
+    color: #64CCC5;
+}
+
+.movie-info h2 {
+    width: 100%;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+}
+
+.poster {
+    width: 100%;
+    height: 250px;
+    /* min-height: 350px;
+    max-height: 350px; */
+    border-radius: 10px;
+    border: 1px solid black;
+    background-color: white;
+}
+
+
 .addToCart {
-    width: 25px;
-    height: 25px;
-    border: 0;
-    border-radius: 5px;
-    background-color: #8DBA5E;
+    width: 200px;
+    height: 30px;
+    color: #395B64;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    background-color: #A5C9CA;
     margin: 3px;
 }
 
 .addToCart:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .addToCart:active {
     transform: scale(0.9);
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 650px) {
+    .movies-grid {
+        width: 510px;
+    }
+}
+
+
+/* Large devices (laptops/desktops, 991px and up) */
+@media only screen and (min-width: 968px) {
+
+    .movies-grid {
+        width: 770px;
+    }
+}
+
+/* Large devices (laptops/desktops, 991px and up) */
+@media only screen and (min-width: 1320px) {
+
+    .movies-grid {
+        width: 1030px;
+    }
+}
+
+/* Extra Extra large devices (large laptops and desktops, 1578px and up) */
+@media only screen and (min-width: 1613px) {
+
+    .movies-grid {
+        width: 1290px;
+    }
 }

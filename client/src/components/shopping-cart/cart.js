@@ -1,4 +1,5 @@
-import { useState, useContext, useMemo } from 'react';
+/* eslint-disable no-throw-literal */
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -10,9 +11,10 @@ const ShoppingCart = () => {
     const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     const cart = useContext(CartContext);
-    const [tax, setTax] = useState(parseFloat((cart.getTotalCost() * 0.1).toFixed(2)));
-    const [grandTotal, setGrandTotal] = useState(parseFloat(cart.getTotalCost() + tax).toFixed(2));
-    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    const tax = parseFloat((cart.getTotalCost() * 0.1).toFixed(2));
+    const grandTotal = parseFloat(cart.getTotalCost() + tax).toFixed(2);
+    // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
     console.log("Cart Page -", cart.items);
 
     const handleCheckout = async () => {
@@ -23,9 +25,17 @@ const ShoppingCart = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: "include",
                 body: JSON.stringify(cart.items),
             });
             const jsonData = await response.json();
+
+            if (!response.ok) {
+                throw {
+                    ...jsonData,
+                    status: response.status,
+                }
+            }
             console.log(jsonData, jsonData.url)
             localStorage.setItem('cart', JSON.stringify(cart.items));
             localStorage.setItem('tax', JSON.stringify(tax));
@@ -33,12 +43,15 @@ const ShoppingCart = () => {
             window.location.href = jsonData.url;
           } catch (error) {
             console.error('Error fetching data:', error);
+            if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
+                window.location.href = "login";
+            }
         }
     }
 
     return (
-        isAuthenticated ?
-        <div className='page-content'>
+        // isAuthenticated ?
+        <div className='cart-page-content'>
             <h1>Your Cart</h1>
             <div className="cart-body">
                 <table className="cart-items table table-striped rounded rounded-3 overflow-hidden">
@@ -73,7 +86,7 @@ const ShoppingCart = () => {
                 </div>
             </div>
         </div>
-        : loginWithRedirect()
+        // : loginWithRedirect()
     )
 }
 

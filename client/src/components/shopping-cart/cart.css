@@ -1,5 +1,4 @@
-
-.page-content {
+.cart-page-content {
     margin: 5% 20%;
 }
 
@@ -9,7 +8,7 @@
 
 .cart-bottom {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .cart-checkout {

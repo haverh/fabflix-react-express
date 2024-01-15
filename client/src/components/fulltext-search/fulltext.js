@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCommentsDollar, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import './fulltext.css'
 
@@ -10,10 +9,18 @@ const FulltextInput = () => {
     const [suggestionsMap, setSuggestionsMap] = useState({"": []});
     const [selectedSuggestion, setSelected] = useState(-1);
     const [hoveredSelectedSuggestion, setHoverSelected] = useState(-1);
-    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
+    // Fetch movies given input from endpoint
     const fetchSuggestions = async (input) => {
-        return fetch(`${fetchURL}/api/fulltext?input=${input}`)
+        return fetch(`${fetchURL}/api/fulltext?input=${input}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+        })
         .then(response => response.json())
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -21,13 +28,13 @@ const FulltextInput = () => {
         });
     }
 
+    // Get and display suggestions
     const handleSuggestions = async (event) => {
         const inputValue = event.target.value;
-        
-        if ( suggestionsMap[inputValue] ) {
+        if ( suggestionsMap[inputValue] ) { // Input exists in map
             setSuggestions(suggestionsMap[inputValue])
             return suggestionsMap[inputValue];
-        } else { // undefined
+        } else { // Input doesn't exist in map
             const suggestions = await fetchSuggestions(inputValue);
             setSuggestionsMap(
                 prevSuggestions => ({
@@ -40,6 +47,7 @@ const FulltextInput = () => {
         }
     }
 
+    // Handle suggestions navigation 
     const handleKeyDown = (event) => {
         if ( event.key === "ArrowUp" ) {
             setSelected(Math.max(selectedSuggestion - 1, -1));
@@ -48,13 +56,13 @@ const FulltextInput = () => {
             setSelected(Math.min(selectedSuggestion + 1, suggestions.length - 1));
             setHoverSelected(-1);
         } else if ( event.key === "Enter") {
-            fetchMovie();
+            selectMovie();
 
         }
     }
 
-    const fetchMovie = () => {
-        console.log("PRESSED")
+    // Go to selected movie page
+    const selectMovie = () => {
 
         // Determine if clicked/entered and get movie info from suggestions
         let movie = (selectedSuggestion !== -1) 
@@ -70,7 +78,7 @@ const FulltextInput = () => {
     }
 
     return (
-        <div className="search-component h-100">
+        <div className="search-component h-100 m-0">
             <form className="d-flex input-group w-auto" onSubmit={(event) => {event.preventDefault();}}>
                 <input
                     name='fsInput'
@@ -99,7 +107,7 @@ const FulltextInput = () => {
                     
                     onMouseEnter={() => {setHoverSelected(index); setSelected(-1);}}
                     onMouseLeave={() => setHoverSelected(-1)}
-                    onClick={ fetchMovie }
+                    onClick={ selectMovie }
                     >
                         {suggestion.movieTitle}
                     </li>))}

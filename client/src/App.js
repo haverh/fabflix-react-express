@@ -1,31 +1,42 @@
-import React, { useState, createContext } from 'react';
+import React, { lazy, Suspense  } from 'react';
 import axios from 'axios';
 import './App.css';
-import Home from './components/home/home';
+// import Home from './components/home/home';
 // import Login from './components/signin/signin';
-import TopMovies from './components/top-movies/top-movies';
-import Navbar from './components/navbar/navbar';
-import SingleMovie from './components/single-movie/single-movie';
-import SingleStar from './components/single-star/single-star';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
-import MoviesResult from './components/movies-result/movies-result';
-import CartProvider from './contexts/CartContext';
-import ShoppingCart from './components/shopping-cart/cart';
-import CheckoutSuccess from './components/checkout/checkout-success'
+// import TopMovies from './components/top-movies/top-movies';
+// import Navbar from './components/navbar/navbar';
+// import SingleMovie from './components/single-movie/single-movie';
+// import SingleStar from './components/single-star/single-star';
+import { Routes, Route, Switch } from 'react-router-dom';
+// import { useAuth0 } from "@auth0/auth0-react";
+// import MoviesResult from './components/movies-result/movies-result';
+// import CartProvider from './contexts/CartContext';
+// import ShoppingCart from './components/shopping-cart/cart';
+// import CheckoutSuccess from './components/checkout/checkout-success';
 
-const SessionContext = createContext();
+const Home = lazy(() => import('./components/home/home'))
+const Login = lazy(() => import('./components/signin/signin'))
+const TopMovies = lazy(() => import('./components/top-movies/top-movies'))
+const Navbar = lazy(() => import('./components/navbar/navbar'))
+const SingleMovie = lazy(() => import('./components/single-movie/single-movie'))
+const SingleStar = lazy(() => import('./components/single-star/single-star'))
+const MoviesResult = lazy(() => import('./components/movies-result/movies-result'))
+const CartProvider = lazy(() => import('./contexts/CartContext'))
+const ShoppingCart = lazy(() => import('./components/shopping-cart/cart'))
+const CheckoutSuccess = lazy(() => import('./components/checkout/checkout-success'))
 
 function App() {
-	const { isAuthenticated, loginWithRedirect } = useAuth0();
+	// const {loginWithRedirect } = useAuth0();
 
-	const [mySession, setSession] = useState({});
+	// const [mySession, setSession] = useState({});
 
 	axios.defaults.withCredentials = true;
+	console.log("APP")
 
 	return (
 		<CartProvider>
 		<Routes>
+			<Route path="/login" element={<Login/>}/>
 			<Route path="/" element={<Navbar/>}>
 				<Route path="/" element={<Home/>}/>
 				<Route path="/home" element={<Home/>}/>
@@ -41,4 +52,4 @@ function App() {
 	);
 }
 
-export {App, SessionContext};
+export {App};

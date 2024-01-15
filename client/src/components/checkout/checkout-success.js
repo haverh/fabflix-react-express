@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState} from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 
 import './checkout-success.css';
@@ -6,15 +6,17 @@ import './checkout-success.css';
 const CheckoutSuccess = () => {
 
     const { user } = useAuth0();
-
+    console.log(localStorage)
     const cart = JSON.parse(localStorage.getItem('cart'));
+    console.log(cart)
     const tax = parseFloat(JSON.parse(localStorage.getItem('tax')).toFixed(2));
     const total = parseFloat(JSON.parse(localStorage.getItem('total')).toFixed(2));
     const grandTotal = parseFloat((total + tax).toFixed(2));
     const email = user?.email;
     const date = new Date().toISOString().slice(0,10);
     const [orderId, setOrderId] = useState(null);
-    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
     console.log(date)
     // console.log(email)
 
@@ -27,6 +29,7 @@ const CheckoutSuccess = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: "include",
                 body: JSON.stringify({cart, tax, total, grandTotal, email, date}),
             });
             const jsonData = await response.json();
@@ -37,7 +40,7 @@ const CheckoutSuccess = () => {
         }
     }
 
-    if ( email != undefined && email != null && orderId == null ) { 
+    if ( email !== undefined && email !== null && orderId === null ) { 
         documentOrder();
     }
 
