@@ -1,6 +1,8 @@
+const middleware = require('../middleware/jwt_middleware');
+
 module.exports = function (pool, app) {
     
-    app.get('/api/cart/price', async (req, res) => {
+    app.get('/api/cart/price', middleware.authenticateToken, async (req, res) => {
         try {
 
             const movieId = req.query.movieId

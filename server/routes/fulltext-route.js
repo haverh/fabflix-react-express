@@ -1,5 +1,7 @@
+const middleware = require('../middleware/jwt_middleware');
+
 module.exports = function (pool, app) {
-    app.get('/api/fulltext', async (req, res) => {
+    app.get('/api/fulltext', middleware.authenticateToken, async (req, res) => {
         const input = req.query.input;
         const tokens = input.trim().split(" ").map((str) => str+":*");
         const newInput = tokens.join(" & ")
@@ -20,10 +22,10 @@ module.exports = function (pool, app) {
                 
                 movieObj.movieId = result.rows[i].id;
                 movieObj.movieTitle = result.rows[i].title;
-
+                // console.log(movieObj)
                 moviesList.push(movieObj)
             }
-            console.log(moviesList);
+            // console.log(moviesList);
             res.json(moviesList)
 
             client.release();

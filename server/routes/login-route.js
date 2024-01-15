@@ -1,17 +1,7 @@
 const session = require('express-session');
+const middleware = require('../middleware/jwt_middleware')
 
 module.exports = function (pool, app) {
-
-    app.get('/api/login', async (req, res) => {
-        res.oidc.login({
-            
-        })
-        // if ( req.session.user ) {
-        //     res.json({signedIn: true, user: req.session.user});
-        // } else {
-        //     res.json({signedIn: false});
-        // }
-    })
 
     app.post('/api/login', async (req, res) => {
         try {
@@ -42,15 +32,22 @@ module.exports = function (pool, app) {
                 userObj.address = result.rows[0].address
                 userObj.email = result.rows[0].email
 
-                req.session.user = userObj;
                 resObj.user = userObj;
-                console.log(req.session.user)
+                
+                const accessToken = middleware.generateAccessToken(resObj.user);
+                res.cookie('accessToken', accessToken, {
+                    httpOnly: true,
+                    sameSite: 'none',
+                    secure: true,
+                });
+                res.status(200).json({data: resObj, msg: 'Login successful'});
             } else {
                 resObj.status = false;
                 resObj.message = "The email or password you entered is incorrect.";
+                res.status(401).json({data: resObj, msg: 'Login unsuccessful'});
             }
             console.log(resObj)
-            res.json(resObj);
+            // res.json(resObj);
 
             } catch (error) {
                 console.error('Error executing query:', error);

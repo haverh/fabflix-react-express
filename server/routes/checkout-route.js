@@ -1,13 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+const middleware = require('../middleware/jwt_middleware');
 
 module.exports = function (pool, app) {
     app.use(express.static('public'));
     app.use(express.json());
 
-    app.post('/checkout', async (req, res) => {
-        console.log(req.body);
+    app.post('/checkout', middleware.authenticateToken, async (req, res) => {
+        // console.log(req.body);
         try {
             const session = await stripe.checkout.sessions.create({
                 mode: 'payment',
@@ -25,8 +26,8 @@ module.exports = function (pool, app) {
                         tax_rates: ['txr_1NljgCEzmVUmdbD6jgXDrmN6']
                     }
                 }),
-                success_url: 'https://gotcha-movies-client.vercel.app/success',
-                cancel_url: 'https://gotcha-movies-client.vercel.app/cancel'
+                success_url: `${process.env.LOCAL_CLIENT_URL}/success`,
+                cancel_url: `${process.env.LOCAL_CLIENT_URL}/cancel`
             })
             res.json({ url: session.url })
         } catch (e) {
@@ -35,7 +36,7 @@ module.exports = function (pool, app) {
     });
 
 
-    app.post('/sale', async (req, res) => {
+    app.post('/sale', middleware.authenticateToken, async (req, res) => {
         try {
             // Email and Password
             const cart = req.body.cart;
@@ -45,14 +46,14 @@ module.exports = function (pool, app) {
             const total = req.body.total;
             const grandTotal = req.body.grandTotal;
 
-            console.log(cart)
-            console.log(email, date, typeof date)
-            console.log(total, typeof total, tax, typeof tax, grandTotal, typeof grandTotal);
+            // console.log(cart)
+            // console.log(email, date, typeof date)
+            // console.log(total, typeof total, tax, typeof tax, grandTotal, typeof grandTotal);
 
             const client = await pool.connect();
 
             let queryString = {
-                text: 'INSERT INTO test_sales (email, saledate, total, tax, grandtotal) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+                text: 'INSERT INTO new_sales (email, saledate, total, tax, grandtotal) VALUES ($1, $2, $3, $4, $5) RETURNING id',
                 values: [email, date, total, tax, grandTotal]
             }
 
@@ -62,7 +63,7 @@ module.exports = function (pool, app) {
 
             for (const item of cart) {
                 const queryString = {
-                    text: 'INSERT INTO test_sales_items (saleid, movieid, quantity, unitprice, totalprice)' +
+                    text: 'INSERT INTO new_sales_items (saleid, movieid, quantity, unitprice, totalprice)' +
                                 'VALUES ($1, $2, $3, $4, $5)',
                     values: [saleId, item.id, item.quantity, item.price, item.quantity*item.price]
                 };
@@ -71,8 +72,6 @@ module.exports = function (pool, app) {
             }
             
             client.release();
-
-            console.log("DONE")
             res.json(saleId);
 
             } catch (error) {

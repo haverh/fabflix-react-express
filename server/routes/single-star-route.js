@@ -1,6 +1,7 @@
+const middleware = require('../middleware/jwt_middleware');
 
 module.exports = function (pool, app) {
-    app.get('/api/single-star', async (req, res) => {
+    app.get('/api/single-star', middleware.authenticateToken, async (req, res) => {
         const starId = req.query.starId;
 
         try {
