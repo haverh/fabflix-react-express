@@ -1,10 +1,11 @@
+const middleware = require('../middleware/jwt_middleware');
 
 module.exports = function (pool, app) {
-    app.get('/api/topmovies', async (req, res) => {
+    app.get('/api/topmovies', middleware.authenticateToken, async (req, res) => {
         try { 
-            console.time("FETCH TIME");
+            console.time("Top Movies");
             const client = await pool.connect();
-            const result = await client.query(`SELECT rating, movieid, title, year, director
+            const result = await client.query(`SELECT rating, movieid, title, year, director, poster
                                                 FROM movies m, ratings r
                                                 WHERE m.id=r.movieId
                                                 ORDER BY rating DESC
@@ -73,7 +74,8 @@ module.exports = function (pool, app) {
                     movieRating: row.rating,
                     movieTitle: row.title,
                     movieYear: row.year,
-                    movieDirector: row.director
+                    movieDirector: row.director,
+                    moviePoster: row.poster
                 } 
             });
 
@@ -86,7 +88,7 @@ module.exports = function (pool, app) {
                     const batch = movies.slice(i, i + batchsize);
 
                     const promises = batch.map(async (movie) => {
-                        console.log("MOVIE -", movie)
+                        // console.log("MOVIE -", movie)
                         const movieObj = movie;
 
                         const starsQueryString = {
@@ -105,7 +107,7 @@ module.exports = function (pool, app) {
                         const genreResult = await client.query(genresQueryString);
                         movieObj.movieGenres = genreResult.rows;
 
-                        console.log("MOVIE OBJECT -", movieObj)
+                        // console.log("MOVIE OBJECT -", movieObj)
                     
                         return movieObj;
                     })
@@ -123,7 +125,7 @@ module.exports = function (pool, app) {
             }
 
             // console.log(moviesList)
-            console.timeEnd("FETCH TIME");
+            console.timeEnd("Top Movies");
             res.json(moviesList);
     
             client.release();

@@ -1,7 +1,10 @@
+const middleware = require('../middleware/jwt_middleware');
+
 module.exports = function (pool, app) {
     
-    app.get('/api/homeDetails', async (req, res) => {
+    app.get('/api/homeDetails', middleware.authenticateToken, async (req, res) => {
         try {
+            // console.log("HOME", req.cookies.accessToken)
             const client = await pool.connect();
             let queryString = {
                 text: 'select * from genres order by name;',
@@ -12,21 +15,19 @@ module.exports = function (pool, app) {
             const genreList = [...result.rows];
 
             // console.log(genreList)
-            res.json(genreList);
+            // res.json(genreList);
+            res.status(200).json({ genreList: genreList });
         
             client.release();
         } catch (error) {
             console.error('Error executing query:', error);
             res.status(500).json({ error: 'An error occurred' });
         }
-
-
-            
     });
 
-    app.get('/api/byStartCharacter', async (req, res) => {
+    app.get('/api/byStartCharacter', middleware.authenticateToken, async (req, res) => {
         try {
-            console.time("fetchTime");
+            console.time("Start Character");
             const { startCharacter, sortOrder, sortBy } = req.query;
             const currentPage = parseInt(req.query.currentPage, 10);
             const perPage = parseInt(req.query.perPage, 10);
@@ -45,13 +46,13 @@ module.exports = function (pool, app) {
             let moviesList = [];
 
             if ( currentPage == 1 ) {
-                offset = (currentPage - 1) * perPage;
+                offset = (currentPage - 1) * perPage ;
                 const result = await client.query(queryString);
                 resultObj.total = parseInt(result.rows[0].count);
             }else { 
                 offset = (currentPage + 1) * perPage;
             }
-            queryString.text = `SELECT rating, movieid, title, year, director FROM movies JOIN ratings ` +
+            queryString.text = `SELECT rating, movieid, title, year, director, poster FROM movies JOIN ratings ` +
                                 `ON id=movieid WHERE title ILIKE $1 ORDER BY ${sortBy} ${sortOrder} ` +
                                 `OFFSET ${offset} LIMIT ${limit};`
 
@@ -67,6 +68,7 @@ module.exports = function (pool, app) {
                 movieObj.movieTitle = result.rows[i].title;
                 movieObj.movieYear = result.rows[i].year;
                 movieObj.movieDirector = result.rows[i].director;
+                movieObj.moviePoster = result.rows[i].poster;
                 
                 // Arrays to hold a list of stars/genres per movie
                 movieObj.movieStars = [];
@@ -101,7 +103,7 @@ module.exports = function (pool, app) {
     
                 moviesList.push(movieObj);
             }
-            console.timeEnd("fetchTime");
+            console.timeEnd("Start Character");
             resultObj.moviesList = moviesList;
             // console.log(resultObj);
             res.json(resultObj);
@@ -113,9 +115,9 @@ module.exports = function (pool, app) {
         }
     });
 
-    app.get('/api/byGenre', async (req, res) => {
+    app.get('/api/byGenre', middleware.authenticateToken, async (req, res) => {
         try {
-            console.time("fetchTime");
+            console.time("Genre");
             const { genreId, sortOrder, sortBy } = req.query;
             const currentPage = parseInt(req.query.currentPage, 10);
             const perPage = parseInt(req.query.perPage, 10);
@@ -141,7 +143,7 @@ module.exports = function (pool, app) {
             }else { 
                 offset = (currentPage + 1) * perPage;
             }
-            queryString.text = `SELECT rating, id as movieid, title, year, director FROM movies ` +
+            queryString.text = `SELECT rating, id as movieid, title, year, director, poster FROM movies ` +
                                 `JOIN ratings ON id=movieid JOIN genres_in_movies on id=genres_in_movies.movieid ` +
                                 `WHERE genreid = ${genreId} ORDER BY ${sortBy} ${sortOrder} ` +
                                 `OFFSET ${offset} LIMIT ${limit}`
@@ -158,6 +160,7 @@ module.exports = function (pool, app) {
                 movieObj.movieTitle = result.rows[i].title;
                 movieObj.movieYear = result.rows[i].year;
                 movieObj.movieDirector = result.rows[i].director;
+                movieObj.moviePoster = result.rows[i].poster;
                 
                 // Arrays to hold a list of stars/genres per movie
                 movieObj.movieStars = [];
@@ -193,7 +196,7 @@ module.exports = function (pool, app) {
                 moviesList.push(movieObj);
             }
 
-            console.timeEnd("fetchTime");
+            console.timeEnd("Genre");
             resultObj.moviesList = moviesList;
             // console.log(resultObj);
             res.json(resultObj);

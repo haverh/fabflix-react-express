@@ -1,12 +1,13 @@
+const middleware = require('../middleware/jwt_middleware');
 
 module.exports = function (pool, app) {
-    app.get('/api/single-movie', async (req, res) =>{
+    app.get('/api/single-movie', middleware.authenticateToken, async (req, res) =>{
         const movieId = req.query.movieId
         
         try {
             const client = await pool.connect();
             let queryString = {
-                text: 'SELECT title, year, director, rating FROM movies LEFT JOIN ratings ON id = movieId WHERE id = $1',
+                text: 'SELECT title, year, director, poster, rating FROM movies LEFT JOIN ratings ON id = movieId WHERE id = $1',
                 values: [movieId]
             }
 
@@ -16,6 +17,7 @@ module.exports = function (pool, app) {
             movieObj.movieTitle = result.rows[0].title;
             movieObj.movieYear = result.rows[0].year;
             movieObj.movieDirector = result.rows[0].director;
+            movieObj.moviePoster = result.rows[0].poster;
             movieObj.movieRating = result.rows[0].rating ? result.rows[0].rating : "N/A";
 
             movieObj.movieStars = [];
