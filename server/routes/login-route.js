@@ -43,8 +43,8 @@ module.exports = function (pool, app) {
                 res.status(200).json({data: resObj, msg: 'Login successful'});
             } else {
                 resObj.status = false;
-                resObj.message = "The email or password you entered is incorrect.";
-                res.status(401).json({data: resObj, msg: 'Login unsuccessful'});
+                resObj.message = "Incorrect email or password. Please try again.";
+                res.status(401).json({data: resObj, msg: 'Unauthorized - Invalid credentials'});
             }
             console.log(resObj)
             // res.json(resObj);

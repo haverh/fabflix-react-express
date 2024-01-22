@@ -13,7 +13,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     // // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
     const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
-    // const [myStatus, setMyStatus] = useState();
+    const [loginData, setLoginData] = useState({data: {status: true}});
 
     // Axios.defaults.withCredentials = true;
     // useEffect(() => {
@@ -33,12 +33,13 @@ const Login = () => {
         .then((res) => {
             if (res.status >= 200 && res.status < 300) {
                 console.log("LOGIN SUCCESSUL", res.data);
+                setLoginData(res.data);
                 window.location.href = "home";
-            } else {
-                console.log("LOGIN UNSUCCESSUL", res.data);
             }
-        }
-        )
+        }).catch(err => {
+            console.log(err.response.data);
+            setLoginData(err.response.data);
+        })
     };
 
     return (
@@ -46,6 +47,7 @@ const Login = () => {
             <div className="signin-widget">
                 <img alt="logo" src={logo}  width={50} height={50}></img>
                 <h1>Login</h1>
+                {!loginData.data.status && <div className="signin-message">{loginData.data.message}</div>}
                 <form onSubmit={handleSubmit}> 
                     <label htmlFor="email">Email</label>
                     <br/>
@@ -74,7 +76,6 @@ const Login = () => {
                     </input>
                     <br/>
                     <input type="submit" value="Login"/>
-                    {/* <div className="signin-message">{mySession.message}</div> */}
                 </form>
             </div>
         </div>

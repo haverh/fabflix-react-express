@@ -65,8 +65,12 @@
 
 
 .signin-message {
+    height: fit-content;
+    padding: 15px 5px;
+    border-radius: 5px;
     text-align: center;
     color: red;
+    background-color: rgb(219, 175, 175);
 }
 
 
