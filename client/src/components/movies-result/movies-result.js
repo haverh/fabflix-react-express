@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortUp, faSortDown, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faSort, faSortUp, faSortDown, faStar } from '@fortawesome/free-solid-svg-icons';
 // import { CartContext } from '../../contexts/CartContext';
 // import { useAuth0 } from "@auth0/auth0-react";
 
@@ -149,11 +149,14 @@ const MoviesResult = () => {
 
     const prevButtonEvent = () => {
         setCurrentPage(current => (currentPage > 1 ? current - 1 : current))
+        window.scrollTo(0, 0)
     };
 
     const nextButtonEvent = () => {
         setCurrentPage((current) => current + 1)
         setIsExhausted(currentPage % 5 === 4);
+        window.scrollTo(0, 0)
+
     };
 
     useEffect(() => {
@@ -165,14 +168,14 @@ const MoviesResult = () => {
         if ( isExhausted && (movieData.length !== totalResult)) {
             fetchDataManager(urlParams);
         }
-    }, [urlParams, sortOrder, sortBy]);
+    }, [urlParams, sortOrder, sortBy, isExhausted]);
 
     return (
         <div className="results-content">
             <h1>Movie Results</h1>
             <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
                 <label defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
-                <select name="sortby" id="sortby" style={{height: "27px"}}>
+                <select name="sortby" id="sortby">
                     <option value="rating">Rating</option>
                     <option value="title">Title</option>
                     <option value="year">Release</option>
@@ -180,19 +183,22 @@ const MoviesResult = () => {
                 </select> 
                 </label>
                 <button className="sortOrderBtn" onClick={changeSortOrder}>
-                    {(sortOrder === "asc") 
+                    <FontAwesomeIcon icon={faSort} rotatation={0} style={{color: "#007bff", }} />
+                    {/* {(sortOrder === "asc") 
                     ? <FontAwesomeIcon icon={faSortUp} rotatation={0} style={{color: "#007bff", }} />
                     : <FontAwesomeIcon icon={faSortDown} rotatation={180} style={{color: "#007bff", }} />
-                    }
+                    } */}
                 </button>
             </div>
             <div className='card-container'>
                 {movieData.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + 10).map((item, index) => (
                     <Link to={`/single-movie?movieId=${item.movieId}`} key={item.movieId} className='movie-card'>
-                        <img className='movie-poster' src={item.moviePoster} alt='Movie Poster'></img>
-                        <div className='movie-info'>
+                        {item.moviePoster !== "N/A" 
+                        ? <img className='movie-poster' src={item.moviePoster} alt="Movie Poster"></img>
+                        : <img className='movie-poster' src={posterPlaceholder} alt="Movie Poster"></img>}
+                        <div className='result-movie-info'>
                             <h2>{item.movieTitle}</h2>
-                            <h3><span>{item.movieYear}</span><span>{item.movieRating}<FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></span></h3>
+                            <h3 className='year-rating'><span>{item.movieYear}</span><span>{item.movieRating}<FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></span></h3>
                             <h3>Directed by: {item.movieDirector}</h3>
                         </div>
                     </Link>
