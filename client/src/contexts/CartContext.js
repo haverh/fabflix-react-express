@@ -17,7 +17,9 @@ export function CartProvider ({ children }) {
 
     // Fetches price from database for specific movie
     const fetchPrice = async (movieId) => {
-        return fetch(`${fetchURL}/api/cart/price?movieId=${movieId}`)
+        return fetch(`${fetchURL}/api/cart/price?movieId=${movieId}`,{
+            credentials: "include"
+        })
         .then(response => response.json())
         .then(jsonData => jsonData.price)
         .catch(error => {
