@@ -58,7 +58,7 @@ const Navbar = () => {
                     <Nav.Link to="/home" as={NavLink} className='nav-link'>Home</Nav.Link>
                     <Nav.Link to="/top-movies" as={NavLink} className='nav-link'>Top Movies</Nav.Link>
                 </Nav>
-                <div className="d-flex flex-column justify-content-end align-items-end h-100">
+                <div className="d-flex justify-content-end align-items-center h-100">
                     <FulltextInput className="me-auto"/>
                     {/* <ul className="d-flex justify-center-end align-items-end h-100 navbar-nav loggingButtons">
                         <li><button onClick={() => loginWithRedirect()}>Login</button></li>
