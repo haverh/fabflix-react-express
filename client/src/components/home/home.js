@@ -60,7 +60,7 @@ const Home = () => {
         }
     
         return (
-            <section className='w-full flex flex-col justify-center align-center text-center my-0 mb-[50px] ml-0'>
+            <section className='w-full flex flex-col justify-center items-center text-center my-0 mb-[50px] ml-0'>
                 <h1>Browse by Movie Title</h1>
                 <div className="alphaBox grid text-center grid-cols-12 gap-[5px] text-bold rounded-[15px] bg-[#041C32] sm:gap-[10px] md:gap-[20px] lg:gap-[25px]">
                     {elements}
@@ -78,7 +78,7 @@ const Home = () => {
         }
     
         return (
-            <section className='w-full flex flex-col justify-center align-center text-center my-0 mb-[50px] ml-0'>
+            <section className='w-full flex flex-col justify-center items-center text-center my-0 mb-[50px] ml-0'>
                 <h1>Browse by Movie Genre</h1>
                 <div className="genreBox grid text-center grid-cols-3 gap-[5px] text-bold rounded-[15px] bg-[#041C32] sm:grid-cols-4 sm:gap-[5px] md:grid-cols-5 lg:grid-cols-6 lg:gap-[5px]">
                 
@@ -90,7 +90,7 @@ const Home = () => {
     }
 
     return (
-        <div className="w-full h-[90%] py-[3%] px-[10%] flex flex-col justify-center align-center">
+        <div className="w-full h-[90%] py-[3%] px-[10%] flex flex-col justify-center items-center">
             <GenreSelect/>
             <AlphaSelect/>
         </div>
