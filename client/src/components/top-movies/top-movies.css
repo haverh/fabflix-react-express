@@ -93,6 +93,11 @@
     font-weight: 400;
 }
 
+.moviePrice {
+    font-weight: bold;
+    color: #DCF2F1;
+}
+
 .poster {
     width: 100%;
     height: 250px;
@@ -100,7 +105,20 @@
     max-height: 350px; */
     border-radius: 10px;
     border: 1px solid black;
-    background-color: white;
+    /* background-color: white; */
+}
+
+.placeholderPoster {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 250px;
+    /* min-height: 350px;
+    max-height: 350px; */
+    border-radius: 10px;
+    border: 1px solid black;
+    background-color: rgb(212, 211, 211);
 }
 
 

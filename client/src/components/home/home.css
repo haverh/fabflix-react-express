@@ -63,7 +63,6 @@ section h1 {
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 650px) {
     .alphaBox {
-        grid-template-columns: repeat(13, 1fr);
         gap: 10px;
     }
     
@@ -78,21 +77,18 @@ section h1 {
 /* Large devices (laptops/desktops, 991px and up) */
 @media only screen and (min-width: 968px) {
     .alphaBox {
-        grid-template-columns: repeat(13, 1fr);
         gap: 20px;
     }
     
     
     .genreBox {
         grid-template-columns: repeat(5, 1fr);
-        gap: 5px;
     }
 }
 
 /* Large devices (laptops/desktops, 991px and up) */
 @media only screen and (min-width: 1320px) {
     .alphaBox {
-        grid-template-columns: repeat(13, 1fr);
         gap: 25px;
     }
     
@@ -106,7 +102,4 @@ section h1 {
 /* Extra Extra large devices (large laptops and desktops, 1578px and up) */
 @media only screen and (min-width: 1613px) {
 
-    .movies-grid {
-        width: 1290px;
-    }
 }

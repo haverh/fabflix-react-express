@@ -2,7 +2,7 @@
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import './top-movies.css';
+// import './top-movies.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { CartContext } from '../../contexts/CartContext';
@@ -67,18 +67,23 @@ const TopMovies = () => {
     }, [fetchData]);
 
     return (    
-        <div className="top-movies-content">
-            <h1>Top 20 Rated Movies</h1>
-            <div className='grid-container'>
-                <div className='movies-grid'>
+        <div className="top-movies-content w-full h-full py-[3%] px-[10%] text-center">
+            <h1 className='text-[#9EC8B9] text-bold'>Top 20 Rated Movies</h1>
+            <div className='grid-container w-full h-full flex-1 flex justify-center'>
+                <div className='movies-grid w-[250px] flex flex-wrap gap-[10px] sm:w-[510px] md:w-[770px] lg:w-[1030px] xl:w-[1290px] '>
                     {top.map((item) => (
                         <div key={item.movieId}>
-                            <Link to={`/single-movie?movieId=${item.movieId}`} className='grid-item'>
-                                <img className='poster' src={item.moviePoster} alt="Movie Poster"></img>
-                                <div className='movie-info'>
-                                    <h1>{item.movieTitle}</h1>
-                                    <h2>
+                            <Link key={item.movieId} to={`/single-movie?movieId=${item.movieId}`} className='grid-item w-[250px] h-[380px] rounded-[10px] transform duration-200 ease-in-out text-[#9EC8B9] no-underline text-[0.7em] flex flex-col items-center border-t-4 border-x-4 border-[#2E4F4F] border-solid hover:scale-[1.02]'>
+                                {item.moviePoster !== "N/A" 
+                                ? <img className='poster w-full h-[250px] rounded-[10px] border border-solid border-black' src={item.moviePoster} alt="Movie Poster"></img>
+                                : <div className='placeholderPoster flex justify-center items-center w-full h-[250px] rounded-[10px] border border-solid border-black bg-[rgb(212, 211, 211)]'>
+                                    <img className='w-[150px] h-[150px]' src={posterPlaceholder} alt="Movie Poster"></img>
+                                  </div>}
+                                <div className='movie-info flex-1 w-full py-0 px-[5%] flex flex-col justify-evenly items-center'>
+                                    <h1 className='text-[2em] text-center text-bold text-[#64CCC5]'>{item.movieTitle}</h1>
+                                    <h2 className='w-full text-[1.5em] flex justify-between font-normal'>
                                         <span>{item.movieYear}</span>
+                                        <span className='moviePrice text-bold text-[#DCF2F1]'>${item.moviePrice}</span>
                                         <span>{item.movieRating}
                                             <span className="fa-layers fa-fw">
                                                 <FontAwesomeIcon icon={faStar} color="#C5E898" size="sm"/>
@@ -87,7 +92,7 @@ const TopMovies = () => {
                                     </h2>
                                     </div>
                             </Link>
-                            <button className='addToCart' name='addToCart'
+                            <button className='addToCart w-[200px] h-[30px] text-[#395B64] text-bold border-0 rounded-[20px] bg-[#A5C9CA] m-[3px] duration-200 hover:scale-[1.05] active:scale-[0.9]' name='addToCart'
                                 onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
                                 ADD TO CART
                             </button>
@@ -95,87 +100,9 @@ const TopMovies = () => {
                     ))}
                 </div>
             </div>
-            <div id="attribution">
+            <div id="attribution" className='fixed w-full bg-[#f0f0f0]'>
                 <a href="https://www.flaticon.com/free-icons/image" title="image icons">Image icons created by Pixel perfect - Flaticon</a>
             </div>
-            
-            
-            {/* <table className="table table-striped">
-                <thead className="thead-dark">
-                    <tr>
-                        <th scope="col" >Title</th>
-                        <th scope="col" >Release Year</th>
-                        <th scope="col" >Director</th>
-                        <th scope="col" >Genres</th>
-                        <th scope="col" >Stars</th>
-                        <th scope="col" >Rating</th>
-                        <th> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows.map((item) => (
-                        <tr key={item.movieId}>
-                            <td><Link to={`/single-movie?movieId=${item.movieId}`} className="link">{item.movieTitle}</Link></td>
-                            <td>{item.movieYear}</td>
-                            <td>{item.movieDirector}</td>
-                            <td>
-                                {item.movieGenres.map((gObj, gIndex) => (
-                                <React.Fragment key={gObj.genreid}>
-                                    <Link key={gObj.genreid} to={`/movies?genreId=${gObj.genreid}`} className="link">{gObj.name}</Link>
-                                    {gIndex < item.movieGenres.length - 1 && ', '}
-                                </React.Fragment>
-                                ))}
-                            </td>
-                            <td>
-                                {item.movieStars.map((sObj, sIndex) => (
-                                <React.Fragment key={sObj.starid}>
-                                    <Link key={sObj.starid} to={`/single-star?starId=${sObj.starid}`} className="link">{sObj.name}</Link>
-                                    {sIndex < item.movieStars.length - 1 && ', '}   
-                                </React.Fragment>
-                                ))}
-                            </td>
-                            <td>{item.movieRating} 
-                            <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
-                            <td>
-                                <button className='addToCart' name='addToCart'
-                                onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
-                                    <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
-                                </button>
-                            </td>
-
-                        </tr>
-                        // <tr key={item.movieId}>
-                        //     <td><Link to={`/single-movie?movieId=${item.movieId}`} className="link">{item.movieTitle}</Link></td>
-                        //     <td>{item.movieYear}</td>
-                        //     <td>{item.movieDirector}</td>
-                        //     <td>
-                        //         {item.movieGenres.map((gObj, gIndex) => (
-                        //             <React.Fragment key={gObj.genreid}>
-                        //                 <Link to={`/movies?genreId=${gObj.genreid}`} className="link">{gObj.name}</Link>
-                        //                 {gIndex < item.movieGenres.length - 1 && ', '}
-                        //             </React.Fragment>
-                        //         ))}
-                        //     </td>
-                        //     <td>
-                        //         {item.movieStars.map((sObj, sIndex) => (
-                        //             <React.Fragment key={sObj.starId}>
-                        //                 <Link to={`/single-star?starId=${sObj.starid}`} className="link">{sObj.name}</Link>
-                        //                 {sIndex < item.movieStars.length - 1 && ', '}
-                        //             </React.Fragment>
-                        //         ))}
-                        //     </td>
-                        //     <td>{item.movieRating}
-                        //         <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
-                        //     <td>
-                        //         <button className='addToCart' name='addToCart'
-                        //             onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
-                        //             <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
-                        //         </button>
-                        //     </td>
-                        // </tr>
-                    ))}
-                </tbody>
-            </table> */}
         </div>
     )
 }
