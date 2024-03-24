@@ -47,12 +47,12 @@ const Login = () => {
             <div className="signin-widget flex flex-col items-center min-w-[300px] max-w-[350px] m-auto h-3/5 p-[10px] bg-[#041C32] rounded-[10px] sm:w-[70%] md:w-3/5 md:h-3/5 lg:w-1/2 xl:w-[1290px]">
                 <img alt="logo" src={logo}  width={50} height={50}></img>
                 <h1 className='text-center font-bold'>Login</h1>
-                    {!loginData.data.status && <div className="signin-message h-fit py-[15px] px-[5px] text-center text-red bg-[rgb(219, 175, 175)">{loginData.data.message}</div>}
+                    {!loginData.data.status && <div className='signin-message h-fit py-[15px] px-[5px] text-center text-[red] bg-[#dbafaf]'>{loginData.data.message}</div>}
                 <form onSubmit={handleSubmit} className='w-full h-4/5 text-center'> 
-                    <label htmlFor="email" className='w-full text-left py-0 px-[5px] font-bold'>Email</label>
+                    <label htmlFor="email">Email</label>
                     <br/>
                     <input 
-                        className='text-[#0b233a] bg-[whitesmoke] box-border w-full h-[40px] py-[5px] px-[10px] mb-[15px] border-t-0 border-r-0 border-b border-l-0 rounded-[5px] focus:outline-none'
+                        className='form-text-input'
                         type="email"
                         onChange={(e) => {
                             setEmail(e.target.value);
@@ -63,10 +63,10 @@ const Login = () => {
                         required>
                     </input>
                     <br/>
-                    <label htmlFor="password" className='w-full text-left py-0 px-[5px] font-bold'>Password</label>
+                    <label htmlFor="password">Password</label>
                     <br/>
                     <input 
-                        className='text-[#0b233a] bg-[whitesmoke] box-border w-full h-[40px] py-[5px] px-[10px] mb-[15px] border-t-0 border-r-0 border-b border-l-0 rounded-[5px] focus:outline-none'
+                        className='form-text-input'
                         type="password" 
                         onChange={(e) => {
                             setPassword(e.target.value);
@@ -78,7 +78,7 @@ const Login = () => {
                     </input>
                     <br/>
                     <input 
-                        className='bg-[#176B87] text-[whitesmoke] border-box mb-[10px] rounded-[5px] font-bold tracking-[2px] hover:bg-[#21738f]'
+                            className='bg-[#167fa1] mb-10px font-bold tracking-[2px] hover:bg-[#18647e] hover:text-[rgb(211, 209, 209)'
                         type="submit"
                         value="Login"/>
                 </form>
