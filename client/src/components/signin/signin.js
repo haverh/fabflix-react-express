@@ -44,7 +44,7 @@ const Login = () => {
 
     return (
         <div className='login-content w-full h-[95%] py-[3%] px-[10%] flex items-center'>
-            <div className="signin-widget min-w-[300px] max-w-[350px] m-auto h-3/5 p-[10px] bg-[#041C32] rounded-[10px] sm:w-[70%] md:w-3/5 md:h-3/5 lg:w-1/2 xl:w-[1290px]">
+            <div className="signin-widget flex flex-col items-center min-w-[300px] max-w-[350px] m-auto h-3/5 p-[10px] bg-[#041C32] rounded-[10px] sm:w-[70%] md:w-3/5 md:h-3/5 lg:w-1/2 xl:w-[1290px]">
                 <img alt="logo" src={logo}  width={50} height={50}></img>
                 <h1 className='text-center font-bold'>Login</h1>
                     {!loginData.data.status && <div className="signin-message h-fit py-[15px] px-[5px] text-center text-red bg-[rgb(219, 175, 175)">{loginData.data.message}</div>}
