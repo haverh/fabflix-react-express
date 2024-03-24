@@ -171,116 +171,49 @@ const MoviesResult = () => {
     }, [urlParams, sortOrder, sortBy, isExhausted]);
 
     return (
-        <div className="results-content">
+        <div className="results-content w-full h-full py-[3%] px-[5%] flex flex-col sm:py-[3%] sm:px-[10%] md:py-[3%] md:px-[15%] lg:py-[3%] lg:px-[20%]">
             <h1>Movie Results</h1>
             <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
-                <label defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
-                <select name="sortby" id="sortby">
+                <label className='font-bold' defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
+                <select className='h-[30px] w-[100px] text-[rgb(0, 123, 255)] font-bold text-center my-0 mx-[5px]' name="sortby" id="sortby">
                     <option value="rating">Rating</option>
                     <option value="title">Title</option>
                     <option value="year">Release</option>
                     <option value="director">Director</option>
                 </select> 
                 </label>
-                <button className="sortOrderBtn" onClick={changeSortOrder}>
+                <button className="sortOrderBtn h-[30px] w-[30px] rounded-[5px] flex justify-center items-center border-0" onClick={changeSortOrder}>
                     <FontAwesomeIcon icon={faSort} rotatation={0} style={{color: "#007bff", }} />
-                    {/* {(sortOrder === "asc") 
-                    ? <FontAwesomeIcon icon={faSortUp} rotatation={0} style={{color: "#007bff", }} />
-                    : <FontAwesomeIcon icon={faSortDown} rotatation={180} style={{color: "#007bff", }} />
-                    } */}
                 </button>
             </div>
-            <div className='card-container'>
+            <div className='card-container w-full h-auto'>
                 {movieData.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + 10).map((item, index) => (
-                    <Link to={`/single-movie?movieId=${item.movieId}`} key={item.movieId} className='movie-card'>
+                    <Link to={`/single-movie?movieId=${item.movieId}`} key={item.movieId}
+                        className='movie-card w-full border-2 border-solid border-white rounded-[10px] my-[10px] mx-[1px] p-[1px] flex no-underline text-[aliceblue] hover:border-[rgb(37, 199, 199)]'>
                         {item.moviePoster !== "N/A" 
-                        ? <img className='movie-poster' src={item.moviePoster} alt="Movie Poster"></img>
-                        : <img className='movie-poster' src={posterPlaceholder} alt="Movie Poster"></img>}
-                        <div className='result-movie-info'>
-                            <h2>{item.movieTitle}</h2>
-                            <h3 className='year-rating'><span>{item.movieYear}</span><span>{item.movieRating}<FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></span></h3>
-                            <h3>Directed by: {item.movieDirector}</h3>
+                        ? <div className='movie-poster-frame'>
+                            <img className='movie-poster w-full rounded-[10px] sm:w-[150px] sm:h-[200px] md:w-[170px] md:h-[230px]' src={item.moviePoster} alt="Movie Poster"></img>
+                          </div>
+                        : <div className='movie-poster-frame'>
+                            <img className='movie-placeholder w-[90px] my-0 mx-[5px] rounded-[10px] sm:w-[150px] sm:h-[200px] md:w-[170px] md:h-[230px]' src={posterPlaceholder} alt="Movie Poster"></img>
+                          </div>}
+                        <div className='result-movie-info w-full flex flex-col justify-evenly items-start p-0'>
+                            <h2 className='w-full text-[1.2em] font-bold sm:text-[1.5em]'>{item.movieTitle}</h2>
+                            <h3 className='year-rating w-full flex justify-between py-0 pr-[10px] pl-0'>
+                                <span>{item.movieYear}</span>
+                                <span className='movie-rating text-[1.2em]'>{item.movieRating}<FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></span>
+                            </h3>
+                            <h3 className='w-full text-base'>Directed by: {item.movieDirector}</h3>
                         </div>
                     </Link>
                 ))}
                 
             </div>
-            <div className='paginationButtons'>
+            <div className='paginationButtons mt-[10px] flex justify-center items-center gap-[10%]'>
                 <button onClick={prevButtonEvent} disabled={currentPage === 1}>Prev</button>
-                <span>{currentPage}</span>
+                <span className='bg-[#f0f0f0] text-black w-fit h-fit py-[2px] px-[5px] border border-solid rounded-[5px] text-center font-bold'>{currentPage}</span>
                 <button onClick={nextButtonEvent} disabled={Math.ceil(totalResult/perPage - 1) + 1 === currentPage}>Next</button>
             </div>
-            {/* <h1>Movies Result</h1>
-            <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
-                <label defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
-                <select name="sortby" id="sortby" style={{height: "27px"}}>
-                    <option value="rating">Rating</option>
-                    <option value="title">Title</option>
-                    <option value="year">Release</option>
-                    <option value="director">Director</option>
-                </select> 
-                </label>
-                <button className="sortOrderBtn" onClick={changeSortOrder}>
-                    {(sortOrder === "asc") 
-                    ? <FontAwesomeIcon icon={faSortUp} rotatation={0} style={{color: "#007bff", }} />
-                    : <FontAwesomeIcon icon={faSortDown} rotatation={180} style={{color: "#007bff", }} />
-                    }
-                </button>
-            </div>
-            <table className="table table-striped">
-                <thead className="thead-dark">
-                    <tr>
-                        <th></th>
-                        <th scope="col" >Title</th>
-                        <th scope="col" >Release Year</th>
-                        <th scope="col" >Director</th>
-                        <th scope="col" >Genres</th>
-                        <th scope="col" >Stars</th>
-                        <th scope="col" >Rating</th>
-                        <th> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                {movieData.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + 10).map((item, index) => (
-                    <tr key={item.movieId}>
-                        <td>{(currentPage-1)*10 + index + 1}</td>
-                        <td><Link to={`/single-movie?movieId=${item.movieId}`} className="link">{item.movieTitle}</Link></td>
-                        <td>{item.movieYear}</td>
-                        <td>{item.movieDirector}</td>
-                        <td>
-                            {item.movieGenres.map((gObj, gIndex) => (
-                            <React.Fragment key={gObj.genreId}>
-                                <Link to={`/movies?genreId=${gObj.genreId}`} className="link">{gObj.genreName}</Link>
-                                {gIndex < item.movieGenres.length - 1 && ', '}
-                            </React.Fragment>
-                            ))}
-                        </td>
-                        <td>
-                            {item.movieStars.map((sObj, sIndex) => (
-                            <React.Fragment key={sObj.starId}>
-                                <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
-                                {sIndex < item.movieStars.length - 1 && ', '}   
-                            </React.Fragment>
-                            ))}
-                        </td>
-                        <td>{item.movieRating} 
-                        <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></td>
-                        <td>
-                            <button className='addToCart' name='addToCart'
-                            onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
-                                <FontAwesomeIcon icon={faPlus} color="white" size="sm" />
-                            </button>
-                        </td>
-
-                    </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className='paginationButtons'>
-                <button onClick={prevButtonEvent} disabled={currentPage === 1}>Prev</button>
-                <span>{currentPage}</span>
-                <button onClick={nextButtonEvent} disabled={Math.ceil(totalResult/perPage - 1) + 1 === currentPage}>Next</button>
-            </div> */}
         </div>
     )
 };
