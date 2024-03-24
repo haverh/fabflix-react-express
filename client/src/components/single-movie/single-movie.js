@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 // import { useAuth0 } from "@auth0/auth0-react";
 
+import posterPlaceholder  from '../../img/img-placeholder.png';
 import './single-movie.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -37,6 +38,7 @@ function SingleMovie() {
                 credentials: "include",
             });
             const jsonData = await response.json();
+            console.log(jsonData)
 
             if (!response.ok) {
                 throw {
@@ -60,9 +62,12 @@ function SingleMovie() {
             const response = await fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=${omdbAPI}`);
             const jsonData = await response.json();
             console.log(jsonData)
-            let OMDbMovieInfo = {}
-            OMDbMovieInfo.plot = jsonData.Plot
-            OMDbMovieInfo.poster = jsonData.Poster
+            let OMDbMovieInfo = {
+                plot: jsonData.Plot,
+                runtime: jsonData.Runtime,
+                rated: jsonData.Rated,
+            }
+            console.log(OMDbMovieInfo)
             setOMDbInfo(OMDbMovieInfo);
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -76,55 +81,58 @@ function SingleMovie() {
 
     return ( 
         // isAuthenticated ?
-        <div className="single-movie-content">
-            <h1 className="header">
-                <span className="movieTitle">{movieInfo.movieTitle} ({movieInfo.movieYear})</span>
-                <span className="movieRating">{movieInfo.movieRating} 
-                    <span className="fa-layers fa-fw">
-                        <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" transform="shrink-6"/>
-                        <FontAwesomeIcon icon={farStar} size="sm" />
+        <div className="single-movie-content my-[3%] mx-[15%] flex flex-col justify-center items-center md:flex-row md:gap-[50px]">
+            <div className='poster-subinfo'>
+                <div className="poster-title flex flex-col justify-between md:flex-col md:justify-center md:items-center">
+                    <h1 className="movieTitle text-left text-[1.5em] font-bold">{movieInfo.movieTitle} ({movieInfo.movieYear})</h1>
+                    {movieInfo.moviePoster !== "N/A" 
+                    ? <div className='single-movie-poster-frame'>
+                        <img className='single-movie-poster w-[250px] h-[330px] rounded-[10px]' src={movieInfo.moviePoster} alt="Movie Poster"></img>
+                      </div>
+                    : <div className='single-movie-poster-frame'>
+                        <img className='single-movie-placeholder w-[150px]' src={posterPlaceholder} alt="Movie Poster"></img>
+                      </div>}
+                </div>
+                
+                <div className='movieSubInfo flex flex-col'>
+                    <span className="movieRating"><span className='detail-title'>Rating</span> {movieInfo.movieRating} 
+                        <span className="fa-layers fa-fw">
+                            <FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" transform="shrink-6"/>
+                            <FontAwesomeIcon icon={farStar} size="sm" />
+                        </span>
                     </span>
-                </span>
-            </h1>
-            <div className="table-img">
-                <table className="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th scope="row" >Plot</th>
-                            <td>{OMDbInfo.plot} </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" >Director</th>
-                            <td>{movieInfo.movieDirector} </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" >Genres</th>
-                            <td>
-                                {movieInfo.movieGenres && movieInfo.movieGenres.map((gObj, gIndex) => (
-                                <React.Fragment key={gObj.genreId}>
-                                    <Link to={`/movies?genreId=${gObj.genreId}`} className="link">{gObj.genreName}</Link>
-                                    {gIndex < movieInfo.movieGenres.length - 1 && ', '}   
-                                </React.Fragment>
-                                ))}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" >Stars</th>
-                            <td>
-                                {movieInfo.movieStars && movieInfo.movieStars.map((sObj, sIndex) => (
-                                <React.Fragment key={sObj.starId}>
-                                    <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
-                                    {sIndex < movieInfo.movieStars.length - 1 && ', '}
-                                </React.Fragment>
-                                ))}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                {OMDbInfo.poster !== 'N/A' && <img className="image" src={OMDbInfo.poster} alt="Movie Poster"></img>}
+                    <span><span className='detail-title'>Runtime</span> {OMDbInfo.runtime} </span>
+                    <span><span className='detail-title'>Rated</span> {OMDbInfo.rated} </span>
+                </div>
             </div>
+            
+
+            <div className='movieMainInfo'>
+                <p>{OMDbInfo.plot}</p>
+                <hr/>
+                <p><span className='detail-title'>Director</span> {movieInfo.movieDirector}</p>
+                <hr/>
+
+                <div>
+                <span className='detail-title'>Genres</span> {movieInfo.movieGenres && movieInfo.movieGenres.map((gObj, gIndex) => (
+                    <React.Fragment key={gObj.genreId}>
+                            <Link to={`/movies?genreId=${gObj.genreId}`} className="link no-underline text-[#56b3b4] hover:underline">{gObj.genreName}</Link>
+                        {gIndex < movieInfo.movieGenres.length - 1 && ', '}   
+                    </React.Fragment>
+                ))}
+                </div>
+                <hr/>
+                <div>
+                <span className='detail-title'>Stars</span> {movieInfo.movieStars && movieInfo.movieStars.map((sObj, sIndex) => (
+                    <React.Fragment key={sObj.starId}>
+                        <Link to={`/single-star?starId=${sObj.starId}`} className="link">{sObj.starName}</Link>
+                        {sIndex < movieInfo.movieStars.length - 1 && ', '}
+                    </React.Fragment>
+                ))}
+                </div>
+            </div>
+                
         </div>
-        // : loginWithRedirect()
     )
 }
 

@@ -1,46 +1,91 @@
-.single-movie-content {
+/* .single-movie-content {
     margin: 3% 15%;
-}
-
-.header {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.poster-title {
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-}
-
-.table-img {
-    display: grid;
-    grid-template-columns: 80% 20%;
-    /* column-gap: 1%; */
-}
-
-.table {
-    margin: 0 0 ;
-    /* height: 100%; */
-    /* align-self: center; */
-}
-
-.table thead th {
-    color: #8DBA5E;
-}
-
-.table thead {
-    background-color: #858585;
-}
+} */
 
 .link {
     text-decoration: none;
+    color: #56b3b4;
 }
 
-.image {
-    width: 100%;
-    align-self: center;
-    justify-self: center;
+.link:hover {
+
+    text-decoration: underline;
 }
 
-.movieTitle {
+/* .movieTitle {
     text-align: left;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
-.movieRating {
-    text-align: right;
+.movieSubInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.single-movie-poster {
+    width: 250px;
+    height: 330px;
+    border-radius: 10px;
+} */
+
+.single-movie-poster-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 330px;
+    width: 250px;
+    background-color: rgb(27, 39, 94);
+    border-radius: 10px;
+    border: 10px 0;
+}
+
+/* .single-movie-placeholder {
+    width: 150px;
+} */
+
+.detail-title {
+    font-weight: bold;
+    color: rgb(135, 192, 219)
+}
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 650px) {
+
+}
+
+
+/* Large devices (laptops/desktops, 991px and up) */
+@media only screen and (min-width: 968px) {
+    .single-movie-content {
+        flex-direction: row;
+        gap: 50px;
+    }
+
+    .poster-title {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Large devices (laptops/desktops, 991px and up) */
+@media only screen and (min-width: 1320px) {
+
+}
+
+/* Extra Extra large devices (large laptops and desktops, 1578px and up) */
+@media only screen and (min-width: 1613px) {
+
 }
