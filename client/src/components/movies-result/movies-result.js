@@ -1,6 +1,6 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable array-callback-return */
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback} from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,12 +11,16 @@ import { faSort, faSortUp, faSortDown, faStar } from '@fortawesome/free-solid-sv
 import posterPlaceholder  from '../../img/img-placeholder.png';
 import './movies-result.css';
 
+import Loading from '../loading/loading';
+import MovieCards from './movie-cards';
+
 const MoviesResult = () => {
     const omdbAPI = "f6cd5e6f";
 
     // const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     // const cart = useContext(CartContext);
+    const [loading, setLoading] = useState(true);
     const [movieData, setMovieData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalResult, setTotal] = useState(-1);
@@ -62,6 +66,7 @@ const MoviesResult = () => {
 
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);
+            setLoading(false);
 
             // const topPromises = jsonData.moviesList.map(async (obj) => {
             //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
@@ -106,6 +111,7 @@ const MoviesResult = () => {
             
             if ( currentPage === 1 ) { setTotal(jsonData.total); }
             setIsExhausted(false);
+            setLoading(false);
 
             // console.time("Poster Fetch Time")
             // const moviePromises = jsonData.moviesList.map(async (obj) => {
@@ -131,10 +137,11 @@ const MoviesResult = () => {
 
     // Decide which endpoint to call
     const fetchDataManager = useCallback((urlParams) => {
+      setLoading(true);
         if (urlParams.get('startCharacter')) {
-            fetchByStartChar(urlParams.get('startCharacter'));
+          fetchByStartChar(urlParams.get('startCharacter'));
         } else if (urlParams.get('genreId')) {
-            fetchByGenre(Number(urlParams.get('genreId')));
+          fetchByGenre(Number(urlParams.get('genreId')));
         }
     }, [fetchByStartChar, fetchByGenre]);
 
@@ -164,58 +171,53 @@ const MoviesResult = () => {
     }, [urlParams])
 
     useEffect(() => {
-        
-        if ( isExhausted && (movieData.length !== totalResult)) {
-            fetchDataManager(urlParams);
-        }
+      if ( isExhausted && (movieData.length !== totalResult)) {
+          fetchDataManager(urlParams);
+      }
     }, [urlParams, sortOrder, sortBy, isExhausted]);
 
-    return (
-        <div className="results-content w-full h-full py-[3%] px-[5%] flex flex-col sm:py-[3%] sm:px-[10%] md:py-[3%] md:px-[15%] lg:py-[3%] lg:px-[20%]">
-            <h1>Movie Results</h1>
-            <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
-                <label className='font-bold' defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
-                <select className='h-[30px] w-[100px] text-[rgb(0, 123, 255)] font-bold text-center my-0 mx-[5px]' name="sortby" id="sortby">
-                    <option value="rating">Rating</option>
-                    <option value="title">Title</option>
-                    <option value="year">Release</option>
-                    <option value="director">Director</option>
-                </select> 
-                </label>
-                <button className="sortOrderBtn h-[30px] w-[30px] rounded-[5px] flex justify-center items-center border-0" onClick={changeSortOrder}>
-                    <FontAwesomeIcon icon={faSort} rotatation={0} style={{color: "#007bff", }} />
-                </button>
-            </div>
-            <div className='card-container w-full h-auto'>
-                {movieData.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + 10).map((item, index) => (
-                    <Link to={`/single-movie?movieId=${item.movieId}`} key={item.movieId}
-                        className='movie-card w-full border-2 border-solid border-white rounded-[10px] my-[10px] mx-[1px] p-[1px] flex no-underline text-[aliceblue] hover:border-[rgb(37, 199, 199)]'>
-                        {item.moviePoster !== "N/A" 
-                        ? <div className='movie-poster-frame'>
-                            <img className='movie-poster w-full rounded-[10px] sm:w-[150px] sm:h-[200px] md:w-[170px] md:h-[230px]' src={item.moviePoster} alt="Movie Poster"></img>
-                          </div>
-                        : <div className='movie-poster-frame'>
-                            <img className='movie-placeholder w-[90px] my-0 mx-[5px] rounded-[10px] sm:w-[150px] sm:h-[200px] md:w-[170px] md:h-[230px]' src={posterPlaceholder} alt="Movie Poster"></img>
-                          </div>}
-                        <div className='result-movie-info w-full flex flex-col justify-evenly items-start p-0'>
-                            <h2 className='w-full text-[1.2em] font-bold sm:text-[1.5em]'>{item.movieTitle}</h2>
-                            <h3 className='year-rating w-full flex justify-between py-0 pr-[10px] pl-0'>
-                                <span>{item.movieYear}</span>
-                                <span className='movie-rating text-[1.2em]'>{item.movieRating}<FontAwesomeIcon icon={faStar} color="#8DBA5E" size="sm" /></span>
-                            </h3>
-                            <h3 className='w-full text-base'>Directed by: {item.movieDirector}</h3>
-                        </div>
-                    </Link>
-                ))}
-                
-            </div>
-            <div className='paginationButtons mt-[10px] flex justify-center items-center gap-[10%]'>
-                <button onClick={prevButtonEvent} disabled={currentPage === 1}>Prev</button>
-                <span className='bg-[#f0f0f0] text-black w-fit h-fit py-[2px] px-[5px] border border-solid rounded-[5px] text-center font-bold'>{currentPage}</span>
-                <button onClick={nextButtonEvent} disabled={Math.ceil(totalResult/perPage - 1) + 1 === currentPage}>Next</button>
-            </div>
-        </div>
-    )
+  return (
+    <div className="results-content w-full h-full py-[3%] px-[5%] flex flex-col sm:py-[3%] sm:px-[10%] md:py-[3%] md:px-[15%] lg:py-[3%] lg:px-[20%]">
+      <h1>Movie Results</h1>
+      <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
+        <label className='font-bold' defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
+          <select className='h-[30px] w-[100px] bg-[#4FBDBA] text-[#313030] font-bold text-center my-0 mx-[5px]' name="sortby" id="sortby">
+          <option value="rating">Rating</option>
+          <option value="title">Title</option>
+          <option value="year">Release</option>
+          <option value="director">Director</option>
+        </select> 
+        </label>
+        <button className="sortOrderBtn bg-[#4FBDBA] h-[30px] w-[30px] rounded-[5px] flex justify-center items-center border-0" onClick={changeSortOrder}>
+          <FontAwesomeIcon icon={faSort} rotatation={0} style={{color: "#313030", }} />
+        </button>
+      </div>
+      {loading ? (
+        <Loading/>
+        ):
+        (<MovieCards
+          movieData={movieData}
+          currentPage={currentPage}
+          perPage={perPage}
+        />
+      )}
+      <div className='paginationButtons my-[10px] flex justify-center items-center gap-[10%]'>
+        <button
+          className={currentPage === 1 ? 'disabled-btn' : 'enabled-btn'}
+          onClick={prevButtonEvent} 
+          disabled={currentPage === 1}
+          >&lt;Prev
+        </button>
+        <span className='bg-[#f0f0f0] text-black w-fit h-fit py-[2px] px-[5px] border border-solid rounded-[5px] text-center font-bold'>{currentPage}</span>
+        <button 
+          className={Math.ceil(totalResult/perPage - 1) + 1 === currentPage ? 'disabled-btn' : 'enabled-btn'}
+          onClick={nextButtonEvent} 
+          disabled={Math.ceil(totalResult/perPage - 1) + 1 === currentPage}
+          >Next&gt;
+        </button>
+      </div>
+    </div>
+  )
 };
 
 export default MoviesResult;
