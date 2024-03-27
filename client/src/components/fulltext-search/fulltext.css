@@ -1,16 +1,16 @@
-.search-input {
+/* .search-input {
     width: 300px;
     margin: 0;
     padding: 5px 10px;
     border-radius: 10px 0 0 10px;
-}
+} */
 
-.search-button {
+/* .search-button {
     border-radius: 0 10px 10px 0;
     width: 34px;
-}
+} */
 
-.suggestions {
+/* .suggestions {
     position: absolute;
     list-style: none;
     margin: 3px 0 0 0;
@@ -20,7 +20,7 @@
     width: 300px;
     border-radius: 5px;
     z-index: 2;
-}
+} */
 
 .suggestions li {
     list-style: none;
