@@ -28,6 +28,7 @@ module.exports = function (pool, app) {
     app.get('/api/byStartCharacter', middleware.authenticateToken, async (req, res) => {
         try {
             console.time("Start Character");
+            console.log(req.query);
             const { startCharacter, sortOrder, sortBy } = req.query;
             const currentPage = parseInt(req.query.currentPage, 10);
             const perPage = parseInt(req.query.perPage, 10);
@@ -50,10 +51,10 @@ module.exports = function (pool, app) {
                 const result = await client.query(queryString);
                 resultObj.total = parseInt(result.rows[0].count);
             }else { 
-                offset = (currentPage + 1) * perPage;
+                offset = currentPage  * perPage;
             }
             queryString.text = `SELECT rating, movieid, title, year, director, poster FROM movies JOIN ratings ` +
-                                `ON id=movieid WHERE title ILIKE $1 ORDER BY ${sortBy} ${sortOrder} ` +
+                                `ON id=movieid WHERE title ILIKE $1 ORDER BY ${sortBy} ${sortOrder}, numVotes DESC ` +
                                 `OFFSET ${offset} LIMIT ${limit};`
 
             const result = await client.query(queryString)
@@ -118,6 +119,7 @@ module.exports = function (pool, app) {
     app.get('/api/byGenre', middleware.authenticateToken, async (req, res) => {
         try {
             console.time("Genre");
+            console.log(req.query);
             const { genreId, sortOrder, sortBy } = req.query;
             const currentPage = parseInt(req.query.currentPage, 10);
             const perPage = parseInt(req.query.perPage, 10);
@@ -141,11 +143,11 @@ module.exports = function (pool, app) {
                 const result = await client.query(queryString);
                 resultObj.total = parseInt(result.rows[0].count);
             }else { 
-                offset = (currentPage + 1) * perPage;
+                offset = (currentPage) * perPage;
             }
             queryString.text = `SELECT rating, id as movieid, title, year, director, poster FROM movies ` +
                                 `JOIN ratings ON id=movieid JOIN genres_in_movies on id=genres_in_movies.movieid ` +
-                                `WHERE genreid = ${genreId} ORDER BY ${sortBy} ${sortOrder} ` +
+                                `WHERE genreid = ${genreId} ORDER BY ${sortBy} ${sortOrder}, numVotes DESC ` +
                                 `OFFSET ${offset} LIMIT ${limit}`
 
             const result = await client.query(queryString)
