@@ -37,7 +37,7 @@ const Home = () => {
 
             console.log(jsonData)
             setGenres(jsonData.genreList);
-          } catch (error) {
+        } catch (error) {
             console.error('Error fetching data:', error);
             if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
                 window.location.href = "login";

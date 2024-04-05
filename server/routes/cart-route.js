@@ -5,6 +5,8 @@ module.exports = function (pool, app) {
     app.get('/api/cart/price', middleware.authenticateToken, async (req, res) => {
         try {
 
+            console.log("YEER")
+
             const movieId = req.query.movieId
 
             const client = await pool.connect();
@@ -18,7 +20,7 @@ module.exports = function (pool, app) {
 
             movieObj.movieId = movieId;
             movieObj.price = result.rows[0].price;
-            // console.log(movieObj);
+            console.log(movieObj);
             res.json(movieObj);
         
             client.release();

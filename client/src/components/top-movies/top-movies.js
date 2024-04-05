@@ -27,38 +27,38 @@ const TopMovies = () => {
     console.time("fetchTime");
     setLoading(true);
     try {
-        const response = await fetch(`${fetchURL}/api/topmovies`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          credentials: "include",
-        });
+      const response = await fetch(`${fetchURL}/api/topmovies`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+      });
 
-        const jsonData = await response.json();
-        console.log(jsonData)
-        
+      const jsonData = await response.json();
+      console.log(jsonData)
+      
 
-        if (!response.ok) {
-          throw {
-            ...jsonData,
-            status: response.status,
-          }
+      if (!response.ok) {
+        throw {
+          ...jsonData,
+          status: response.status,
         }
+      }
 
-        // console.time("Poster Fetch Time")
-        // const topPromises = jsonData.map(async (obj) => {
-        //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
-        //     const jsonData = await response.json();
-        //     const poster = jsonData.Poster !== "N/A" ? jsonData.Poster : posterPlaceholder;
-        //     return  {...obj, moviePoster:poster};
-        // })
+      // console.time("Poster Fetch Time")
+      // const topPromises = jsonData.map(async (obj) => {
+      //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
+      //     const jsonData = await response.json();
+      //     const poster = jsonData.Poster !== "N/A" ? jsonData.Poster : posterPlaceholder;
+      //     return  {...obj, moviePoster:poster};
+      // })
 
-        // const updatedTop = await Promise.all(topPromises);
-        // console.timeEnd("Poster Fetch Time")
-        // setTop(updatedTop);
-        setLoading(false);
-        setTop(jsonData)
+      // const updatedTop = await Promise.all(topPromises);
+      // console.timeEnd("Poster Fetch Time")
+      // setTop(updatedTop);
+      setLoading(false);
+      setTop(jsonData)
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
