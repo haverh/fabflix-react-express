@@ -68,18 +68,21 @@ const MoviesResult = () => {
       setIsExhausted(false);
       setLoading(false);
 
-      // const topPromises = jsonData.moviesList.map(async (obj) => {
-      //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
-      //     const jsonData = await response.json();
-      //     const poster = jsonData.Poster !== "N/A" ? jsonData.Poster : posterPlaceholder;
-      //     return  {...obj, moviePoster:poster};
-      // })
+      console.time("Poster Fetch Time")
+      const moviePromises = jsonData.moviesList.map(async (obj) => {
+          const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
+          const jsonData = await response.json();
+          const plot = jsonData.Plot;
+          
+          // console.log(plot);
+          return  {...obj, plot: plot};
+      })
 
-      // const updatedMovieList = await Promise.all(topPromises);
-      // console.log(updatedMovieList)
-
-      // setMovieData([...movieData, ...updatedMovieList]);
-      setMovieData([...movieData, ...jsonData.moviesList]);
+      const updatedMovieList = await Promise.all(moviePromises);
+      console.timeEnd("Poster Fetch Time")
+      console.log(updatedMovieList)
+      
+      setMovieData([...movieData, ...updatedMovieList]);
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
@@ -113,20 +116,22 @@ const MoviesResult = () => {
       setIsExhausted(false);
       setLoading(false);
 
-      // console.time("Poster Fetch Time")
-      // const moviePromises = jsonData.moviesList.map(async (obj) => {
-      //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
-      //     const jsonData = await response.json();
-      //     const poster = jsonData.Poster !== "N/A" ? jsonData.Poster : posterPlaceholder;
-      //     return  {...obj, moviePoster:poster};
-      // })
+      console.time("Poster Fetch Time")
+      const moviePromises = jsonData.moviesList.map(async (obj) => {
+          const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
+          const jsonData = await response.json();
+          const plot = jsonData.Plot;
+          
+          // console.log(plot);
+          return  {...obj, plot: plot};
+      })
 
-      // const updatedMovieList = await Promise.all(moviePromises);
-      // console.timeEnd("Poster Fetch Time")
-      // console.log(updatedMovieList)
+      const updatedMovieList = await Promise.all(moviePromises);
+      console.timeEnd("Poster Fetch Time")
+      console.log(updatedMovieList)
       
-      // setMovieData([...movieData, ...updatedMovieList]);
-      setMovieData([...movieData, ...jsonData.moviesList])
+      setMovieData([...movieData, ...updatedMovieList]);
+      // setMovieData([...movieData, ...jsonData.moviesList])
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
@@ -159,18 +164,22 @@ const MoviesResult = () => {
       setIsExhausted(false);
       setLoading(false);
 
-      // const topPromises = jsonData.moviesList.map(async (obj) => {
-      //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
-      //     const jsonData = await response.json();
-      //     const poster = jsonData.Poster !== "N/A" ? jsonData.Poster : posterPlaceholder;
-      //     return  {...obj, moviePoster:poster};
-      // })
+      console.time("Poster Fetch Time")
+      const moviePromises = jsonData.moviesList.map(async (obj) => {
+          const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
+          const jsonData = await response.json();
+          const plot = jsonData.Plot;
+          
+          // console.log(plot);
+          return  {...obj, plot: plot};
+      })
 
-      // const updatedMovieList = await Promise.all(topPromises);
-      // console.log(updatedMovieList)
-
-      // setMovieData([...movieData, ...updatedMovieList]);
-      setMovieData([...movieData, ...jsonData.moviesList]);
+      const updatedMovieList = await Promise.all(moviePromises);
+      console.timeEnd("Poster Fetch Time")
+      console.log(updatedMovieList)
+      
+      setMovieData([...movieData, ...updatedMovieList]);
+      
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
@@ -224,15 +233,15 @@ const MoviesResult = () => {
 
 return (
   <div className="results-content w-full h-full py-[3%] px-[5%] flex flex-col sm:py-[3%] sm:px-[10%] md:py-[3%] md:px-[15%] lg:py-[3%] lg:px-[20%]">
-    <h1>Movie Results</h1>
+    <h1 className='font-bold'>Movie Results</h1>
     <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
       <label className='font-bold' defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
         <select className='h-[30px] w-[100px] bg-[#4FBDBA] text-[#313030] font-bold text-center my-0 mx-[5px]' name="sortby" id="sortby">
-        <option value="rating">Rating</option>
-        <option value="title">Title</option>
-        <option value="year">Release</option>
-        <option value="director">Director</option>
-      </select> 
+          <option value="rating">Rating</option>
+          <option value="title">Title</option>
+          <option value="year">Release</option>
+          <option value="director">Director</option>
+        </select> 
       </label>
       <button className="sortOrderBtn bg-[#4FBDBA] h-[30px] w-[30px] rounded-[5px] flex justify-center items-center border-0" onClick={changeSortOrder}>
         <FontAwesomeIcon icon={faSort} rotatation={0} style={{color: "#313030", }} />
