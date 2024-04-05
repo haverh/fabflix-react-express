@@ -89,7 +89,7 @@ const FulltextInput = () => {
 
   return (
     <div className="search-component h-100 m-0">
-      <form className="d-flex input-group w-auto" onSubmit={(event) => {event.preventDefault();}}>
+      <form className="d-flex input-group w-auto justify-center items-center" onSubmit={(event) => {event.preventDefault();}}>
         <input
             name='fsInput'
             type="search"
