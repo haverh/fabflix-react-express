@@ -15,7 +15,7 @@ import { Routes, Route, Switch } from 'react-router-dom';
 // import CheckoutSuccess from './components/checkout/checkout-success';
 
 const Home = lazy(() => import('./components/home/home'))
-const Login = lazy(() => import('./components/signin/signin'))
+const Login = lazy(() => import('./components/login/login'))
 const TopMovies = lazy(() => import('./components/top-movies/top-movies'))
 const Navbar = lazy(() => import('./components/navbar/navbar'))
 const SingleMovie = lazy(() => import('./components/single-movie/single-movie'))
@@ -24,6 +24,11 @@ const MoviesResult = lazy(() => import('./components/movies-result/movies-result
 const CartProvider = lazy(() => import('./contexts/CartContext'))
 const ShoppingCart = lazy(() => import('./components/shopping-cart/cart'))
 const CheckoutSuccess = lazy(() => import('./components/checkout/checkout-success'))
+
+// Admin Pages
+const AdminLogin = lazy(() => import('./components/admin-pages/admin-login'))
+const AdminHome = lazy(() => import ('./components/admin-pages/admin-home'))
+const AddMovie = lazy(() => import('./components/admin-pages/add-movie'))
 
 function App() {
 	// const {loginWithRedirect } = useAuth0();
@@ -35,19 +40,22 @@ function App() {
 
 	return (
 		<CartProvider>
-		<Routes>
-			<Route path="/login" element={<Login/>}/>
-			<Route path="/" element={<Navbar/>}>
-				<Route path="/" element={<Home/>}/>
-				<Route path="/home" element={<Home/>}/>
-				<Route path="/movies" element={<MoviesResult/>}/>
-				<Route path="/top-movies" element={<TopMovies/>}/>
-				<Route path="/single-movie" element={<SingleMovie/>}/>
-				<Route path="/single-star" element={<SingleStar/>}/>
-				<Route path="/cart" element={<ShoppingCart/>}/>
-				<Route path="/success" element={<CheckoutSuccess/>}/>
-			</Route>
-		</Routes>
+			<Routes>
+				<Route path="/login" element={<Login/>}/>
+				<Route path='/admin/home' element={<AdminHome/>}></Route>
+				<Route path="/admin/login" element={<AdminLogin/>}></Route>
+				<Route path="/" element={<Navbar/>}>
+					<Route path="/" element={<Home/>}/>
+					<Route path="/home" element={<Home/>}/>
+					<Route path="/movies" element={<MoviesResult/>}/>
+					<Route path="/top-movies" element={<TopMovies/>}/>
+					<Route path="/single-movie" element={<SingleMovie/>}/>
+					<Route path="/single-star" element={<SingleStar/>}/>
+					<Route path="/cart" element={<ShoppingCart/>}/>
+					<Route path="/success" element={<CheckoutSuccess/>}/>
+					<Route path="/admin/add-movie" element={<AddMovie/>}/>
+				</Route>
+			</Routes>
 		</CartProvider>
 	);
 }

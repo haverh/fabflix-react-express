@@ -19,7 +19,7 @@ app.use(cors({
     origin: [process.env.LOCAL_CLIENT_URL],
     methods: ["GET", "POST"],
     credentials: true,
-  }));
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 // app.use(middleware.generateAccessToken); 
@@ -82,6 +82,9 @@ const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
+const addMovieRoutes = require('./routes/admin/add-movie-route'); // Add Movie
+const dbSchemaRoute = require('./routes/admin/db-schema-route'); // Fetch Schema Data
+
 landingRoutes(app);
 loginRoutes(pool, app);
 homeRoutes(pool, app);
@@ -91,6 +94,9 @@ fulltextRoutes(pool, app);
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);
 singleStarRoutes(pool, app);
+
+addMovieRoutes(pool, app);
+dbSchemaRoute(pool, app);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
