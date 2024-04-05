@@ -5,9 +5,10 @@ module.exports = function (pool, app) {
         try { 
             console.time("Top Movies");
             const client = await pool.connect();
-            const result = await client.query(`SELECT rating, movieid, title, year, director, poster
-                                                FROM movies m, ratings r
+            const result = await client.query(`SELECT rating, r.movieid, title, year, director, poster, price
+                                                FROM movies m, ratings r, movie_prices mp
                                                 WHERE m.id=r.movieId
+                                                AND m.id = mp.movieid
                                                 ORDER BY rating DESC
                                                 LIMIT 20;`);
             // Array to hold all movies
@@ -70,7 +71,8 @@ module.exports = function (pool, app) {
 
             const movies = result.rows.map((row) => { 
                 return { 
-                    movieId: row.movieid, 
+                    movieId: row.movieid,
+                    moviePrice: row.price,
                     movieRating: row.rating,
                     movieTitle: row.title,
                     movieYear: row.year,
