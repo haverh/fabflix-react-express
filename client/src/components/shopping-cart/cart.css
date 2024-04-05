@@ -6,6 +6,10 @@
     margin-bottom: 5px;
 }
 
+th {
+    background-color:#041C32;
+}
+
 .cart-bottom {
     display: flex;
     justify-content: flex-end;
@@ -20,7 +24,8 @@
 }
 
 .cart-total {
-    background: white;
+    color: black;
+    background: #041C32;
     width: 100%; 
     padding: 5%;
     margin: 0;

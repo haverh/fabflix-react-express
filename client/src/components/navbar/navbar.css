@@ -21,6 +21,8 @@
 .navbar-brand {
     color: #71dfcf;
     font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 .navbar-brand:hover {
