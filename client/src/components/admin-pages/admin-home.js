@@ -6,21 +6,22 @@ import React, { useState, useEffect } from 'react';
 const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
 
+// Table Component
 const SchemaTable = ({ table_name, table_fields }) => {
   console.log(table_name)
   return (
-    <div className='bg-white text-black w-1/2 my-4'>
-      <h2 className='bg-[aqua]'>{table_name}</h2>
+    <div className='schema-table text-black w-3/4 max-w-[420px] my-4'>
+      <h2 className='text-white font-bold'>"{table_name}" Table</h2>
       <div className='flex'>
-        <h3 className='bg-[salmon] w-1/2'>Column Name</h3>
-        <h3 className='bg-[lightblue] w-1/2'>Data Type</h3>
+        <h3 className='bg-[#041C32] text-white w-1/2 m-0 p-2 font-bold border border-solid border-black'>Column Name</h3>
+        <h3 className='bg-[#041C32] text-white w-1/2 m-0 p-2 font-bold border border-solid border-black'>Data Type</h3>
       </div>
 
-      <div className='bg-[lightcyan] flex flex-col'>
+      <div className='bg-[#022747] flex flex-col'>
         { table_fields.map((field) => (
           <div className='flex'>
-            <p className='w-1/2'>{field.column_name}</p>
-            <p className='w-1/2'>{field.data_type}</p>
+            <p className='text-white w-1/2 m-0 p-2 border border-solid border-black'>{field.column_name}</p>
+            <p className='text-white w-1/2 m-0 p-2 border border-solid border-black'>{field.data_type}</p>
           </div>
         ))
         }
