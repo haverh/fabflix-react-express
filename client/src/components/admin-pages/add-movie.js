@@ -1,27 +1,37 @@
+/* eslint-disable no-throw-literal */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState, useRef } from 'react';
 import './add-data.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faCircleExclamation, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { Dialog } from '@headlessui/react';
+// import { Dialog } from '@headlessui/react';
+
+import Modal from '../modal/modal';
 
 const AddMovie = () => {
   // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
   const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   const omdbAPI = "f6cd5e6f";
+  // To keep data of all inputs on the form
   const [formData, setFormData] = useState({});
 
+  // To hold input value for star name
   const [starName, setStarName] = useState('');
+  // To hold input value for star birth year
   const [starYear, setStarYear] = useState('');
+  // An array to hold a list of stars
   const [starList, setStarList] = useState([]);
 
+  // To hold input value for genre name
   const [genre, setGenre] = useState('');
+  // An array to hold a list of stars
   const [genreList, setGenreList] = useState([]);
 
+  // To hold response when submitting form to add movie
   const [formResponse, setFormResponse] = useState(undefined);
-  const [isOpen, setIsOpen] = useState(false);
 
+  // A reference to the form used for clearing inputs when submitting
   const formRef = useRef(null);
 
   // Create and add star object to list from input values
@@ -121,8 +131,15 @@ const AddMovie = () => {
         body: JSON.stringify(updatedFormData),
       });
       const jsonData = await response.json();
+
+      if (!response.ok) {
+        throw {
+          ...jsonData,
+          status: response.status,
+        }
+      }
+
       setFormResponse(jsonData);
-      setIsOpen(true);
       console.log(jsonData);
 
       // Clear form when movie is added
@@ -135,45 +152,17 @@ const AddMovie = () => {
         setStarList([]);
         setGenreList([]);
       }
-      
-      // if (!response.ok) {
-      //     throw {
-      //         ...jsonData,
-      //         status: response.status,
-      //     }
-      // }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      // console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        window.location.href = "../login";
       }
     }
   }
 
   return (
     <div className="add-content">
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className='relative z-50'>
-        <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-black bg-opacity-50 ">
-          <Dialog.Panel className='relative w-full max-w-md p-3 rounded text-white bg-[#243666] shadow-lg'>
-            <div className='flex flex-column items-center'>
-              <FontAwesomeIcon 
-                icon={(formResponse !== undefined && formResponse.success) ? faCircleCheck : faCircleExclamation} 
-                color={(formResponse !== undefined && formResponse.success) ? "#64e692" : "#f48260"} 
-                size='4x'/>
-              <Dialog.Title className='font-bold'>{formResponse !== undefined && (formResponse.success ? 'SUCCESS' : 'ERROR')}</Dialog.Title>
-            </div>
-            <Dialog.Description>
-              {formResponse !== undefined && formResponse.message}
-            </Dialog.Description>
-            <button onClick={() => setIsOpen(false)}
-              className='absolute top-1 right-1 bg-[salmon] py-1 px-2 rounded'>
-                <FontAwesomeIcon 
-                icon={faXmark}
-                size='lg'/>
-            </button>
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+      <Modal formResponse={formResponse} />
       <h1 className='font-bold mb-4'>Add Movie</h1>
       <form onSubmit={(e) => handleSubmit(e)} onKeyDown={(e) => handleKeyDown(e)}
         ref={formRef}>
