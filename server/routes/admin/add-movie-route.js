@@ -11,7 +11,7 @@ module.exports = function (pool, app) {
 
       const client = await pool.connect();
       let queryString = {
-        text: 'SELECT success, message from add_movie($1, $2, $3, $4, $5, $6, $7)',
+        text: 'SELECT success, message FROM add_movie($1, $2, $3, $4, $5, $6, $7)',
         values: [newMovieData.movieId, newMovieData.movieTitle, newMovieData.movieYear, newMovieData.movieDirector,
                 newMovieData.moviePoster, newMovieData.movieRating, newMovieData.movieNumRating]
       }
