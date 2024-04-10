@@ -101,7 +101,7 @@ const AddMovie = () => {
     }
   }
 
-  // Add movie when pushing "Submit" button
+  // Add movie when pushing submitting form
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -153,7 +153,7 @@ const AddMovie = () => {
         setGenreList([]);
       }
     } catch (error) {
-      // console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
         window.location.href = "../login";
       }

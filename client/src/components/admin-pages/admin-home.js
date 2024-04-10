@@ -31,7 +31,7 @@ const SchemaTable = ({ table_name, table_fields }) => {
 } 
 
 
-const Admin_Home = () => {
+const AdminHome = () => {
 
   const [tableArray, setTableArray] = useState([]);
 
@@ -88,4 +88,4 @@ const Admin_Home = () => {
   )
 }
 
-export default Admin_Home;
+export default AdminHome;
