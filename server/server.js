@@ -72,17 +72,19 @@ const pool = new Pool({
 })
 
 // Routes
-const landingRoutes = require('./routes/landing-route');
-const loginRoutes = require('./routes/login-route');
-const homeRoutes = require('./routes/home-route');
-const cartRoutes = require('./routes/cart-route');
-const checkoutRoutes = require('./routes/checkout-route');
-const fulltextRoutes = require('./routes/fulltext-route');
+const landingRoutes = require('./routes/landing-route'); // Landing
+const loginRoutes = require('./routes/login-route'); // Login
+const homeRoutes = require('./routes/home-route'); // Home
+const cartRoutes = require('./routes/cart-route'); // Cart
+const checkoutRoutes = require('./routes/checkout-route'); // Checkout
+const fulltextRoutes = require('./routes/fulltext-route'); // Fulltext 
 const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
 
 const addMovieRoutes = require('./routes/admin/add-movie-route'); // Add Movie
+const addStarRoutes = require('./routes/admin/add-star-route'); // Add Star
+const addGenreRoutes = require('./routes/admin/add-genre-route'); // Add Genre
 const dbSchemaRoute = require('./routes/admin/db-schema-route'); // Fetch Schema Data
 
 landingRoutes(app);
@@ -96,6 +98,8 @@ singleMovieRoutes(pool, app);
 singleStarRoutes(pool, app);
 
 addMovieRoutes(pool, app);
+addStarRoutes(pool, app);
+addGenreRoutes(pool,app);
 dbSchemaRoute(pool, app);
 
 app.listen(port, () => {

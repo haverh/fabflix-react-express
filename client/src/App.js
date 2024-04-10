@@ -29,6 +29,8 @@ const CheckoutSuccess = lazy(() => import('./components/checkout/checkout-succes
 const AdminLogin = lazy(() => import('./components/admin-pages/admin-login'))
 const AdminHome = lazy(() => import ('./components/admin-pages/admin-home'))
 const AddMovie = lazy(() => import('./components/admin-pages/add-movie'))
+const AddStar = lazy(() => import('./components/admin-pages/add-star'))
+const AddGenre = lazy(() => import('./components/admin-pages/add-genre'))
 
 function App() {
 	// const {loginWithRedirect } = useAuth0();
@@ -44,6 +46,9 @@ function App() {
 				<Route path="/login" element={<Login/>}/>
 				<Route path='/admin/home' element={<AdminHome/>}></Route>
 				<Route path="/admin/login" element={<AdminLogin/>}></Route>
+				<Route path="/admin/add-movie" element={<AddMovie/>}/>
+				<Route path="/admin/add-star" element={<AddStar/>}/>
+				<Route path="/admin/add-genre" element={<AddGenre/>}/>
 				<Route path="/" element={<Navbar/>}>
 					<Route path="/" element={<Home/>}/>
 					<Route path="/home" element={<Home/>}/>
@@ -53,7 +58,6 @@ function App() {
 					<Route path="/single-star" element={<SingleStar/>}/>
 					<Route path="/cart" element={<ShoppingCart/>}/>
 					<Route path="/success" element={<CheckoutSuccess/>}/>
-					<Route path="/admin/add-movie" element={<AddMovie/>}/>
 				</Route>
 			</Routes>
 		</CartProvider>
