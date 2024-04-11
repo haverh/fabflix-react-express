@@ -8,7 +8,8 @@ import { faSearch, faCartShopping, faRightFromBracket, faUser } from '@fortaweso
 import FulltextInput from '../fulltext-search/fulltext';
 import { CartContext } from '../../contexts/CartContext';
 
-import handleLogout from '../login/logout';
+import handleLogout from '../account/logout';
+import UserMenuImage from '../account/user';
 
 // import Container from 'react-bootstrap/Container';
 // import Nav from 'react-bootstrap/Nav';
@@ -17,14 +18,8 @@ import handleLogout from '../login/logout';
 // Logo
 import logo from '../../img/logo_transparent.png';
 
-const UserImage = (
-  <FontAwesomeIcon icon={faUser} style={{"--fa-primary-color": "#b8efe7", "--fa-secondary-color": "#b8efe7",}} />
-)
-
 const Navbar = () => {
   const cart = useContext(CartContext);
-
-  
 
   return (
     <>
@@ -49,8 +44,7 @@ const Navbar = () => {
           <Nav.Link to="/cart" as={NavLink} className='cartButton' name='cart'>
             <FontAwesomeIcon icon={faCartShopping} /><span>{cart.items.length}</span>
           </Nav.Link>
-          <NavDropdown title={UserImage} align="end">
-            
+          <NavDropdown title={UserMenuImage} align="end">
             <NavDropdown.Item href="#action/3.1" className='dropdown-item'>
               <div className='dropdown-thingy'>
                 <FontAwesomeIcon icon={faUser} />
