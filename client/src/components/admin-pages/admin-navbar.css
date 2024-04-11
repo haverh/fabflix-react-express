@@ -1,0 +1,62 @@
+.nav-section {
+  height: 100%;
+}
+
+.navbar {
+  background-color: #1A1A2E;
+  padding: 0 1%;
+}
+
+.navbar-toggler {
+  background-color: #4fbdb9a8;
+  outline: none;
+  border: none;
+  margin: 5px;
+}
+
+.navbar-toggler:active, .navbar-toggler:focus {
+  border: none;
+  outline: none;
+}
+
+.navbar-brand {
+  color: #71dfcf;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand:hover, .navbar-brand:focus {
+  color: inherit;
+}
+
+.nav-link {
+  color: #4FBDBA;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.nav-link:hover {
+  color: #b8efe7;
+}
+
+.active {
+  color: aliceblue;
+  background-color: #aefeffa6;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-thingy {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+}

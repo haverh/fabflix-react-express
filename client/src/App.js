@@ -15,7 +15,7 @@ import { Routes, Route, Switch } from 'react-router-dom';
 // import CheckoutSuccess from './components/checkout/checkout-success';
 
 const Home = lazy(() => import('./components/home/home'))
-const Login = lazy(() => import('./components/login/login'))
+const Login = lazy(() => import('./components/account/login'))
 const TopMovies = lazy(() => import('./components/top-movies/top-movies'))
 const Navbar = lazy(() => import('./components/navbar/navbar'))
 const SingleMovie = lazy(() => import('./components/single-movie/single-movie'))
@@ -26,6 +26,7 @@ const ShoppingCart = lazy(() => import('./components/shopping-cart/cart'))
 const CheckoutSuccess = lazy(() => import('./components/checkout/checkout-success'))
 
 // Admin Pages
+const AdminNavbar = lazy(() => import('./components/admin-pages/admin-navbar'))
 const AdminLogin = lazy(() => import('./components/admin-pages/admin-login'))
 const AdminHome = lazy(() => import ('./components/admin-pages/admin-home'))
 const AddMovie = lazy(() => import('./components/admin-pages/add-movie'))
@@ -44,11 +45,15 @@ function App() {
 		<CartProvider>
 			<Routes>
 				<Route path="/login" element={<Login/>}/>
-				<Route path='/admin/home' element={<AdminHome/>}></Route>
 				<Route path="/admin/login" element={<AdminLogin/>}></Route>
-				<Route path="/admin/add-movie" element={<AddMovie/>}/>
-				<Route path="/admin/add-star" element={<AddStar/>}/>
-				<Route path="/admin/add-genre" element={<AddGenre/>}/>
+				<Route path="/admin/" element={<AdminNavbar/>}>
+					<Route path='/admin/' element={<AdminHome/>}></Route>
+					<Route path='/admin/home' element={<AdminHome/>}></Route>
+					<Route path="/admin/add-movie" element={<AddMovie/>}/>
+					<Route path="/admin/add-star" element={<AddStar/>}/>
+					<Route path="/admin/add-genre" element={<AddGenre/>}/>
+				</Route>
+				
 				<Route path="/" element={<Navbar/>}>
 					<Route path="/" element={<Home/>}/>
 					<Route path="/home" element={<Home/>}/>
