@@ -74,6 +74,7 @@ const pool = new Pool({
 // Routes
 const landingRoutes = require('./routes/landing-route'); // Landing
 const loginRoutes = require('./routes/login-route'); // Login
+const logoutRoutes = require('./routes/logout-route'); // Logout
 const homeRoutes = require('./routes/home-route'); // Home
 const cartRoutes = require('./routes/cart-route'); // Cart
 const checkoutRoutes = require('./routes/checkout-route'); // Checkout
@@ -89,6 +90,7 @@ const dbSchemaRoute = require('./routes/admin/db-schema-route'); // Fetch Schema
 
 landingRoutes(app);
 loginRoutes(pool, app);
+logoutRoutes(pool, app);
 homeRoutes(pool, app);
 cartRoutes(pool, app);
 checkoutRoutes(pool, app);
