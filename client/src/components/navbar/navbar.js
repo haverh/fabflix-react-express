@@ -17,9 +17,6 @@ import handleLogout from '../login/logout';
 // Logo
 import logo from '../../img/logo_transparent.png';
 
-// const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
-
 const UserImage = (
   <FontAwesomeIcon icon={faUser} style={{"--fa-primary-color": "#b8efe7", "--fa-secondary-color": "#b8efe7",}} />
 )
