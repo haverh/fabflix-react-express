@@ -11,13 +11,10 @@
 .link-style {
     text-decoration: none;
     color: #2D9596;
-}
-
-.textSelect {
     padding: 5px;
 }
 
-.textSelect:hover {
+.link-style:hover {
     color: #56b3b4;
     background-color: #064663;
     border-radius: 10px;
@@ -42,7 +39,6 @@ section h1 {
     display: grid;
     text-align: center;
     grid-template-columns: repeat(13, 1fr);
-    font-weight: bold;
     gap: 5px;
     border-radius: 15px;
     background-color: #041C32;
@@ -54,7 +50,6 @@ section h1 {
     display: grid;
     text-align: center;
     grid-template-columns: repeat(3, 1fr);
-    font-weight: bold;
     gap: 5px;
     border-radius: 15px;
     background-color: #041C32;
