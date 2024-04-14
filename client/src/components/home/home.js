@@ -74,7 +74,7 @@ const Home = () => {
         const elements = [];
     
         for (let i = 0; i < genres.length; i++) {
-            elements.push(<Link key={genres[i].id} className='link-style' to={`/movies?genreId=${genres[i].id}`}>{genres[i].name}</Link>);
+            elements.push(<Link key={genres[i].id} className='link-style' to={`/movies?genreId=${genres[i].id}&genreName=${genres[i].name}`}>{genres[i].name}</Link>);
         }
     
         return (

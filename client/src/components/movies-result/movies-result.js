@@ -20,6 +20,7 @@ const MoviesResult = () => {
   // const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   // const cart = useContext(CartContext);
+  const [pageTitle, setPageTitle] = useState('Movies Result');
   const [loading, setLoading] = useState(true);
   const [movieData, setMovieData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,6 +49,7 @@ const MoviesResult = () => {
     console.log("FETCHING MOVIES BY CHAR")
     try {
       const params = new URLSearchParams({startCharacter, currentPage, sortOrder, sortBy, perPage, numPage});
+      setPageTitle(`Results for "${startCharacter}"`)
       const response = await fetch(`${fetchURL}/api/byStartCharacter?${params}`, {
         method: "GET",
         headers: {
@@ -91,10 +93,11 @@ const MoviesResult = () => {
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
 
-  const fetchByGenre = useCallback(async (genreId) => {
+  const fetchByGenre = useCallback(async (genreId, genreName) => {
     console.log("FETCHING MOVIES BY GENRE")
     try {
       const params = new URLSearchParams({genreId, currentPage, sortOrder, sortBy, perPage, numPage});
+      setPageTitle(`Results for "${genreName}" Genre`)
       const response = await fetch(`${fetchURL}/api/byGenre?${params}`, {
         method: "GET",
         headers: {
@@ -144,6 +147,7 @@ const MoviesResult = () => {
     console.log("FETCHING MOVIES BY CHAR")
     try {
       const params = new URLSearchParams({title, currentPage, sortOrder, sortBy, perPage, numPage});
+      setPageTitle(`Results for "${title}"`)
       const response = await fetch(`${fetchURL}/api/title?${params}`, {
         method: "GET",
         headers: {
@@ -194,7 +198,7 @@ const MoviesResult = () => {
     if (urlParams.get('startCharacter')) {
       fetchByStartChar(urlParams.get('startCharacter'));
     } else if (urlParams.get('genreId')) {
-      fetchByGenre(Number(urlParams.get('genreId')));
+      fetchByGenre(Number(urlParams.get('genreId')), urlParams.get('genreName'));
     } else if (urlParams.get('title')) {
       fetchByTitle(urlParams.get('title'));
     }
@@ -233,7 +237,7 @@ const MoviesResult = () => {
 
 return (
   <div className="results-content w-full h-full py-[3%] px-[5%] flex flex-col sm:py-[3%] sm:px-[10%] md:py-[3%] md:px-[15%] lg:py-[3%] lg:px-[20%]">
-    <h1 className='font-bold'>Movie Results</h1>
+    <h1 className='font-bold'>{pageTitle}</h1>
     <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
       <label className='font-bold' defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
         <select className='h-[30px] w-[100px] bg-[#4FBDBA] text-[#313030] font-bold text-center my-0 mx-[5px]' name="sortby" id="sortby">

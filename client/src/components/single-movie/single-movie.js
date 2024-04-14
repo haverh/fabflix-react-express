@@ -83,7 +83,7 @@ function SingleMovie() {
     // isAuthenticated ?
     <div className="single-movie-content my-[3%] mx-[15%] flex flex-col justify-center items-center md:flex-row md:gap-[50px]">
       <div className='poster-subinfo'>
-        <div className="poster-title flex flex-col justify-between md:flex-col md:justify-center md:items-center">
+        <div className="poster-title flex flex-col justify-between items-center md:flex-col md:justify-center md:items-center">
           <h1 className="movieTitle text-left text-[1.5em] font-bold">{movieInfo.movieTitle} ({movieInfo.movieYear})</h1>
           {movieInfo.moviePoster !== "N/A" 
           ? <div className='single-movie-poster-frame'>
@@ -93,7 +93,7 @@ function SingleMovie() {
             <img className='single-movie-placeholder w-[150px]' src={posterPlaceholder} alt="Movie Poster"></img>
           </div>}
         </div>
-        
+        <hr/>
         <div className='movieSubInfo flex flex-col'>
           <div className="movieRating"><span className='detail-title'>Rating</span> {movieInfo.movieRating} 
             <span className="fa-layers fa-fw">
@@ -115,7 +115,7 @@ function SingleMovie() {
         <div>
           <span className='detail-title'>Genres</span> {movieInfo.movieGenres && movieInfo.movieGenres.map((gObj, gIndex) => (
             <React.Fragment key={gObj.genreId}>
-              <Link to={`/movies?genreId=${gObj.genreId}`} className="link no-underline text-[#56b3b4] hover:underline">{gObj.genreName}</Link>
+              <Link to={`/movies?genreId=${gObj.genreId}&genreName=${gObj.genreName}`} className="link no-underline text-[#56b3b4] hover:underline">{gObj.genreName}</Link>
               {gIndex < movieInfo.movieGenres.length - 1 && ', '}
             </React.Fragment>
           ))}
