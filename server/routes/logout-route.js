@@ -5,4 +5,4 @@ module.exports = function (pool, app) {
     res.clearCookie('accessToken');
     res.json({ message: 'Logged out successfully' });
   })
-}
+} 

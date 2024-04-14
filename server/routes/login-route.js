@@ -34,7 +34,7 @@ module.exports = function (pool, app) {
 
       resObj.user = userObj;
       
-      const accessToken = middleware.generateAccessToken(resObj.user);
+      const accessToken = middleware.generateAccessToken(resObj.user, 'customer');
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
         sameSite: 'none',
@@ -86,7 +86,7 @@ module.exports = function (pool, app) {
 
         resObj.user = userObj;
         
-        const accessToken = middleware.generateAccessToken(resObj.user);
+        const accessToken = middleware.generateAccessToken(resObj.user, 'admin');
         res.cookie('accessToken', accessToken, {
           httpOnly: true,
           sameSite: 'none',
