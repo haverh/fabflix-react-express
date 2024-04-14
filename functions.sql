@@ -21,7 +21,7 @@
 
 -- DROP FUNCTION add_movie(character varying,character varying,integer,character varying,text,real,integer)
 -- ADD MOVIE
-CREATE OR REPLACE FUNCTION add_movie( _movieId varchar(10), _movieTitle varchar(100), _movieYear integer, _movieDirector varchar(100), _moviePoster text, _movieRating real, _movieNumVotes integer)
+CREATE OR REPLACE FUNCTION add_movie( _movieId VARCHAR(10), _movieTitle VARCHAR(100), _movieYear INTEGER, _movieDirector VARCHAR(100), _moviePoster TEXT, _movieRating REAL, _movieNumVotes INTEGER)
 RETURNS TABLE(success BOOLEAN, message VARCHAR(255)) AS $$
 DECLARE
 	_success BOOLEAN;
@@ -50,8 +50,8 @@ LANGUAGE plpgsql;
 
 
 -- DROP FUNCTION add_star_to_movie(character varying,integer,character varying)
--- ADD STAR
-CREATE OR REPLACE FUNCTION add_star_to_movie(_starName varchar(100), _starYear integer, _movieId varchar(10))
+-- ADD STAR TO MOVIE
+CREATE OR REPLACE FUNCTION add_star_to_movie(_starName VARCHAR(100), _starYear INTEGER, _movieId VARCHAR(10))
 RETURNS TABLE(sucess BOOLEAN, message VARCHAR(255)) AS $$
 DECLARE
 	_success BOOLEAN;
@@ -62,7 +62,7 @@ BEGIN
 
 -- 	Star doesn't exists in database
 	IF _starId IS NULL THEN
-		_starId:= (select 'nm' || LPAD(CAST(fieldid AS text), 7, '0') from nextIDs where fieldname='star');
+		_starId:= (SELECT 'nm' || LPAD(CAST(fieldid AS text), 7, '0') FROM nextIDs WHERE fieldname='star');
 		UPDATE nextIDs SET fieldid = (SELECT fieldid+1 FROM nextIDs WHERE fieldname='star') WHERE fieldname='star';
 		INSERT INTO stars(id, name, birthyear)
 		VALUES(_starId, _starName, _starYear);
@@ -84,8 +84,8 @@ LANGUAGE plpgsql;
 
 
 -- DROP FUNCTION add_genre_to_movie(character varying,character varying)
--- ADD GENRE
-CREATE OR REPLACE FUNCTION add_genre_to_movie(_genreName VARCHAR(32), _movieId varchar(10))
+-- ADD GENRE TO MOVIE
+CREATE OR REPLACE FUNCTION add_genre_to_movie(_genreName VARCHAR(32), _movieId VARCHAR(10))
 RETURNS TABLE(success BOOLEAN, message VARCHAR(255)) AS $$
 DECLARE
 	_success BOOLEAN;
@@ -96,7 +96,7 @@ BEGIN
 
 -- 	Star doesn't exists in database
 	IF _genreId IS NULL THEN
-		_genreId:= (select fieldid from nextIDs where fieldname='genre');
+		_genreId:= (SELECT fieldid FROM nextIDs WHERE fieldname='genre');
 		UPDATE nextIDs SET fieldid = (SELECT fieldid+1 FROM nextIDs WHERE fieldname='genre') WHERE fieldname='genre';
 		INSERT INTO genres(id, name)
 		VALUES(_genreId, _genreName);
@@ -115,6 +115,66 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+
+-- ADD STAR
+CREATE OR REPLACE FUNCTION add_star(_starName VARCHAR(100), _starYear INTEGER)
+RETURNS TABLE(success BOOLEAN, message VARCHAR(255)) AS $$
+DECLARE
+	_success BOOLEAN;
+	_message VARCHAR(255);
+	_starId VARCHAR(10);
+BEGIN
+	SELECT * INTO _starId FROM stars WHERE name=_starName AND birthyear=_starYear;
+	
+-- 	Star doesn't exists in database
+	IF _starId IS NULL THEN
+		_starId:= (SELECT 'nm' || LPAD(CAST(fieldid AS text), 7, '0') FROM nextIDs WHERE fieldname='star');
+		UPDATE nextIDs SET fieldid = (SELECT fieldid+1 FROM nextIDs WHERE fieldname='star') WHERE fieldname='star';
+		INSERT INTO stars(id, name, birthyear)
+		VALUES(_starId, _starName, _starYear);
+		_success:= TRUE;
+		_message:= 'Successfully added '||_starName||'('||_starYear||')'||' with ID '''||_starId ||'''.';
+	ELSE
+		_success:= FALSE;
+		_message:= _starName||' ('||_starYear||')'||' with ID '''||_starId||''' already exists.';
+	END IF;
+	
+	RETURN QUERY SELECT _success AS success, _message AS message;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+-- ADD GENRE
+CREATE OR REPLACE FUNCTION add_genre(_genreName VARCHAR(32))
+RETURNS TABLE(success BOOLEAN, message VARCHAR(255)) AS $$
+DECLARE
+	_success BOOLEAN;
+	_message VARCHAR(255);
+	_genreId VARCHAR(10);
+BEGIN
+	SELECT * INTO _genreId FROM genres WHERE name=_genreName;
+	
+-- 	Genre doesn't exists in database
+	IF _genreId IS NULL THEN
+		_genreId:= (SELECT fieldid FROM nextIDs WHERE fieldname='genre');
+		UPDATE nextIDs SET fieldid = (SELECT fieldid+1 FROM nextIDs WHERE fieldname='genre') WHERE fieldname='genre';
+		INSERT INTO genres(id, name)
+		VALUES(_genreId, _genreName);
+		_success:= TRUE;
+		_message:= 'Successfully added the '''||_genreName||''' genre with ID ''' || _genreId || '''.';
+	ELSE
+		_success:= FALSE;
+		_message:= 'The '''||_genreName||''' genre with ID ''' || _genreId || ''' already exists.';
+	END IF;
+	  
+	RETURN QUERY SELECT _success AS success, _message AS message;
+END;
+$$
+LANGUAGE plpgsql;
+
+		
 
 -- select * from genres_in_movies;
 
