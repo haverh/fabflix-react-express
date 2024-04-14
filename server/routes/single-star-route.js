@@ -7,9 +7,9 @@ module.exports = function (pool, app) {
         try {
             const client = await pool.connect();
             let queryString = {
-                text: 'SELECT name, birthyear, sim.movieid, title, year, director, rating  FROM stars s ' + 
+                text: 'SELECT name, birthyear, sim.movieid, title, year, director, rating, poster  FROM stars s ' + 
                 'JOIN stars_in_movies sim ON s.id = sim.starId JOIN movies m ON sim.movieId = m.id ' +
-                'JOIN ratings r ON m.id = r.movieId WHERE starId = $1',
+                'JOIN ratings r ON m.id = r.movieId WHERE starId = $1 ORDER BY r.numVotes DESC',
                 values: [starId]
             }
 
@@ -30,6 +30,7 @@ module.exports = function (pool, app) {
                 movieObj.movieYear = result.rows[i].year;
                 movieObj.movieDirector = result.rows[i].director;
                 movieObj.movieRating = result.rows[i].rating;
+                movieObj.moviePoster = result.rows[i].poster;
 
                 movieObj.movieStars = []
                 movieObj.movieGenres = [];
