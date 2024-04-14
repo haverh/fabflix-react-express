@@ -82,6 +82,7 @@ const fulltextRoutes = require('./routes/fulltext-route'); // Fulltext
 const topMoviesRoutes = require('./routes/top-movies-route'); // Top Movies
 const singleMovieRoutes = require('./routes/single-movie-route'); // Single Movie
 const singleStarRoutes = require('./routes/single-star-route'); // Single Movie
+const tokenAuthRoutes = require('./routes/token-auth');
 
 const addMovieRoutes = require('./routes/admin/add-movie-route'); // Add Movie
 const addStarRoutes = require('./routes/admin/add-star-route'); // Add Star
@@ -98,6 +99,7 @@ fulltextRoutes(pool, app);
 topMoviesRoutes(pool, app);
 singleMovieRoutes(pool, app);
 singleStarRoutes(pool, app);
+tokenAuthRoutes(pool, app);
 
 addMovieRoutes(pool, app);
 addStarRoutes(pool, app);
