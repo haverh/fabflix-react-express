@@ -8,7 +8,6 @@ const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
 // Table Component
 const SchemaTable = ({ table_name, table_fields }) => {
-  console.log(table_name)
   return (
     <div className='schema-table text-black w-3/4 max-w-[420px] my-4'>
       <h2 className='text-white font-bold'>"{table_name}" Table</h2>
@@ -18,8 +17,8 @@ const SchemaTable = ({ table_name, table_fields }) => {
       </div>
 
       <div className='bg-[#022747] flex flex-col'>
-        { table_fields.map((field) => (
-          <div className='flex'>
+        { table_fields.map((field, index) => (
+          <div key={index} className='flex'>
             <p className='text-white w-1/2 m-0 p-2 border border-solid border-black'>{field.column_name}</p>
             <p className='text-white w-1/2 m-0 p-2 border border-solid border-black'>{field.data_type}</p>
           </div>
@@ -37,7 +36,6 @@ const AdminHome = () => {
 
   // Fetch for data only once when mounted
   useEffect(() => {
-    console.log("USE EFFECT")
     fetchSchemas();
   }, []);
 
@@ -70,8 +68,6 @@ const AdminHome = () => {
       }
     }
   }
-
-  console.log("LAST CONSOLE", tableArray)
 
   return (
     <div className='admin-add-content flex flex-col justify-center items-center'>
