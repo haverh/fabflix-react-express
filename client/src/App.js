@@ -1,18 +1,7 @@
-import React, { lazy, Suspense  } from 'react';
-import axios from 'axios';
+import React, { lazy, useState, useEffect, } from 'react';
+import Axios from 'axios';
 import './App.css';
-// import Home from './components/home/home';
-// import Login from './components/signin/signin';
-// import TopMovies from './components/top-movies/top-movies';
-// import Navbar from './components/navbar/navbar';
-// import SingleMovie from './components/single-movie/single-movie';
-// import SingleStar from './components/single-star/single-star';
-import { Routes, Route, Switch } from 'react-router-dom';
-// import { useAuth0 } from "@auth0/auth0-react";
-// import MoviesResult from './components/movies-result/movies-result';
-// import CartProvider from './contexts/CartContext';
-// import ShoppingCart from './components/shopping-cart/cart';
-// import CheckoutSuccess from './components/checkout/checkout-success';
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 
 const Home = lazy(() => import('./components/home/home'))
 const Login = lazy(() => import('./components/account/login'))
@@ -24,35 +13,81 @@ const MoviesResult = lazy(() => import('./components/movies-result/movies-result
 const CartProvider = lazy(() => import('./contexts/CartContext'))
 const ShoppingCart = lazy(() => import('./components/shopping-cart/cart'))
 const CheckoutSuccess = lazy(() => import('./components/checkout/checkout-success'))
+const Loading = lazy(() => import('./components/loading/loading'));
+const UnauthorizedPage = lazy(() => import('./components/loading/unauthorized'));
 
 // Admin Pages
 const AdminNavbar = lazy(() => import('./components/admin-pages/admin-navbar'))
-const AdminLogin = lazy(() => import('./components/admin-pages/admin-login'))
 const AdminHome = lazy(() => import ('./components/admin-pages/admin-home'))
 const AddMovie = lazy(() => import('./components/admin-pages/add-movie'))
 const AddStar = lazy(() => import('./components/admin-pages/add-star'))
 const AddGenre = lazy(() => import('./components/admin-pages/add-genre'))
 
-function App() {
-	// const {loginWithRedirect } = useAuth0();
+// // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
-	// const [mySession, setSession] = useState({});
+const isAuthenticated = async () => {
+	try {
+		const res = await Axios.get(`${fetchURL}/api/authorization`, {
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		
+		if (res.status === 401) {
+			window.location.href = "/login";
+		}
+		return res.data.role;
 
-	axios.defaults.withCredentials = true;
+	} catch (error) {
+		console.error("Error:", error);
+		return null;
+	}
+};
+
+const ProtectedRoute = () => {
+	const [role, setRole] = useState(null);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+    const fetchRole = async () => {
+      const _role = await isAuthenticated();
+      setRole(_role);
+			setLoading(false);
+    };
+    fetchRole();
+  }, []);
+
+	if (loading) {
+    return <Loading/>;
+  }
+
+	return (
+		(role === 'admin') ? <Outlet /> : <UnauthorizedPage/>
+	)
+};
+
+
+const App = () => {
+	
+	Axios.defaults.withCredentials = true;
 	console.log("APP")
 
 	return (
 		<CartProvider>
 			<Routes>
 				<Route path="/login" element={<Login/>}/>
-				<Route path="/admin/login" element={<AdminLogin/>}></Route>
-				<Route path="/admin/" element={<AdminNavbar/>}>
-					<Route path='/admin/' element={<AdminHome/>}></Route>
-					<Route path='/admin/home' element={<AdminHome/>}></Route>
-					<Route path="/admin/add-movie" element={<AddMovie/>}/>
-					<Route path="/admin/add-star" element={<AddStar/>}/>
-					<Route path="/admin/add-genre" element={<AddGenre/>}/>
+				<Route element={<ProtectedRoute />}>
+					<Route path="/admin/" element={<AdminNavbar/>}>
+						<Route path='/admin/' element={<AdminHome/>}></Route>
+						<Route path='/admin/home' element={<AdminHome/>}></Route>
+						<Route path="/admin/add-movie" element={<AddMovie/>}/>
+						<Route path="/admin/add-star" element={<AddStar/>}/>
+						<Route path="/admin/add-genre" element={<AddGenre/>}/>
+					</Route>
 				</Route>
+				
 				
 				<Route path="/" element={<Navbar/>}>
 					<Route path="/" element={<Home/>}/>
