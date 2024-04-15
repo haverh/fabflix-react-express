@@ -59,11 +59,8 @@ const ProtectedRoute = () => {
     fetchRole();
   }, []);
 
-	if (loading) {
-    return <Loading/>;
-  }
-
 	return (
+		loading ? <Loading /> :
 		(role === 'admin') ? <Outlet /> : <UnauthorizedPage/>
 	)
 };
@@ -72,7 +69,6 @@ const ProtectedRoute = () => {
 const App = () => {
 	
 	Axios.defaults.withCredentials = true;
-	console.log("APP")
 
 	return (
 		<CartProvider>

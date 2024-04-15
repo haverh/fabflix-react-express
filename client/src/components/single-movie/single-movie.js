@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 // import { useAuth0 } from "@auth0/auth0-react";
-
+import Loading from '../loading/loading';
 import posterPlaceholder  from '../../img/img-placeholder.png';
 import './single-movie.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +16,7 @@ function SingleMovie() {
 
   const omdbAPI = "f6cd5e6f";
   
+  const [loading, setLoading] = useState(true);
   const [movieInfo, setMovieInfo] = useState({});
   const [OMDbInfo, setOMDbInfo] = useState({});
 
@@ -48,6 +49,7 @@ function SingleMovie() {
       }
       // console.log(jsonData)
       setMovieInfo(jsonData);
+      setLoading(true)
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
@@ -69,6 +71,7 @@ function SingleMovie() {
       }
       console.log(OMDbMovieInfo)
       setOMDbInfo(OMDbMovieInfo);
+      setLoading(true)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -80,7 +83,7 @@ function SingleMovie() {
   }, [urlParams, fetchData])
 
   return ( 
-    // isAuthenticated ?
+    loading ? <Loading /> :
     <div className="single-movie-content my-[3%] mx-[15%] flex flex-col justify-center items-center md:flex-row md:gap-[50px]">
       <div className='poster-subinfo'>
         <div className="poster-title flex flex-col justify-between items-center md:flex-col md:justify-center md:items-center">

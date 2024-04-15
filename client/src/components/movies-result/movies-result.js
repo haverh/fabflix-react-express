@@ -49,7 +49,6 @@ const MoviesResult = () => {
     console.log("FETCHING MOVIES BY CHAR")
     try {
       const params = new URLSearchParams({startCharacter, currentPage, sortOrder, sortBy, perPage, numPage});
-      setPageTitle(`Results for "${startCharacter}"`)
       const response = await fetch(`${fetchURL}/api/byStartCharacter?${params}`, {
         method: "GET",
         headers: {
@@ -68,7 +67,7 @@ const MoviesResult = () => {
 
       if ( currentPage === 1 ) { setTotal(jsonData.total); }
       setIsExhausted(false);
-      setLoading(false);
+      setPageTitle(`Results for "${startCharacter}"`)
 
       console.time("Poster Fetch Time")
       const moviePromises = jsonData.moviesList.map(async (obj) => {
@@ -81,6 +80,7 @@ const MoviesResult = () => {
       })
 
       const updatedMovieList = await Promise.all(moviePromises);
+      setLoading(false);
       console.timeEnd("Poster Fetch Time")
       console.log(updatedMovieList)
       
@@ -93,11 +93,13 @@ const MoviesResult = () => {
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
 
+
+
+
   const fetchByGenre = useCallback(async (genreId, genreName) => {
     console.log("FETCHING MOVIES BY GENRE")
     try {
       const params = new URLSearchParams({genreId, currentPage, sortOrder, sortBy, perPage, numPage});
-      setPageTitle(`Results for "${genreName}" Genre`)
       const response = await fetch(`${fetchURL}/api/byGenre?${params}`, {
         method: "GET",
         headers: {
@@ -117,7 +119,7 @@ const MoviesResult = () => {
       
       if ( currentPage === 1 ) { setTotal(jsonData.total); }
       setIsExhausted(false);
-      setLoading(false);
+      setPageTitle(`Results for "${genreName}" Genre`)
 
       console.time("Poster Fetch Time")
       const moviePromises = jsonData.moviesList.map(async (obj) => {
@@ -130,6 +132,7 @@ const MoviesResult = () => {
       })
 
       const updatedMovieList = await Promise.all(moviePromises);
+      setLoading(false);
       console.timeEnd("Poster Fetch Time")
       console.log(updatedMovieList)
       
@@ -143,11 +146,13 @@ const MoviesResult = () => {
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
 
+
+
+
   const fetchByTitle = useCallback(async (title) => {
     console.log("FETCHING MOVIES BY CHAR")
     try {
       const params = new URLSearchParams({title, currentPage, sortOrder, sortBy, perPage, numPage});
-      setPageTitle(`Results for "${title}"`)
       const response = await fetch(`${fetchURL}/api/title?${params}`, {
         method: "GET",
         headers: {
@@ -166,7 +171,7 @@ const MoviesResult = () => {
 
       if ( currentPage === 1 ) { setTotal(jsonData.total); }
       setIsExhausted(false);
-      setLoading(false);
+      setPageTitle(`Results for "${title}"`)
 
       console.time("Poster Fetch Time")
       const moviePromises = jsonData.moviesList.map(async (obj) => {
@@ -179,6 +184,7 @@ const MoviesResult = () => {
       })
 
       const updatedMovieList = await Promise.all(moviePromises);
+      setLoading(false);
       console.timeEnd("Poster Fetch Time")
       console.log(updatedMovieList)
       
