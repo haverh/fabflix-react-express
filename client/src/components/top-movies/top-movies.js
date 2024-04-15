@@ -45,18 +45,6 @@ const TopMovies = () => {
           status: response.status,
         }
       }
-
-      // console.time("Poster Fetch Time")
-      // const topPromises = jsonData.map(async (obj) => {
-      //     const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
-      //     const jsonData = await response.json();
-      //     const poster = jsonData.Poster !== "N/A" ? jsonData.Poster : posterPlaceholder;
-      //     return  {...obj, moviePoster:poster};
-      // })
-
-      // const updatedTop = await Promise.all(topPromises);
-      // console.timeEnd("Poster Fetch Time")
-      // setTop(updatedTop);
       setLoading(false);
       setTop(jsonData)
     } catch (error) {

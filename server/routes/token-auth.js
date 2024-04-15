@@ -9,7 +9,5 @@ module.exports = function (pool, app) {
       console.error('Error authorizing user:', error);
       res.status(403).json({ error: 'An error occurred' });
     }
-    
-    
   })
 }

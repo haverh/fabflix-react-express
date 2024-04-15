@@ -27,10 +27,8 @@ const authenticateToken = (req, res, next) => {
 }
 
 const authorizeToken = (req, res) => {
-  console.log("GOT INTO THIS 2")
   const token = req.cookies.accessToken;
   const decodedToken = jwt.decode(token);
-  console.log("DECODED TOKEN => ", decodedToken)
   return decodedToken.role;
 }
 
