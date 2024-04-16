@@ -16,7 +16,7 @@ const port = 5000;
 // Parse URL-encoded bodies
 app.use(express.json());
 app.use(cors({
-    origin: [VERCEL_CLIENT_URL],
+    origin: [process.env.VERCEL_CLIENT_URL],
     // origin: [process.env.LOCAL_CLIENT_URL],
     methods: ["GET", "POST"],
     credentials: true,
