@@ -10,8 +10,8 @@ const FulltextInput = () => {
   const [suggestionsMap, setSuggestionsMap] = useState({"": []}); // Map of input text -> movie suggestions
   const [selectedSuggestion, setSelected] = useState(-1);
   const [hoveredSelectedSuggestion, setHoverSelected] = useState(-1);
-  // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   // Fetch movies given input from endpoint
   const fetchSuggestions = async (input) => {

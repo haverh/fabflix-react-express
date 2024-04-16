@@ -15,8 +15,8 @@ const CheckoutSuccess = () => {
     const email = user?.email;
     const date = new Date().toISOString().slice(0,10);
     const [orderId, setOrderId] = useState(null);
-    // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-    const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
     console.log(date)
     // console.log(email)
 
@@ -35,7 +35,7 @@ const CheckoutSuccess = () => {
             const jsonData = await response.json();
             setOrderId(jsonData);
             console.log(jsonData);
-          } catch (error) {
+        } catch (error) {
             console.error('Error fetching data:', error);
         }
     }

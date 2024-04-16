@@ -7,8 +7,8 @@ import './add-data.css';
 import Modal from '../modal/modal';
 
 const AddStar = () => {
-  // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   const [starName, setStarName] = useState('');
   const [starYear, setStarYear] = useState('');

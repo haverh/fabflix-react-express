@@ -5,8 +5,8 @@ import './login.css';
 
 import logo from '../../img/logo_transparent.png';
 
-// // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
 const NormalLogin = () => {
 

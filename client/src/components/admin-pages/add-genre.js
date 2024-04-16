@@ -5,8 +5,8 @@ import './add-data.css';
 import Modal from '../modal/modal';
 
 const AddGenre = () => {
-  // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   const [genreName, setGenreName] = useState('');
   

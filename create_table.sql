@@ -1,3 +1,5 @@
+CREATE USER myuser WITH PASSWORD 'My6Pa$$word';
+
 CREATE DATABASE moviedb;
 SET search_path TO moviedb;
 
@@ -74,7 +76,7 @@ CREATE TABLE employees
 	firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    password VARCHAR(20) NOT NULL,
+    password VARCHAR(20) NOT NULL
 );
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON movies TO myuser;

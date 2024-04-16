@@ -19,8 +19,8 @@ function SingleStar() {
 
   const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
-  // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   const fetchData = useCallback(async (starId) => {
     console.log("FETCHING STAR INFO")

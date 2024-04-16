@@ -23,8 +23,8 @@ const AddMovie = lazy(() => import('./components/admin-pages/add-movie'))
 const AddStar = lazy(() => import('./components/admin-pages/add-star'))
 const AddGenre = lazy(() => import('./components/admin-pages/add-genre'))
 
-// // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
 const isAuthenticated = async () => {
 	try {

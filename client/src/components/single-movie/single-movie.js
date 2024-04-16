@@ -24,8 +24,8 @@ function SingleMovie() {
 
   const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
-  // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   // Fetch movie data from backend
   const fetchData = useCallback(async (movieId) => {
@@ -49,7 +49,7 @@ function SingleMovie() {
       }
       // console.log(jsonData)
       setMovieInfo(jsonData);
-      setLoading(true)
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
@@ -71,7 +71,7 @@ function SingleMovie() {
       }
       console.log(OMDbMovieInfo)
       setOMDbInfo(OMDbMovieInfo);
-      setLoading(true)
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching data:', error);
     }

@@ -61,7 +61,9 @@ const Navbar = () => {
         </div>
       </NB.Collapse>
     </NB>
-    <Outlet/>
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <Outlet/>
+    </Suspense>
     </>
   )
 }

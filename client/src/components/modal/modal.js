@@ -5,8 +5,8 @@ import { faXmark, faCircleExclamation, faCircleCheck } from '@fortawesome/free-s
 
 
 const Modal = ({formResponse}) => {
-  // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   // To determine whether modal is displayed
   const [isOpen, setIsOpen] = useState(false);

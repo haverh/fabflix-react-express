@@ -13,8 +13,8 @@ const ShoppingCart = () => {
     const cart = useContext(CartContext);
     const tax = parseFloat((cart.getTotalCost() * 0.1).toFixed(2));
     const grandTotal = parseFloat(cart.getTotalCost() + tax).toFixed(2);
-    // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-    const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+    // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
     console.log("Cart Page -", cart.items);
 
     const handleCheckout = async () => {

@@ -16,7 +16,8 @@ const port = 5000;
 // Parse URL-encoded bodies
 app.use(express.json());
 app.use(cors({
-    origin: [process.env.LOCAL_CLIENT_URL],
+    origin: [VERCEL_CLIENT_URL],
+    // origin: [process.env.LOCAL_CLIENT_URL],
     methods: ["GET", "POST"],
     credentials: true,
 }));
@@ -61,11 +62,15 @@ app.use(cookieParser());
 
 // Setup connection pool
 const pool = new Pool({
-    user: process.env.LOCAL_PG_USER,
-    host: process.env.LOCAL_PG_HOST,
-    database: process.env.LOCAL_PG_DATABASE,
-    password: process.env.LOCAL_PG_PASSWORD,
-    port: 5432,
+    // user: process.env.LOCAL_PG_USER,
+    // host: process.env.LOCAL_PG_HOST,
+    // database: process.env.LOCAL_PG_DATABASE,
+    // password: process.env.LOCAL_PG_PASSWORD,
+    // port: 5432,
+    connectionString: `postgres://postgres.xuvwtdmdjkzxzfxzbalr:${process.env.SUPABASE_PASSWORD}@aws-0-us-west-1.pooler.supabase.com:5432/postgres`,
+    ssl: {
+        rejectUnauthorized: false
+    }
     // ssl: {
     //     rejectUnauthorized: false,
     // },

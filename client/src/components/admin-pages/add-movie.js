@@ -9,8 +9,8 @@ import { faXmark, faCircleExclamation, faCircleCheck } from '@fortawesome/free-s
 import Modal from '../modal/modal';
 
 const AddMovie = () => {
-  // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   const omdbAPI = "f6cd5e6f";
   // To keep data of all inputs on the form

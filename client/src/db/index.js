@@ -1,6 +1,6 @@
 import { Pool } from 'pg'
 import { PgPool } from 'pg-pool'
- 
+
 const client = new Client({
     user: 'myuser',
     host: 'localhost',
@@ -10,4 +10,4 @@ const client = new Client({
 
 export const query = (text, params, callback) => {
     return pool.query(text, params, callback)
-  }
+}

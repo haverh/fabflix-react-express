@@ -1,11 +1,11 @@
 -- INSERT EMPLOYEE
 
--- INSERT INTO employees(firstname, lastname, email, password) VALUES(
--- 	'Tessa',
--- 	'Rivers',
--- 	'real_admin@email.com',
--- 	'adminIsMe44@'
--- );
+INSERT INTO employees(firstname, lastname, email, password) VALUES(
+	'Tessa',
+	'Rivers',
+	'real_admin@email.com',
+	'adminIsMe44@'
+);
 
 SELECT firstname, lastname, email FROM employees WHERE email='real_admin@email.com' AND password='adminIsMe44@';
 

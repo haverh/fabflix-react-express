@@ -2,20 +2,20 @@
 
 -- DROP TABLE IF EXISTS nextIDs;
 
--- CREATE TABLE IF NOT EXISTS nextIDs(
--- 	fieldName text,
--- 	fieldId numeric
--- );
--- GRANT SELECT, INSERT, UPDATE, DELETE ON nextIDs TO myuser;
+CREATE TABLE IF NOT EXISTS nextIDs(
+	fieldName text,
+	fieldId numeric
+);
+GRANT SELECT, INSERT, UPDATE, DELETE ON nextIDs TO myuser;
 
 
 
--- insert into nextIDs(fieldname, fieldid)
--- select 'star', CAST(SUBSTRING(id, 3) AS numeric) + 1
--- from stars order by id desc limit 1;
+insert into nextIDs(fieldname, fieldid)
+select 'star', CAST(SUBSTRING(id, 3) AS numeric) + 1
+from stars order by id desc limit 1;
 
--- insert into nextIDs(fieldname, fieldid)
--- select 'genre', max(id) from genres;
+insert into nextIDs(fieldname, fieldid)
+select 'genre', max(id) from genres;
 
 -- select * from nextIDs;
 

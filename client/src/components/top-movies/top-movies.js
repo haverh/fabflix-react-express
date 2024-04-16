@@ -19,8 +19,8 @@ const TopMovies = () => {
   const [top, setTop] = useState([]);
   // const [OMDbInfo, setOMDbInfo] = useState({});
 
-  // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   // Fetch top movies and their respective poster
   const fetchData = useCallback(async () => {
@@ -36,7 +36,7 @@ const TopMovies = () => {
       });
 
       const jsonData = await response.json();
-      console.log(jsonData)
+      console.log("TOP",jsonData)
       
 
       if (!response.ok) {
