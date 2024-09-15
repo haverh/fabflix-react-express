@@ -16,8 +16,8 @@ const port = 5000;
 // Parse URL-encoded bodies
 app.use(express.json());
 app.use(cors({
-    origin: ['https://gotcha-movies-client.vercel.app'],
-    // origin: [process.env.LOCAL_CLIENT_URL],
+    // origin: ['https://gotcha-movies-client.vercel.app'],
+    origin: [process.env.LOCAL_CLIENT_URL],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
