@@ -8,7 +8,10 @@ import './single-star.css';
 import MovieCards from '../movies-result/movie-cards';
 import Loading from '../loading/loading';
 
-function SingleStar() {
+const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+
+const SingleStar = () => {
   const omdbAPI = "f6cd5e6f";
 
   // const { isAuthenticated, loginWithRedirect } = useAuth0();
@@ -19,8 +22,7 @@ function SingleStar() {
 
   const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
-  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  
 
   const fetchData = useCallback(async (starId) => {
     console.log("FETCHING STAR INFO")

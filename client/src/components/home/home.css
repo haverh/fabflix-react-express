@@ -10,8 +10,10 @@
 
 .link-style {
     text-decoration: none;
-    color: #2D9596;
+    /* color: #2D9596; */
     padding: 5px;
+
+    color: white;
 }
 
 .link-style:hover {
@@ -41,7 +43,9 @@ section h1 {
     grid-template-columns: repeat(13, 1fr);
     gap: 5px;
     border-radius: 15px;
-    background-color: #041C32;
+    /* background-color: #041C32; */
+
+    background-color: #172A46;
 }
 
 
@@ -52,7 +56,9 @@ section h1 {
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
     border-radius: 15px;
-    background-color: #041C32;
+    /* background-color: #041C32; */
+
+    background-color: #172A46;
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

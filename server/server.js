@@ -18,9 +18,11 @@ app.use(express.json());
 app.use(cors({
     origin: ['https://gotcha-movies-client.vercel.app'],
     // origin: [process.env.LOCAL_CLIENT_URL],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.options('*', cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 // app.use(middleware.generateAccessToken); 
@@ -62,15 +64,15 @@ app.use(cookieParser());
 
 // Setup connection pool
 const pool = new Pool({
-    // user: process.env.LOCAL_PG_USER,
-    // host: process.env.LOCAL_PG_HOST,
-    // database: process.env.LOCAL_PG_DATABASE,
-    // password: process.env.LOCAL_PG_PASSWORD,
-    // port: 5432,
-    connectionString: `postgres://postgres.xuvwtdmdjkzxzfxzbalr:${process.env.SUPABASE_PASSWORD}@aws-0-us-west-1.pooler.supabase.com:5432/postgres`,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    user: process.env.LOCAL_PG_USER,
+    host: process.env.LOCAL_PG_HOST,
+    database: process.env.LOCAL_PG_DATABASE,
+    password: process.env.LOCAL_PG_PASSWORD,
+    port: 5432,
+    // connectionString: `postgres://postgres.xuvwtdmdjkzxzfxzbalr:${process.env.SUPABASE_PASSWORD}@aws-0-us-west-1.pooler.supabase.com:5432/postgres`,
+    // ssl: {
+    //     rejectUnauthorized: false
+    // }
     // ssl: {
     //     rejectUnauthorized: false,
     // },

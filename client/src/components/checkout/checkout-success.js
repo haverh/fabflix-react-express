@@ -3,6 +3,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import './checkout-success.css';
 
+const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+
 const CheckoutSuccess = () => {
 
     const { user } = useAuth0();
@@ -15,8 +18,6 @@ const CheckoutSuccess = () => {
     const email = user?.email;
     const date = new Date().toISOString().slice(0,10);
     const [orderId, setOrderId] = useState(null);
-    const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-    // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
     console.log(date)
     // console.log(email)
 

@@ -12,7 +12,7 @@ const MovieCards = ({ movieData, currentPage, perPage }) => {
     <div className='card-container w-full h-auto'>
       {movieData.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + 10).map((item, index) => (
         <Link to={`/single-movie?movieId=${item.movieId}`} key={item.movieId}
-          className='movie-card w-full border-2 border-solid border-[white] hover:border-[#25c7c7] rounded-[10px] my-[10px] mx-[1px] p-[1px] flex no-underline text-[aliceblue]'>
+          className='movie-card w-full border-1 border-solid border-[white] hover:border-[#25c7c7] rounded-[10px] my-[10px] mx-[1px] p-[1px] flex no-underline text-[aliceblue]'>
           {item.moviePoster !== "N/A" 
           ? <div className='movie-poster-frame'>
               <img className='movie-poster w-full h-full rounded-[10px] ' src={item.moviePoster} alt="Movie Poster"></img>

@@ -10,6 +10,10 @@ import posterPlaceholder  from '../../img/img-placeholder.png';
 
 import Loading from '../loading/loading';
 
+const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
+// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+
+
 const TopMovies = () => {
   const omdbAPI = "f6cd5e6f";
 
@@ -18,9 +22,6 @@ const TopMovies = () => {
   const [loading, setLoading] = useState(true);
   const [top, setTop] = useState([]);
   // const [OMDbInfo, setOMDbInfo] = useState({});
-
-  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   // Fetch top movies and their respective poster
   const fetchData = useCallback(async () => {
