@@ -15,12 +15,13 @@ const port = 5000;
 
 // Parse URL-encoded bodies
 app.use(express.json());
-app.use(cors({
-    origin: [process.env.VERCEL_CLIENT_URL, process.env.LOCAL_CLIENT_URL],
-    methods: ["GET", "POST", "OPTIONS"],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
+// app.use(cors({
+//     origins: [process.env.VERCEL_CLIENT_URL, process.env.LOCAL_CLIENT_URL],
+//     methods: ["GET", "POST", "OPTIONS"],
+//     credentials: true,
+//     allowedHeaders: ['Content-Type', 'Authorization']
+// }));
 app.options('*', cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
