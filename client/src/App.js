@@ -3,6 +3,8 @@ import Axios from 'axios';
 import './App.css';
 import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 
+import fetchURL from './config';
+
 const Home = lazy(() => import('./components/home/home'))
 const Login = lazy(() => import('./components/account/login'))
 const TopMovies = lazy(() => import('./components/top-movies/top-movies'))
@@ -23,8 +25,6 @@ const AddMovie = lazy(() => import('./components/admin-pages/add-movie'))
 const AddStar = lazy(() => import('./components/admin-pages/add-star'))
 const AddGenre = lazy(() => import('./components/admin-pages/add-genre'))
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
 const isAuthenticated = async () => {
 	try {

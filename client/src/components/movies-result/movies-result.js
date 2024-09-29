@@ -8,6 +8,8 @@ import { faSort, faSortUp, faSortDown, faStar } from '@fortawesome/free-solid-sv
 // import { CartContext } from '../../contexts/CartContext';
 // import { useAuth0 } from "@auth0/auth0-react";
 
+import fetchURL from '../../config';
+
 import posterPlaceholder  from '../../img/img-placeholder.png';
 import './movies-result.css';
 
@@ -41,9 +43,7 @@ const MoviesResult = () => {
     setCurrentPage(1);
     setIsExhausted(true);
   }
-
-  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  
 
   const fetchByStartChar = useCallback(async (startCharacter) => {
     console.log("FETCHING MOVIES BY CHAR")

@@ -3,10 +3,11 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Loading from '../loading/loading';
 
+import fetchURL from '../../config';
+
 import './home.css';
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+console.log(fetchURL)
 
 const Home = () => {
 

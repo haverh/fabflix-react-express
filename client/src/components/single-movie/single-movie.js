@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
+import fetchURL from '../../config';
+
 function SingleMovie() {
 
   // const { isAuthenticated, loginWithRedirect } = useAuth0();
@@ -23,9 +25,6 @@ function SingleMovie() {
   const location = useLocation()
 
   const urlParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
-
-  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   // Fetch movie data from backend
   const fetchData = useCallback(async (movieId) => {

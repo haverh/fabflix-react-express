@@ -3,8 +3,7 @@ import { Dialog } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faCircleExclamation, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+import fetchURL from '../../config';
 
 const Modal = ({formResponse}) => {
   

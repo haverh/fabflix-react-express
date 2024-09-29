@@ -3,10 +3,11 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 import { useAuth0 } from "@auth0/auth0-react";
+
+import fetchURL from '../../config';
+
 import './cart.css';
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
 const ShoppingCart = () => {
 

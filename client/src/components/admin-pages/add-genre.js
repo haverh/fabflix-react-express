@@ -2,11 +2,11 @@
 import React, { useState, useRef } from "react";
 import './add-data.css';
 
+import fetchURL from "../../config";
+
 import Modal from '../modal/modal';
 
 const AddGenre = () => {
-  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   const [genreName, setGenreName] = useState('');
   
