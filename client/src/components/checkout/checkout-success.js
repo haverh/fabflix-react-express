@@ -1,10 +1,9 @@
 import { useState} from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 
-import './checkout-success.css';
+import fetchURL from '../../config';
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+import './checkout-success.css';
 
 const CheckoutSuccess = () => {
 

@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import './add-data.css';
 
+import fetchURL from '../../config';
+
 import Modal from '../modal/modal';
 
 const AddStar = () => {
-  const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  // const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
   const [starName, setStarName] = useState('');
   const [starYear, setStarYear] = useState('');

@@ -10,8 +10,7 @@ import posterPlaceholder  from '../../img/img-placeholder.png';
 
 import Loading from '../loading/loading';
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+import fetchURL from '../../config';
 
 
 const TopMovies = () => {

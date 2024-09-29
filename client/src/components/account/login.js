@@ -3,10 +3,9 @@ import Axios from 'axios';
 import { SessionContext } from '../../App.js';
 import './login.css';
 
-import logo from '../../img/logo_transparent.png';
+import fetchURL from '../../config.js';
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+import logo from '../../img/logo_transparent.png';
 
 const NormalLogin = () => {
 
@@ -81,8 +80,7 @@ const AdminLogin = () => {
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // // const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-  const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+  
   const [loginData, setLoginData] = useState({data: {status: true}});
 
   const handleSubmit = async (e) => {

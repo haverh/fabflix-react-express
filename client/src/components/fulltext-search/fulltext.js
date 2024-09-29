@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentsDollar, faSearch } from '@fortawesome/free-solid-svg-icons';
 
+import fetchURL from '../../config';
+
 import './fulltext.css'
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
 
 const FulltextInput = () => {
   const [currentInput,  setCurrentInput] = useState('');

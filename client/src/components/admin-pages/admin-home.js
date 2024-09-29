@@ -2,8 +2,7 @@
 /* eslint-disable no-throw-literal */
 import React, { useState, useEffect } from 'react';
 
-const fetchURL = process.env.REACT_APP_VERCEL_FETCH_URL;
-// const fetchURL = process.env.REACT_APP_LOCAL_FETCH_URL;
+import fetchURL from '../../config';
 
 
 // Table Component
