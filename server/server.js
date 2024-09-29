@@ -11,18 +11,16 @@ const middleware = require('./middleware/jwt_middleware');
 
 const app = express();
 const port = 5000;
-
+console.log(process.env.VERCEL_CLIENT_URL, process.env.LOCAL_CLIENT_URL)
 
 // Parse URL-encoded bodies
 app.use(express.json());
-app.use(cors());
-// app.use(cors({
-//     origins: [process.env.VERCEL_CLIENT_URL, process.env.LOCAL_CLIENT_URL],
-//     methods: ["GET", "POST", "OPTIONS"],
-//     credentials: true,
-//     allowedHeaders: ['Content-Type', 'Authorization']
-// }));
-app.options('*', cors());
+app.use(cors({
+    origin: [process.env.VERCEL_CLIENT_URL, process.env.LOCAL_CLIENT_URL],
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 // app.use(middleware.generateAccessToken); 
