@@ -1,13 +1,13 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useMemo, useCallback} from 'react';
-import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faSortUp, faSortDown, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownShortWide, faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 // import { CartContext } from '../../contexts/CartContext';
 // import { useAuth0 } from "@auth0/auth0-react";
 
+import Pagination from '../pagination/pagination';
 import fetchURL from '../../config';
 
 import posterPlaceholder  from '../../img/img-placeholder.png';
@@ -254,7 +254,10 @@ return (
         </select> 
       </label>
       <button className="sortOrderBtn bg-[#4FBDBA] h-[30px] w-[30px] rounded-[5px] flex justify-center items-center border-0" onClick={changeSortOrder}>
-        <FontAwesomeIcon icon={faSort} rotatation={0} style={{color: "#313030", }} />
+      {/* <FontAwesomeIcon icon={faSort} rotatation={0} style={{color: "#313030", }} /> */}
+        {sortOrder === 'asc' 
+        ? <FontAwesomeIcon icon={faArrowDownShortWide} rotatation={0} style={{color: "#313030", }} /> 
+        : <FontAwesomeIcon icon={faArrowUpShortWide} rotatation={0} style={{color: "#313030", }} />}
       </button>
     </div>
     {loading ? (
@@ -266,21 +269,8 @@ return (
         perPage={perPage}
       />
     )}
-    <div className='paginationButtons my-[10px] flex justify-center items-center gap-[10%]'>
-      <button
-        className={currentPage === 1 ? 'disabled-btn' : 'enabled-btn'}
-        onClick={prevButtonEvent} 
-        disabled={currentPage === 1}
-        >&lt;Prev
-      </button>
-      <span className='bg-[#f0f0f0] text-black w-fit h-fit py-[2px] px-[5px] border border-solid rounded-[5px] text-center font-bold'>{currentPage}</span>
-      <button 
-        className={Math.ceil(totalResult/perPage - 1) + 1 === currentPage ? 'disabled-btn' : 'enabled-btn'}
-        onClick={nextButtonEvent} 
-        disabled={Math.ceil(totalResult/perPage - 1) + 1 === currentPage}
-        >Next&gt;
-      </button>
-    </div>
+    <Pagination currentPage={currentPage} totalResult={totalResult} perPage={perPage} prevButtonEvent={prevButtonEvent} nextButtonEvent={nextButtonEvent} />
+    
   </div>
   )
 };
