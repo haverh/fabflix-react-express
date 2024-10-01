@@ -1,0 +1,21 @@
+.paginationButtons {
+  margin: 0.5rem 0;
+}
+.paginationButtons button {
+  width: fit-content;
+  height: fit-content;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  border: none;
+}
+
+.disabled-btn {
+  color: rgb(94, 92, 92);
+  background-color: #4fbdb94d;
+}
+
+.enabled-btn {
+  color: #313030;
+  background-color: #4FBDBA;
+}
