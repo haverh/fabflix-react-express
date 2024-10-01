@@ -9,9 +9,10 @@ const { auth } = require('express-openid-connect');
 const { sql } = require("@vercel/postgres");
 const middleware = require('./middleware/jwt_middleware');
 
+const config = require('./config');
+
 const app = express();
 const port = 5000;
-console.log(process.env.VERCEL_CLIENT_URL, process.env.LOCAL_CLIENT_URL)
 
 // Parse URL-encoded bodies
 app.use(express.json());
@@ -62,11 +63,12 @@ app.use(cookieParser());
 
 // Setup connection pool
 const pool = new Pool({
-    user: process.env.LOCAL_PG_USER,
-    host: process.env.LOCAL_PG_HOST,
-    database: process.env.LOCAL_PG_DATABASE,
-    password: process.env.LOCAL_PG_PASSWORD,
-    port: 5432,
+    user: config.pg_user,
+    host: config.pg_host,
+    database: config.pg_database,
+    password: config.pg_password,
+    port: config.pg_port,
+    ssl: { rejectUnauthorized: false },
     // connectionString: `postgres://postgres.xuvwtdmdjkzxzfxzbalr:${process.env.SUPABASE_PASSWORD}@aws-0-us-west-1.pooler.supabase.com:5432/postgres`,
     // ssl: {
     //     rejectUnauthorized: false
