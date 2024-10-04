@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 import fetchURL from "../config";
 
@@ -9,10 +9,17 @@ export const CartContext = createContext({
   removeOne: () => {},
   removeFromCart: () => {},
   getTotalCost: () => {},
+  clearCart: () => {},
 });
 
 export function CartProvider ({ children }) {
-  const [cart, setCart] = useState([]);
+  const initialCart = JSON.parse(localStorage.getItem("cart")) || [];
+  const [cart, setCart] = useState(initialCart);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart])
+
 
   // Fetches price from database for specific movie
   const fetchPrice = async (movieId) => {
@@ -46,7 +53,7 @@ export function CartProvider ({ children }) {
   }
 
   // Add 1 quantity of an item to the cart
-  const addOne = async (id, title) => {
+  const addOne = async (id, title, poster) => {
     const quantity = getQuantity(id);
     
     if ( quantity === 0 ) { // item not in cart
@@ -54,7 +61,7 @@ export function CartProvider ({ children }) {
       setCart(
         [
           ...cart, 
-          { id: id, title: title, quantity: 1, price: parseFloat(fetchedPrice) }
+          { id: id, title: title, poster: poster, quantity: 1, price: parseFloat(fetchedPrice) }
         ])
     } else { // item is in cart
       // map over and find id, add 1 to quantity or return same object
@@ -96,6 +103,11 @@ export function CartProvider ({ children }) {
     return totalCost;
   }
 
+  // Clear items in cart
+  const clearCart = () => {
+    setCart([]);
+  }
+
   const contextValue = {
     items: cart,
     getQuantity,
@@ -103,6 +115,7 @@ export function CartProvider ({ children }) {
     removeOne,
     removeFromCart,
     getTotalCost,
+    clearCart,
   };
 
   return (
