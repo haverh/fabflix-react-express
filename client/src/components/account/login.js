@@ -103,9 +103,9 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="signin-widget flex flex-col items-center min-w-[300px] max-w-[350px] h-1/2 p-[10px] bg-[#042b4f] rounded-[10px] sm:w-[70%] md:w-3/5 lg:w-1/2 xl:w-[1290px]">
+    <div className="signin-widget flex flex-col items-center min-w-[300px] max-w-[350px] h-1/2 p-[10px] rounded-[10px] sm:w-[70%] md:w-3/5 lg:w-1/2 xl:w-[1290px]">
       <img alt="logo" src={logo}  width={75} height={75}></img>
-      <h1 className='text-center font-bold'>Admin Login</h1>
+      <h1 className='text-center font-bold mb-4'>Admin Login</h1>
         {!loginData.data.status && <div className='signin-message h-fit py-[15px] px-[5px] text-center text-[red] bg-[#dbafaf]'>{loginData.data.message}</div>}
       <form onSubmit={handleSubmit} className='w-full h-auto mb-5 text-center'> 
         <label htmlFor="email">Email</label>
@@ -151,7 +151,7 @@ const Login = () => {
   return (
     <>
     <div className='h-full flex flex-col justify-center items-center'>
-      <div className='w-[300px] bg-[#062463] rounded mb-2'>
+      <div className='min-w-[300px] min-w-[350px] bg-[#062463] rounded mb-2'>
         <button onClick={() => setAdminLogin(false)} className={`w-1/2 p-2 rounded hover:bg-[#08296e] ${!adminLogin && 'bg-[#0B3E8F]'}`}>Customer</button>
         <button onClick={() => setAdminLogin(true)} className={`w-1/2 p-2 rounded hover:bg-[#08296e] ${adminLogin && 'bg-[#0B3E8F]'}`}>Admin</button>
       </div>
