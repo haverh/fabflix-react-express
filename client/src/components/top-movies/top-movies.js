@@ -61,7 +61,7 @@ const TopMovies = () => {
   }, [fetchData]);
 
   return ( 
-    <div className="top-movies-content w-full h-full py-[3%] px-[10%] text-center">
+    <div className="top-movies-content py-[3%] px-[10%] text-center">
       <h1 className='text-[#9EC8B9] font-bold'>Top 20 Rated Movies</h1>
       <div className='flex-container w-full h-full flex-1 flex justify-center'>
         {loading ? (
@@ -89,7 +89,7 @@ const TopMovies = () => {
                   </h3>
                 </div>
               <button className='addToCart w-[200px] h-[30px] text-[#395B64] text-base font-bold border-0 rounded-[20px] bg-[#A5C9CA] m-[3px] duration-200 hover:scale-[1.05] active:scale-[0.9]' name='addToCart'
-                onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
+                onClick={() => cart.addOne(item.movieId, item.movieTitle, item.moviePoster)}>
                 ADD TO CART
               </button>
             </div>
