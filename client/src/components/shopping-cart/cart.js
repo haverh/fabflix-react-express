@@ -3,10 +3,13 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 import { useAuth0 } from "@auth0/auth0-react";
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 import fetchURL from '../../config';
 
 import './cart.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CartItem from './cart-item';
 
 
 const ShoppingCart = () => {
@@ -21,7 +24,7 @@ const ShoppingCart = () => {
 
   const handleCheckout = async () => {
     try {
-      const response = await fetch(`${fetchURL}/checkout`, {
+      const response = await fetch(`${fetchURL}/api/checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,10 +40,6 @@ const ShoppingCart = () => {
           status: response.status,
         }
       }
-      console.log(jsonData, jsonData.url)
-      localStorage.setItem('cart', JSON.stringify(cart.items));
-      localStorage.setItem('tax', JSON.stringify(tax));
-      localStorage.setItem('total', JSON.stringify(cart.getTotalCost()));
       window.location.href = jsonData.url;
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -55,26 +54,11 @@ const ShoppingCart = () => {
     <div className='cart-page-content'>
       <h1>Your Cart</h1>
       <div className="cart-body">
-        <table className="cart-items table table-striped rounded rounded-3 overflow-hidden">
-          <thead className="thead-dark">
-            <tr>
-            <th scope="col" >Title</th>
-            <th scope="col" >Price</th>
-            <th scope="col" >Quantity</th>
-            <th scope="col" >Total</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className='cart-cards'>
           {cart.items.map((item) => (
-            <tr key={item.id}>
-              <td><Link to={`/single-movie?movieId=${item.id}`} className="link">{item.title}</Link></td>
-              <td>${item.price}</td>
-              <td>{item.quantity}</td>
-              <td>${(parseFloat(item.price) * parseInt(item.quantity)).toFixed(2)}</td>
-            </tr>
+            <CartItem id={item.id} title={item.title} poster={item.poster} quantity={item.quantity} price={item.price} />
           ))}
-          </tbody>
-        </table>
+        </div>
         <div className='cart-bottom'>
           <div className='cart-checkout'>
             <div className='cart-total'>
@@ -82,7 +66,7 @@ const ShoppingCart = () => {
               <p><b>Sales Tax:</b> ${tax}</p>
               <p><b>Grand Total:</b> ${grandTotal}</p>
             </div>
-            <button className='checkout-button' onClick={ isAuthenticated ? handleCheckout : loginWithRedirect } >Checkout</button>
+            <button className='checkout-button' onClick={ handleCheckout } >Checkout</button>
           </div>
         </div>
       </div>
