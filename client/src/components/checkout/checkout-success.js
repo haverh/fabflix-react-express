@@ -26,28 +26,25 @@ const CheckoutSuccess = () => {
   const [paymentStatus, setPaymentStatus] = useState(null);
   
 
-  useEffect(() => {
-    const getUser = async () => {
-      const response = await fetch(`${fetchURL}/api/authorization`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: "include",
-      });
 
-      if (response.status === 200) {
-        const jsonData = await response.json();
-        setEmail(jsonData.user.email);
-      }
+  const getEmail = async () => {
+    const response = await fetch(`${fetchURL}/api/authorization`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+    });
+
+    if (response.status === 200) {
+      const jsonData = await response.json();
+      return jsonData.user.email;
     }
-    getUser();
-  },[])
+  }
 
 
   const documentOrder = async (session_id) => {
     try {
-
       const response = await fetch(`${fetchURL}/api/sale`, {
         method: 'POST',
         headers: {
@@ -57,7 +54,7 @@ const CheckoutSuccess = () => {
         body: JSON.stringify({cart, session_id, tax, total, grandTotal, email, date}),
       });
       const data = await response.json();
-      
+
       return data;
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -66,6 +63,7 @@ const CheckoutSuccess = () => {
 
 
   useEffect(() => {
+
     if (session_id) {
       const verifyPayment = async () => {
         try {
@@ -79,17 +77,10 @@ const CheckoutSuccess = () => {
           const data = await response.json();
 
           if (data.success) {
-            setPaymentStatus('success');
-            const data = await documentOrder(session_id);
-            
-            mycart.clearCart();
+            const email = await getEmail();
+            setEmail(email);
 
-            setCart(data.cart);
-            setOrderId(data.saleId);
-            setTax(data.tax);
-            setTotal(data.total);
-            setGrandTotal(data.grandTotal);
-            setDate(data.date);
+            setPaymentStatus('success');
 
           } else {
             setPaymentStatus('failed');
@@ -97,13 +88,38 @@ const CheckoutSuccess = () => {
         } catch (error) {
           console.error('Error verifying payment:', error);
           setPaymentStatus('failed');
-        } finally {
-          setLoading(false);
         }
       }
       verifyPayment();
     }
   }, [session_id])
+
+  useEffect(() => {
+    const callDocumentOrder = async () => {
+      try {
+        if (email && paymentStatus === "success") {
+          const cartData = await documentOrder(session_id);
+
+
+          setCart(cartData.cart);
+          setOrderId(cartData.saleId);
+          setTax(cartData.tax);
+          setTotal(cartData.total);
+          setGrandTotal(cartData.grandTotal);
+          setDate(cartData.date);
+
+          mycart.clearCart();
+        }
+      } catch (error) {
+        console.error('Error inserting sale:', error);
+      } finally {
+        setLoading(false);
+      }
+      
+    }
+
+    callDocumentOrder()
+  }, [email, paymentStatus])
 
   if (loading) {
     return <Loading />
