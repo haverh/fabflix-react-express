@@ -1,5 +1,6 @@
 CREATE TABLE new_sales(
 	id SERIAL PRIMARY KEY,
+	stripesessionid TEXT NOT NULL UNIQUE,
 	email VARCHAR(50) NOT NULL,
 	saledate DATE NOT NULL,
 	total NUMERIC(10,2) NOT NULL,
