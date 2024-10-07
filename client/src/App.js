@@ -38,7 +38,10 @@ const isAuthenticated = async () => {
 		if (res.status === 401) {
 			window.location.href = "/login";
 		}
-		return res.data.role;
+
+		const jsonData = await res.json()
+		
+		return jsonData.role;
 
 	} catch (error) {
 		console.error("Error:", error);
@@ -93,7 +96,7 @@ const App = () => {
 					<Route path="/single-movie" element={<SingleMovie/>}/>
 					<Route path="/single-star" element={<SingleStar/>}/>
 					<Route path="/cart" element={<ShoppingCart/>}/>
-					<Route path="/checkout/success" element={<CheckoutSuccess/>}/>
+					<Route path="checkout/success" element={<CheckoutSuccess/>}/>
 				</Route>
 			</Routes>
 		</CartProvider>

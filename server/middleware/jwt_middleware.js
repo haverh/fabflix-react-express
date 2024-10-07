@@ -28,8 +28,21 @@ const authenticateToken = (req, res, next) => {
 
 const authorizeToken = (req, res) => {
   const token = req.cookies.accessToken;
+
+  if (!token) {
+    return null;
+  }
+
   const decodedToken = jwt.decode(token);
-  return decodedToken.role;
+
+  if (!decodedToken) {
+    return null;
+  }
+
+  return {
+    role: decodedToken.role,
+    user: decodedToken.user
+  };
 }
 
 module.exports = {

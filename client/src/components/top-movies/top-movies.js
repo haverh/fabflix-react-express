@@ -61,7 +61,7 @@ const TopMovies = () => {
   }, [fetchData]);
 
   return ( 
-    <div className="top-movies-content w-full h-full py-[3%] px-[10%] text-center">
+    <div className="top-movies-content py-[3%] px-[10%] text-center">
       <h1 className='text-[#9EC8B9] font-bold'>Top 20 Rated Movies</h1>
       <div className='flex-container w-full h-full flex-1 flex justify-center'>
         {loading ? (
