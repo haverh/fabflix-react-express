@@ -93,7 +93,7 @@ const App = () => {
 					<Route path="/single-movie" element={<SingleMovie/>}/>
 					<Route path="/single-star" element={<SingleStar/>}/>
 					<Route path="/cart" element={<ShoppingCart/>}/>
-					<Route path="/success" element={<CheckoutSuccess/>}/>
+					<Route path="/checkout/success" element={<CheckoutSuccess/>}/>
 				</Route>
 			</Routes>
 		</CartProvider>
