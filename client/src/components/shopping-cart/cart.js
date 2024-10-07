@@ -1,26 +1,18 @@
 /* eslint-disable no-throw-literal */
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
-import { useAuth0 } from "@auth0/auth0-react";
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 import fetchURL from '../../config';
 
 import './cart.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CartItem from './cart-item';
 
 
 const ShoppingCart = () => {
 
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
-
   const cart = useContext(CartContext);
   const tax = parseFloat((cart.getTotalCost() * 0.1).toFixed(2));
   const grandTotal = parseFloat(cart.getTotalCost() + tax).toFixed(2);
-  
-  console.log("Cart Page -", cart.items);
 
   const handleCheckout = async () => {
     try {
@@ -50,7 +42,6 @@ const ShoppingCart = () => {
   }
 
   return (
-    // isAuthenticated ?
     <div className='cart-page-content'>
       <h1>Your Cart</h1>
       <div className="cart-body">
@@ -71,7 +62,6 @@ const ShoppingCart = () => {
         </div>
       </div>
     </div>
-    // : loginWithRedirect()
   )
 }
 
