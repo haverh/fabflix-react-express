@@ -15,9 +15,9 @@ const CartItem = ({id, title, poster, quantity, price}) => {
     <div className="item-container border-2 border-opacity-20 border-gray-400">
       <div className="item-poster">
         {poster !== "N/A" 
-        ? <img className='poster max-h-[200px] max-w-[150px] rounded-[10px] border border-solid border-black' src={poster} alt="Movie Poster"></img>
-        : <div className='poster flex justify-center items-center h-[200px] w-[150px] rounded-[10px] border border-solid border-black'>
-            <img className='w-[100px] h-[100px]' src={posterPlaceholder} alt="Movie Poster"></img> 
+        ? <img className='poster rounded-[10px] border border-solid' src={poster} alt="Movie Poster"></img>
+        : <div className='poster flex justify-center items-center rounded-[10px] border border-solid'>
+            <img className='max-w-[100px] max-h-[100px]' src={posterPlaceholder} alt="Movie Poster"></img> 
           </div>
         }
       </div>
