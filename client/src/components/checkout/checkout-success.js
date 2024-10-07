@@ -4,6 +4,8 @@ import { CartContext } from '../../contexts/CartContext';
 import Loading from '../loading/loading';
 import fetchURL from '../../config';
 
+import ItemCard from './item-card';
+
 import './checkout-success.css';
 
 const CheckoutSuccess = () => {
@@ -123,53 +125,51 @@ const CheckoutSuccess = () => {
 
   if (loading) {
     return <Loading />
-  }
-
-  if (paymentStatus === "success") {
-
+  } else {
     return (
-      <div className='outerContainer'>
-        <h3 className='gratitude'>Thank you for your order</h3>
-        <div className='saleInfo'>
-          <>Order #: {orderId}</>
-          <br></br>
-          <div className='customerDetais'>
-            <h4>Customer Details</h4>
-            <><b>Email:</b> {email}</>
-          </div>
-          <br></br>
-          <div className='orderDetails'>
-            <h4>Order Details</h4>
-            <div className='order'>
-              <div className='orderRow'>
-                <div className='product'><b>Product</b></div>
-                <div className='quantity'><b>Quantity</b></div>
-                <div className='price'><b>Price</b></div>
-                <div className='total'><b>Total</b></div>
-              </div>
-              {cart && cart.map((item) => (
-                <div className='orderRow' key={item.id}>
-                  <div className='product'>{item.title}</div>
-                  <div className='quantity'>{item.quantity}</div>
-                  <div className='price'>${item.price}</div>
-                  <div className='total'>${(parseFloat(item.price) * parseInt(item.quantity)).toFixed(2)}</div>
-                </div>
-              ))}
+      <div className='checkout-success-content'>
+        <div className='cart-container'>
+          <h3 className='gratitude'>Thank you for your order</h3>
+          <div className='saleInfo'>
+            <>Order #: {orderId}</>
+            <hr></hr>
+
+            <div className='customerDetais'>
+              <h4>Customer Details</h4>
+              <><b>Email:</b> {email}</>
             </div>
-            <br></br>
-            <div className='paymentDetails'>
-              <h4>Payment Details</h4>
-              <div className='paymentRow'>
-                <div className='payment-type'><b>Sub-Total:</b></div>
-                <div className='payment-amount'>${total}</div>
+
+            <hr></hr>
+
+            <div className='orderDetails'>
+              <h4>Order Details</h4>
+              <div className='order'>
+                {cart && cart.map((item) => (
+                  <ItemCard 
+                    poster={item.poster} 
+                    title={item.title} 
+                    quantity={item.quantity}
+                    price={item.price}
+                    total={(parseFloat(item.price) * parseInt(item.quantity)).toFixed(2)} />
+                ))}
               </div>
-              <div className='paymentRow'>
-                <div className='payment-type'><b>Sales Tax:</b></div>
-                <div className='payment-amount'>${tax}</div>
-              </div>
-              <div className='paymentRow'>
-                <div className='payment-type'><b>Grand Total:</b></div>
-                <div className='payment-amount'>${grandTotal}</div>
+
+              <hr></hr>
+              
+              <div className='paymentDetails'>
+                <h4>Payment Details</h4>
+                <div className='paymentRow'>
+                  <div className='payment-type'><b>Sub-Total:</b></div>
+                  <div className='payment-amount'>${total}</div>
+                </div>
+                <div className='paymentRow'>
+                  <div className='payment-type'><b>Sales Tax:</b></div>
+                  <div className='payment-amount'>${tax}</div>
+                </div>
+                <div className='paymentRow'>
+                  <div className='payment-type'><b>Grand Total:</b></div>
+                  <div className='payment-amount'>${grandTotal}</div>
+                </div>
               </div>
             </div>
           </div>
