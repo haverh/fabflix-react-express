@@ -89,7 +89,7 @@ const TopMovies = () => {
                   </h3>
                 </div>
               <button className='addToCart w-[200px] h-[30px] text-[#395B64] text-base font-bold border-0 rounded-[20px] bg-[#A5C9CA] m-[3px] duration-200 hover:scale-[1.05] active:scale-[0.9]' name='addToCart'
-                onClick={() => cart.addOne(item.movieId, item.movieTitle)}>
+                onClick={() => cart.addOne(item.movieId, item.movieTitle, item.moviePoster)}>
                 ADD TO CART
               </button>
             </div>
