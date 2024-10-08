@@ -81,54 +81,55 @@ module.exports = function (pool, app) {
                 } 
             });
 
-            const batchsize = 10;
+            // const batchsize = 10;
 
-            try {
-                await client.query('BEGIN');
+            // try {
+            //     await client.query('BEGIN');
 
-                for (let i = 0; i < movies.length; i += batchsize) {
-                    const batch = movies.slice(i, i + batchsize);
+            //     for (let i = 0; i < movies.length; i += batchsize) {
+            //         const batch = movies.slice(i, i + batchsize);
 
-                    const promises = batch.map(async (movie) => {
-                        // console.log("MOVIE -", movie)
-                        const movieObj = movie;
+            //         const promises = batch.map(async (movie) => {
+            //             // console.log("MOVIE -", movie)
+            //             const movieObj = movie;
 
-                        const starsQueryString = {
-                            text: 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1',
-                            values: [movie.movieId],
-                        };
+            //             const starsQueryString = {
+            //                 text: 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1',
+            //                 values: [movie.movieId],
+            //             };
                     
-                        const starsResult = await client.query(starsQueryString);
-                        movieObj.movieStars = starsResult.rows;
+            //             const starsResult = await client.query(starsQueryString);
+            //             movieObj.movieStars = starsResult.rows;
                     
-                        const genresQueryString = {
-                            text: 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1',
-                            values: [movie.movieId],
-                        };
+            //             const genresQueryString = {
+            //                 text: 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1',
+            //                 values: [movie.movieId],
+            //             };
                     
-                        const genreResult = await client.query(genresQueryString);
-                        movieObj.movieGenres = genreResult.rows;
+            //             const genreResult = await client.query(genresQueryString);
+            //             movieObj.movieGenres = genreResult.rows;
 
-                        // console.log("MOVIE OBJECT -", movieObj)
+            //             // console.log("MOVIE OBJECT -", movieObj)
                     
-                        return movieObj;
-                    })
+            //             return movieObj;
+            //         })
 
-                    const batchResults = await Promise.all(promises);
-                    moviesList.push(...batchResults);
-                }  
+            //         const batchResults = await Promise.all(promises);
+            //         moviesList.push(...batchResults);
+            //     }  
                 
-                await client.query('COMMIT');
-            } catch (error) {
-                await client.query('ROLLBACK');
-                console.error('Error:', error);
-            } finally {
-                client.end();
-            }
+            //     await client.query('COMMIT');
+            // } catch (error) {
+            //     await client.query('ROLLBACK');
+            //     console.error('Error:', error);
+            // } finally {
+            //     client.end();
+            // }
 
             // console.log(moviesList)
             console.timeEnd("Top Movies");
-            res.json(moviesList);
+            // res.json(moviesList);
+            res.json(movies);
     
             client.release();
         } catch (error) {
