@@ -1,5 +1,6 @@
 /* eslint-disable no-throw-literal */
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 
 import fetchURL from '../../config';
@@ -9,7 +10,7 @@ import CartItem from './cart-item';
 
 
 const ShoppingCart = () => {
-
+  const navigate = useNavigate();
   const cart = useContext(CartContext);
   const tax = parseFloat((cart.getTotalCost() * 0.1).toFixed(2));
   const grandTotal = parseFloat(cart.getTotalCost() + tax).toFixed(2);
@@ -32,11 +33,11 @@ const ShoppingCart = () => {
           status: response.status,
         }
       }
-      window.location.href = jsonData.url;
+      navigate(jsonData.url);
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        navigate("/login");
       }
     }
   }

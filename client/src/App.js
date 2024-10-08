@@ -1,7 +1,7 @@
 import React, { lazy, useState, useEffect, } from 'react';
 import Axios from 'axios';
 import './App.css';
-import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate, useNavigate } from 'react-router-dom';
 
 import fetchURL from './config';
 
@@ -25,35 +25,35 @@ const AddMovie = lazy(() => import('./components/admin-pages/add-movie'))
 const AddStar = lazy(() => import('./components/admin-pages/add-star'))
 const AddGenre = lazy(() => import('./components/admin-pages/add-genre'))
 
-
-const isAuthenticated = async () => {
-	try {
-		const res = await Axios.get(`${fetchURL}/api/authorization`, {
-			withCredentials: true,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-		
-		if (res.status === 401) {
-			window.location.href = "/login";
-		}
-
-		const jsonData = await res.json()
-		
-		return jsonData.role;
-
-	} catch (error) {
-		console.error("Error:", error);
-		return null;
-	}
-};
-
 const ProtectedRoute = () => {
+	const navigate = useNavigate();
 	const [role, setRole] = useState(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
+		const isAuthenticated = async () => {
+			try {
+				const res = await Axios.get(`${fetchURL}/api/authorization`, {
+					withCredentials: true,
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				
+				if (res.status === 401) {
+					navigate("/login");
+				}
+		
+				const jsonData = await res.json()
+				
+				return jsonData.role;
+		
+			} catch (error) {
+				console.error("Error:", error);
+				return null;
+			}
+		};
+
     const fetchRole = async () => {
       const _role = await isAuthenticated();
       setRole(_role);

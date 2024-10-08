@@ -1,6 +1,7 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './add-data.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faCircleExclamation, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +12,7 @@ import fetchURL from '../../config';
 import Modal from '../modal/modal';
 
 const AddMovie = () => {
-
+  const navigate = useNavigate();
   const omdbAPI = "f6cd5e6f";
   // To keep data of all inputs on the form
   const [formData, setFormData] = useState({});
@@ -155,7 +156,7 @@ const AddMovie = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "../login";
+        navigate("/login");
       }
     }
   }

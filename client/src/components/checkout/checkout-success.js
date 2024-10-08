@@ -1,5 +1,6 @@
+/* eslint-disable no-throw-literal */
 import { useContext, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 import Loading from '../loading/loading';
 import fetchURL from '../../config';
@@ -10,6 +11,7 @@ import './checkout-success.css';
 
 const CheckoutSuccess = () => {
 
+  const navigate = useNavigate();
   const mycart = useContext(CartContext);
   
   const [cart, setCart] = useState(mycart.items);
@@ -78,6 +80,15 @@ const CheckoutSuccess = () => {
           });
           const data = await response.json();
 
+          if (!response.ok) {
+            throw {
+              ...data,
+              status: response.status,
+            }
+          }
+
+          console.log(data)
+
           if (data.success) {
             const email = await getEmail();
             setEmail(email);
@@ -89,6 +100,9 @@ const CheckoutSuccess = () => {
           }
         } catch (error) {
           console.error('Error verifying payment:', error);
+          if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
+            navigate("/login")
+          }
           setPaymentStatus('failed');
         }
       }
