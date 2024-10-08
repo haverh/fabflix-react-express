@@ -1,8 +1,7 @@
 /* eslint-disable no-throw-literal */
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-// import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate, useLocation } from 'react-router-dom';
 import Loading from '../loading/loading';
 import posterPlaceholder  from '../../img/img-placeholder.png';
 import './single-movie.css'
@@ -14,7 +13,7 @@ import fetchURL from '../../config';
 
 function SingleMovie() {
 
-  // const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const navigate = useNavigate();
 
   const omdbAPI = "f6cd5e6f";
   
@@ -52,7 +51,7 @@ function SingleMovie() {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        navigate("/login");
       }
     }
   }, [fetchURL])

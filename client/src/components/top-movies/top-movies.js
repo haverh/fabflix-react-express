@@ -1,7 +1,7 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './top-movies.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +16,7 @@ import fetchURL from '../../config';
 const TopMovies = () => {
   const omdbAPI = "f6cd5e6f";
 
+  const navigate = useNavigate();
   const cart = useContext(CartContext);
 
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,7 @@ const TopMovies = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        navigate("/login");
       }
     }
     console.timeEnd("fetchTime");

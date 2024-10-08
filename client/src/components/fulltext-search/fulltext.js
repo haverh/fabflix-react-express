@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentsDollar, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import fetchURL from '../../config';
 
@@ -8,6 +9,7 @@ import './fulltext.css'
 
 
 const FulltextInput = () => {
+  const navigate = useNavigate();
   const [currentInput,  setCurrentInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionsMap, setSuggestionsMap] = useState({"": []}); // Map of input text -> movie suggestions
@@ -77,11 +79,11 @@ const FulltextInput = () => {
 
     if (selectedSuggestion === -1 && hoveredSelectedSuggestion === -1) {
       console.log("SEARCH FOR THIS ==> ", currentInput)
-      window.location.href = `/movies?title=${currentInput}`
+      navigate(`/movies?title=${currentInput}`);
     } else {
       const movieId = movie.movieId;
 
-      window.location.href = `/single-movie?movieId=${movieId}`
+      navigate(`/single-movie?movieId=${movieId}`);
     }
     setSelected(-1);
     setHoverSelected(-1);

@@ -1,5 +1,6 @@
 /* eslint-disable no-throw-literal */
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Loading from '../loading/loading';
 
@@ -10,15 +11,12 @@ import './home.css';
 console.log(fetchURL)
 
 const Home = () => {
-
+  const navigate = useNavigate();
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  // Fetch data for GenreSelect
+    // Fetch data for GenreSelect
   const fetchData = async () => {
     try {
       const response = await fetch(`${fetchURL}/api/homeDetails`, {
@@ -43,10 +41,13 @@ const Home = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        navigate("/login");
       }
     }
   };
+
+  fetchData();
+  }, []);
 
   // AlphaSelect Component
   const AlphaSelect = () => {

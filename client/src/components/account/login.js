@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-import { SessionContext } from '../../App.js';
 import './login.css';
 
 import fetchURL from '../../config.js';
@@ -8,7 +8,7 @@ import fetchURL from '../../config.js';
 import logo from '../../img/logo_transparent.png';
 
 const NormalLogin = () => {
-
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
@@ -25,7 +25,7 @@ const NormalLogin = () => {
       if (res.status >= 200 && res.status < 300) {
         console.log("LOGIN SUCCESSUL", res.data);
         setLoginData(res.data);
-        window.location.href = "home";
+        navigate("/home");
       }
     }).catch(err => {
       console.log(err.response.data);
@@ -77,7 +77,7 @@ const NormalLogin = () => {
 }
 
 const AdminLogin = () => {
-  
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
@@ -94,7 +94,7 @@ const AdminLogin = () => {
       if (res.status >= 200 && res.status < 300) {
         console.log("ADMIN LOGIN SUCCESSUL", res.data);
         setLoginData(res.data);
-        window.location.href = "../home";
+        navigate("/home");
       }
     }).catch(err => {
       console.log(err.response.data);

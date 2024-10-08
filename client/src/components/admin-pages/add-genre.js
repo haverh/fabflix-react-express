@@ -1,5 +1,6 @@
 /* eslint-disable no-throw-literal */
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import './add-data.css';
 
 import fetchURL from "../../config";
@@ -7,11 +8,9 @@ import fetchURL from "../../config";
 import Modal from '../modal/modal';
 
 const AddGenre = () => {
-
+  const navigate = useNavigate();
   const [genreName, setGenreName] = useState('');
-  
   const [formResponse, setFormResponse] = useState(undefined);
-
   const formRef = useRef(null);
 
   const handleSubmit = async (event) => {
@@ -49,7 +48,7 @@ const AddGenre = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === 'TokenExpiredError' || error.name === 'NoTokenError' ) {
-        window.location.href = '../login';
+        navigate("/login");
       }
     }
   }

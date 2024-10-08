@@ -1,7 +1,7 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useMemo, useCallback} from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownShortWide, faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 // import { CartContext } from '../../contexts/CartContext';
@@ -20,7 +20,7 @@ const MoviesResult = () => {
   const omdbAPI = "f6cd5e6f";
 
   // const { isAuthenticated, loginWithRedirect } = useAuth0();
-
+  const navigate = useNavigate();
   // const cart = useContext(CartContext);
   const [pageTitle, setPageTitle] = useState('Movies Result');
   const [loading, setLoading] = useState(true);
@@ -88,7 +88,7 @@ const MoviesResult = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        navigate("/login");
       }
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
@@ -141,7 +141,7 @@ const MoviesResult = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        navigate("/login");
       }
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
@@ -193,7 +193,7 @@ const MoviesResult = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        navigate("/login");
       }
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);

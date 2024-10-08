@@ -1,5 +1,6 @@
 /* eslint-disable no-throw-literal */
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import './add-data.css';
@@ -9,7 +10,7 @@ import fetchURL from '../../config';
 import Modal from '../modal/modal';
 
 const AddStar = () => {
-
+  const navigate = useNavigate();
   const [starName, setStarName] = useState('');
   const [starYear, setStarYear] = useState('');
   const [starList, setStarList] = useState([]);
@@ -88,7 +89,7 @@ const AddStar = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "../login";
+        navigate("/login");
       }
     }
   }

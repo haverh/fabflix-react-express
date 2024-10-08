@@ -1,6 +1,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-throw-literal */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import fetchURL from '../../config';
 
@@ -30,7 +31,7 @@ const SchemaTable = ({ table_name, table_fields }) => {
 
 
 const AdminHome = () => {
-
+  const navigate = useNavigate();
   const [tableArray, setTableArray] = useState([]);
 
   // Fetch for data only once when mounted
@@ -63,7 +64,7 @@ const AdminHome = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === 'TokenExpiredError' || error.name === 'NoTokenError' ) {
-        window.location.href = '../login';
+        navigate("/login");
       }
     }
   }

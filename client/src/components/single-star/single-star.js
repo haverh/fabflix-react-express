@@ -1,9 +1,8 @@
 /* eslint-disable no-throw-literal */
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-// import { useAuth0 } from "@auth0/auth0-react";
 import './single-star.css';
 import MovieCards from '../movies-result/movie-cards';
 import Loading from '../loading/loading';
@@ -13,7 +12,7 @@ import fetchURL from '../../config';
 const SingleStar = () => {
   const omdbAPI = "f6cd5e6f";
 
-  // const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [starInfo, setStarInfo] = useState({});
@@ -58,7 +57,7 @@ const SingleStar = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
-        window.location.href = "login";
+        navigate("/login");
       }
     }
   }, [fetchURL]);
