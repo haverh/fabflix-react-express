@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from 'react';
+import React, {  Suspense } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { Navbar as NB, Nav, NavDropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
