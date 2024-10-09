@@ -71,36 +71,36 @@ module.exports = function (pool, app) {
                 movieObj.movieDirector = result.rows[i].director;
                 movieObj.moviePoster = result.rows[i].poster;
                 
-                // Arrays to hold a list of stars/genres per movie
-                movieObj.movieStars = [];
-                movieObj.movieGenres = [];
+                // // Arrays to hold a list of stars/genres per movie
+                // movieObj.movieStars = [];
+                // movieObj.movieGenres = [];
     
-                queryString.text = 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1'
-                queryString.values = [movieObj.movieId];
+                // queryString.text = 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1'
+                // queryString.values = [movieObj.movieId];
 
-                const starsResult = await client.query(queryString)
+                // const starsResult = await client.query(queryString)
     
-                // Iterate through the stars object array
-                for ( let j=0; j < starsResult.rows.length; ++j ) {
-                    let starObj = {}
+                // // Iterate through the stars object array
+                // for ( let j=0; j < starsResult.rows.length; ++j ) {
+                //     let starObj = {}
     
-                    starObj.starId = starsResult.rows[j].starid;
-                    starObj.starName = starsResult.rows[j].name;
-                    movieObj.movieStars.push(starObj);
-                }
+                //     starObj.starId = starsResult.rows[j].starid;
+                //     starObj.starName = starsResult.rows[j].name;
+                //     movieObj.movieStars.push(starObj);
+                // }
     
-                queryString.text = 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1'
+                // queryString.text = 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1'
     
-                const genreResult = await client.query(queryString)
+                // const genreResult = await client.query(queryString)
     
-                // Iterate through the genres object array
-                for ( let k=0; k < genreResult.rows.length; ++k ) {
-                    let genreObj = {}
+                // // Iterate through the genres object array
+                // for ( let k=0; k < genreResult.rows.length; ++k ) {
+                //     let genreObj = {}
     
-                    genreObj.genreId = genreResult.rows[k].genreid;
-                    genreObj.genreName = genreResult.rows[k].name;
-                    movieObj.movieGenres.push(genreObj);
-                }
+                //     genreObj.genreId = genreResult.rows[k].genreid;
+                //     genreObj.genreName = genreResult.rows[k].name;
+                //     movieObj.movieGenres.push(genreObj);
+                // }
     
                 moviesList.push(movieObj);
             }
@@ -145,15 +145,21 @@ module.exports = function (pool, app) {
             }else { 
                 offset = (currentPage) * perPage;
             }
+            console.time("50 Records");
             queryString.text = `SELECT rating, id as movieid, title, year, director, poster FROM movies ` +
                                 `JOIN ratings ON id=movieid JOIN genres_in_movies on id=genres_in_movies.movieid ` +
                                 `WHERE genreid = ${genreId} ORDER BY ${sortBy} ${sortOrder}, numVotes DESC ` +
                                 `OFFSET ${offset} LIMIT ${limit}`
 
             const result = await client.query(queryString)
+            console.timeEnd("50 Records");
+
+            let getStarTime = 0
+            let getGenreTime = 0
     
             // Iterate through each movie
             // Create object to hold all info (stars, genres, movie info)
+            
             for ( let i=0; i < result.rows.length; ++i ) {
                 let movieObj = {}
     
@@ -164,41 +170,48 @@ module.exports = function (pool, app) {
                 movieObj.movieDirector = result.rows[i].director;
                 movieObj.moviePoster = result.rows[i].poster;
                 
-                // Arrays to hold a list of stars/genres per movie
-                movieObj.movieStars = [];
-                movieObj.movieGenres = [];
-    
-                queryString.text = 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1'
-                queryString.values = [movieObj.movieId];
+                // // Arrays to hold a list of stars/genres per movie
+                // movieObj.movieStars = [];
+                // movieObj.movieGenres = [];
+                
+                // let t0 = performance.now()
+                // queryString.text = 'SELECT starId, name FROM stars_in_movies sim JOIN stars s ON sim.starId = s.id WHERE movieId = $1'
+                // queryString.values = [movieObj.movieId];
 
-                const starsResult = await client.query(queryString)
+                // const starsResult = await client.query(queryString)
+                // getStarTime += (performance.now() - t0)
+
+                // // Iterate through the stars object array
+                // for ( let j=0; j < starsResult.rows.length; ++j ) {
+                //     let starObj = {}
     
-                // Iterate through the stars object array
-                for ( let j=0; j < starsResult.rows.length; ++j ) {
-                    let starObj = {}
+                //     starObj.starId = starsResult.rows[j].starid;
+                //     starObj.starName = starsResult.rows[j].name;
+                //     movieObj.movieStars.push(starObj);
+                // }
+                
+                // let t1 = performance.now()
+                // queryString.text = 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1'
     
-                    starObj.starId = starsResult.rows[j].starid;
-                    starObj.starName = starsResult.rows[j].name;
-                    movieObj.movieStars.push(starObj);
-                }
+                // const genreResult = await client.query(queryString)
+                // getGenreTime += (performance.now() - t1)
+
+                // // Iterate through the genres object array
+                // for ( let k=0; k < genreResult.rows.length; ++k ) {
+                //     let genreObj = {}
     
-                queryString.text = 'SELECT genreId, name FROM genres_in_movies gim JOIN genres g ON gim.genreId = g.id WHERE movieId = $1'
-    
-                const genreResult = await client.query(queryString)
-    
-                // Iterate through the genres object array
-                for ( let k=0; k < genreResult.rows.length; ++k ) {
-                    let genreObj = {}
-    
-                    genreObj.genreId = genreResult.rows[k].genreid;
-                    genreObj.genreName = genreResult.rows[k].name;
-                    movieObj.movieGenres.push(genreObj);
-                }
+                //     genreObj.genreId = genreResult.rows[k].genreid;
+                //     genreObj.genreName = genreResult.rows[k].name;
+                //     movieObj.movieGenres.push(genreObj);
+                // }
     
                 moviesList.push(movieObj);
             }
+            
 
             console.timeEnd("Genre");
+            console.log(`Get Stars: ${getStarTime} ms`)
+            console.log(`Get Genres: ${getStarTime} ms`)
             resultObj.moviesList = moviesList;
             // console.log(resultObj);
             res.json(resultObj);
