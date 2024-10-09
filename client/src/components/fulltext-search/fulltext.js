@@ -97,7 +97,7 @@ const FulltextInput = () => {
         <input
             name='fsInput'
             type="search"
-            className="search-input  w-[300px] m-0 p-1 rounded-tl-[10px] rounded-bl-[10px] text-[#0b233a]"
+            className="search-input min-w-[225px] max-w-[300px] m-0 p-1 rounded-tl-[10px] rounded-bl-[10px] text-[#0b233a]"
             placeholder="Fulltext Search"
             aria-label="Search"
             aria-describedby="search-addon"

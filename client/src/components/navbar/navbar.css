@@ -46,6 +46,14 @@
     background-color: #aefeffa6;
 }
 
+.nav-sub {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: end;
+    align-items: end; 
+}
+
 .search-component {
     margin: 0 0.5rem;
 }
@@ -80,6 +88,7 @@
 
 .cartButton:focus {
     outline: none;
+    color: black;
 }
 
 .cartButton:hover {
@@ -108,4 +117,13 @@
     width: 20px;
     height: 20px;
     margin-right: 0.5rem;
+}
+
+
+@media (min-width: 992px) {
+    .nav-sub {
+        flex-direction: row;
+        justify-content: end;
+        align-items: center; 
+    }
 }
