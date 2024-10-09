@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom'
 import './navbar.css'
 import { Navbar as NB, Nav, NavDropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons';
 import FulltextInput from '../fulltext-search/fulltext';
 import { CartContext } from '../../contexts/CartContext';
 import LogoutButton from '../account/logout';
@@ -32,7 +32,7 @@ const Navbar = () => {
         <div className="nav-sub h-100">
           <FulltextInput className="me-auto"/>
 
-          <Nav.Link to="/cart" as={NavLink} className='cartButton' name='cart'>
+          <Nav.Link to="/cart" as={NavLink} className='cartButton nav-link' name='cart'>
             <FontAwesomeIcon icon={faCartShopping} /><span>{cart.items.length}</span>
           </Nav.Link>
 
