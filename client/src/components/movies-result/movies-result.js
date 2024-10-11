@@ -4,8 +4,6 @@ import React, { useState, useEffect, useMemo, useCallback} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownShortWide, faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
-// import { CartContext } from '../../contexts/CartContext';
-// import { useAuth0 } from "@auth0/auth0-react";
 
 import Pagination from '../pagination/pagination';
 import fetchURL from '../../config';
@@ -17,11 +15,7 @@ import Loading from '../loading/loading';
 import MovieCards from './movie-cards';
 
 const MoviesResult = () => {
-  const omdbAPI = "f6cd5e6f";
-
-  // const { isAuthenticated, loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
-  // const cart = useContext(CartContext);
   const [pageTitle, setPageTitle] = useState('Movies Result');
   const [loading, setLoading] = useState(true);
   const [movieData, setMovieData] = useState([]);
@@ -68,23 +62,9 @@ const MoviesResult = () => {
       if ( currentPage === 1 ) { setTotal(jsonData.total); }
       setIsExhausted(false);
       setPageTitle(`Results for "${startCharacter}"`)
-
-      console.time("Poster Fetch Time")
-      const moviePromises = jsonData.moviesList.map(async (obj) => {
-          const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
-          const jsonData = await response.json();
-          const plot = jsonData.Plot;
-          
-          // console.log(plot);
-          return  {...obj, plot: plot};
-      })
-
-      const updatedMovieList = await Promise.all(moviePromises);
-      setLoading(false);
-      console.timeEnd("Poster Fetch Time")
-      console.log(updatedMovieList)
       
-      setMovieData([...movieData, ...updatedMovieList]);
+      setLoading(false);
+      setMovieData([...movieData, ...jsonData.moviesList])
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
@@ -120,24 +100,9 @@ const MoviesResult = () => {
       if ( currentPage === 1 ) { setTotal(jsonData.total); }
       setIsExhausted(false);
       setPageTitle(`Results for "${genreName}" Genre`)
-
-      console.time("Poster Fetch Time")
-      const moviePromises = jsonData.moviesList.map(async (obj) => {
-          const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
-          const jsonData = await response.json();
-          const plot = jsonData.Plot;
-          
-          // console.log(plot);
-          return  {...obj, plot: plot};
-      })
-
-      const updatedMovieList = await Promise.all(moviePromises);
-      setLoading(false);
-      console.timeEnd("Poster Fetch Time")
-      console.log(updatedMovieList)
       
-      setMovieData([...movieData, ...updatedMovieList]);
-      // setMovieData([...movieData, ...jsonData.moviesList])
+      setLoading(false);
+      setMovieData([...movieData, ...jsonData.moviesList])
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
@@ -173,22 +138,8 @@ const MoviesResult = () => {
       setIsExhausted(false);
       setPageTitle(`Results for "${title}"`)
 
-      console.time("Poster Fetch Time")
-      const moviePromises = jsonData.moviesList.map(async (obj) => {
-          const response = await fetch(`https://www.omdbapi.com/?i=${obj.movieId}&apikey=${omdbAPI}`);
-          const jsonData = await response.json();
-          const plot = jsonData.Plot;
-          
-          // console.log(plot);
-          return  {...obj, plot: plot};
-      })
-
-      const updatedMovieList = await Promise.all(moviePromises);
       setLoading(false);
-      console.timeEnd("Poster Fetch Time")
-      console.log(updatedMovieList)
-      
-      setMovieData([...movieData, ...updatedMovieList]);
+      setMovieData([...movieData, ...jsonData.moviesList]);
       
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -242,24 +193,26 @@ const MoviesResult = () => {
   }, [urlParams, sortOrder, sortBy, isExhausted]);
 
 return (
-  <div className="results-content w-full h-full py-[3%] px-[5%] flex flex-col sm:py-[3%] sm:px-[10%] md:py-[3%] md:px-[15%] lg:py-[3%] lg:px-[20%]">
-    <h1 className='font-bold'>{pageTitle}</h1>
-    <div style={{display:"flex", justifyContent: "end", gap: "1%"}}>
-      <label className='font-bold' defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
-        <select className='h-[30px] w-[100px] bg-[#4FBDBA] text-[#313030] font-bold text-center my-0 mx-[5px]' name="sortby" id="sortby">
-          <option value="rating">Rating</option>
-          <option value="title">Title</option>
-          <option value="year">Release</option>
-          <option value="director">Director</option>
-        </select> 
-      </label>
-      <button className="sortOrderBtn bg-[#4FBDBA] h-[30px] w-[30px] rounded-[5px] flex justify-center items-center border-0" onClick={changeSortOrder}>
-      {/* <FontAwesomeIcon icon={faSort} rotatation={0} style={{color: "#313030", }} /> */}
-        {sortOrder === 'asc' 
-        ? <FontAwesomeIcon icon={faArrowDownShortWide} rotatation={0} style={{color: "#313030", }} /> 
-        : <FontAwesomeIcon icon={faArrowUpShortWide} rotatation={0} style={{color: "#313030", }} />}
-      </button>
+  <div className="results-content py-4 px-6 flex flex-col ">
+    <h1 className='font-bold text-center'>{pageTitle}</h1>
+    <div className='flex justify-center'>
+      <div className='max-w-[600px] w-full flex justify-end gap-1'>
+        <label className='font-bold' defaultValue={sortBy} onChange={ (e) => {setSortBy(e.target.value); reset();} } htmlFor="sortby">Sort By: 
+          <select className='h-[30px] w-[100px] bg-[#4FBDBA] text-[#313030] font-bold text-center my-0 mx-[5px]' name="sortby" id="sortby">
+            <option value="rating">Rating</option>
+            <option value="title">Title</option>
+            <option value="year">Release</option>
+            <option value="director">Director</option>
+          </select> 
+        </label>
+        <button className="sortOrderBtn bg-[#4FBDBA] h-[30px] w-[30px] rounded-[5px] flex justify-center items-center border-0" onClick={changeSortOrder}>
+          {sortOrder === 'asc' 
+          ? <FontAwesomeIcon icon={faArrowDownShortWide} rotatation={0} style={{color: "#313030", }} /> 
+          : <FontAwesomeIcon icon={faArrowUpShortWide} rotatation={0} style={{color: "#313030", }} />}
+        </button>
+      </div>
     </div>
+    
     {loading ? (
       <Loading/>
       ):
