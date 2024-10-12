@@ -63,13 +63,14 @@ const MoviesResult = () => {
       setIsExhausted(false);
       setPageTitle(`Results for "${startCharacter}"`)
       
-      setLoading(false);
       setMovieData([...movieData, ...jsonData.moviesList])
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
         navigate("/login");
       }
+    } finally {
+      setLoading(false);
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
 
@@ -101,13 +102,14 @@ const MoviesResult = () => {
       setIsExhausted(false);
       setPageTitle(`Results for "${genreName}" Genre`)
       
-      setLoading(false);
       setMovieData([...movieData, ...jsonData.moviesList])
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
         navigate("/login");
       }
+    } finally {
+      setLoading(false);
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
 
@@ -137,8 +139,7 @@ const MoviesResult = () => {
       if ( currentPage === 1 ) { setTotal(jsonData.total); }
       setIsExhausted(false);
       setPageTitle(`Results for "${title}"`)
-
-      setLoading(false);
+      
       setMovieData([...movieData, ...jsonData.moviesList]);
       
     } catch (error) {
@@ -146,6 +147,8 @@ const MoviesResult = () => {
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
         navigate("/login");
       }
+    } finally {
+      setLoading(false);
     }
   }, [currentPage, fetchURL, movieData, sortBy, sortOrder]);
 
