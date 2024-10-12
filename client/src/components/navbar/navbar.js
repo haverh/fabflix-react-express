@@ -34,7 +34,7 @@ const Navbar = () => {
           <FulltextInput className="me-auto"/>
 
           <Nav.Link to="/cart" as={NavLink} className='cartButton nav-link' name='cart'>
-            <FontAwesomeIcon icon={faCartShopping} /><span>{cart.items.length}</span>
+            <FontAwesomeIcon icon={faCartShopping} size='xl' /><span>{cart.getTotalQuantity()}</span>
           </Nav.Link>
 
           <NavDropdown title={UserMenuImage} align="end">
