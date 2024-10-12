@@ -1,12 +1,12 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable array-callback-return */
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './top-movies.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { CartContext } from '../../contexts/CartContext';
 import posterPlaceholder  from '../../img/img-placeholder.png';
+import {AddToCartBig} from '../shopping-cart/add-to-cart';
 
 import Loading from '../loading/loading';
 
@@ -16,7 +16,6 @@ import fetchURL from '../../config';
 const TopMovies = () => {
 
   const navigate = useNavigate();
-  const cart = useContext(CartContext);
 
   const [loading, setLoading] = useState(true);
   const [top, setTop] = useState([]);
@@ -74,8 +73,8 @@ const TopMovies = () => {
               <div key={item.movieId} className='grid-item w-[250px] h-[380px] rounded-[10px] transform duration-200 ease-in-out text-[#9EC8B9] no-underline text-[0.7em] flex flex-col items-center border-t-4 border-x-4 border-[#2E4F4F] border-solid hover:scale-[1.02]'>
                 <Link key={item.movieId} to={`/single-movie?movieId=${item.movieId}`} draggable='false' className='w-full'>
                   {item.moviePoster !== "N/A" 
-                  ? <img className='poster w-full h-[250px] rounded-[10px] border border-solid border-black' src={item.moviePoster} alt="Movie Poster"></img>
-                  : <div className='placeholderPoster flex justify-center items-center w-full h-[250px] rounded-[10px] border border-solid border-black bg-[rgb(212, 211, 211)]'>
+                  ? <img className='w-full h-[250px] rounded-[10px] border border-solid border-black' src={item.moviePoster} alt="Movie Poster"></img>
+                  : <div className='flex justify-center items-center w-full h-[250px] rounded-[10px] border border-solid border-black bg-[rgb(212, 211, 211)]'>
                       <img className='w-[150px] h-[150px]' src={posterPlaceholder} alt="Movie Poster"></img>
                     </div>}
                 </Link>
@@ -91,10 +90,7 @@ const TopMovies = () => {
                       </span>
                     </h3>
                   </div>
-                <button className='addToCart w-[200px] h-[30px] text-[#395B64] text-base font-bold border-0 rounded-[20px] bg-[#A5C9CA] m-[3px] duration-200 hover:scale-[1.05] active:scale-[0.9]' name='addToCart'
-                  onClick={() => cart.addOne(item.movieId, item.movieTitle, item.moviePoster)}>
-                  ADD TO CART
-                </button>
+                  <AddToCartBig movieid={item.movieId} movietitle={item.movieTitle} movieposter={item.moviePoster} />
               </div>
             ))}
           </div>
