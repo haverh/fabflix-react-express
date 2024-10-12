@@ -12,11 +12,11 @@ const MovieCards = ({ movieData, currentPage, perPage }) => {
     <div className='card-container w-full h-auto flex flex-col items-center'>
       {movieData.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + 10).map((item, index) => (
         <Link to={`/single-movie?movieId=${item.movieId}`} key={item.movieId}
-          className='movie-card max-w-[600px] w-full border-1 border-solid border-[white] hover:border-[#25c7c7] rounded-[10px] my-[10px] mx-[1px] p-[1px] flex no-underline text-[aliceblue]'>
+          className='movie-card max-w-[600px] w-full border-1 border-solid border-[white] hover:border-[#25c7c7] hover:bg-[#24c6c628] rounded-[10px] my-[10px] mx-[1px] p-[1px] flex no-underline text-[aliceblue]'>
           <div className="movie-poster-frame">
             {item.moviePoster !== "N/A" 
-            ? <img className='movie-poster rounded-xl ' src={item.moviePoster} alt="Movie Poster"></img>
-            : <div className='movie-poster size-full flex justify-center items-center rounded-xl border border-white'>
+            ? <img className='movie-poster rounded-lg ' src={item.moviePoster} alt="Movie Poster"></img>
+            : <div className='movie-poster size-full flex justify-center items-center rounded-lg border border-white'>
                 <img className='max-w-[100px] max-h-[100px]' src={posterPlaceholder} alt="Movie Poster"></img>
               </div>
             }
