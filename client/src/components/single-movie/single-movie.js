@@ -47,7 +47,6 @@ function SingleMovie() {
       }
       // console.log(jsonData)
       setMovieInfo(jsonData);
-      setLoading(false)
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
@@ -69,9 +68,10 @@ function SingleMovie() {
       }
       console.log(OMDbMovieInfo)
       setOMDbInfo(OMDbMovieInfo);
-      setLoading(false)
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false)
     }
   }
 
