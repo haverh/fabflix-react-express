@@ -1,7 +1,7 @@
 import React, { lazy, useState, useEffect, } from 'react';
 import Axios from 'axios';
 import './App.css';
-import { Routes, Route, Outlet, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Outlet, useNavigate } from 'react-router-dom';
 
 import fetchURL from './config';
 

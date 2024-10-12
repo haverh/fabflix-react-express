@@ -8,6 +8,7 @@ import FulltextInput from '../fulltext-search/fulltext';
 import { CartContext } from '../../contexts/CartContext';
 import LogoutButton from '../account/logout';
 import UserMenuImage from '../account/user';
+import Loading from '../loading/loading';
 
 // Logo
 import logo from '../../img/logo_transparent.png';
@@ -51,7 +52,7 @@ const Navbar = () => {
         </div>
       </NB.Collapse>
     </NB>
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Suspense fallback={<Loading />}>
       <Outlet/>
     </Suspense>
     </>
