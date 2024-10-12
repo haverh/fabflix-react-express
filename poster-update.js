@@ -5,6 +5,7 @@ const db = pgp({
 });
 const omdbAPI = "f6cd5e6f";
 
+// 0 -> 500 -> 1000 -> etc
 const getUsersQuery = 'SELECT id FROM movies ORDER BY id ASC LIMIT 500 OFFSET 9000';
 
 // db.any(getUsersQuery).then(

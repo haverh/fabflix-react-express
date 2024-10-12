@@ -14,14 +14,12 @@ import fetchURL from '../../config';
 
 
 const TopMovies = () => {
-  const omdbAPI = "f6cd5e6f";
 
   const navigate = useNavigate();
   const cart = useContext(CartContext);
 
   const [loading, setLoading] = useState(true);
   const [top, setTop] = useState([]);
-  // const [OMDbInfo, setOMDbInfo] = useState({});
 
   // Fetch top movies and their respective poster
   const fetchData = useCallback(async () => {
@@ -65,7 +63,7 @@ const TopMovies = () => {
     return <Loading />
   } else {
     return ( 
-      <div className="top-movies-content py-[3%] px-[10%] text-center">
+      <div className="top-movies-content py-4 text-center">
         <h1 className='text-[#9EC8B9] font-bold'>Top 20 Rated Movies</h1>
         <div className='flex-container w-full h-full flex-1 flex justify-center'>
           <div className='movies-grid w-[250px] flex flex-wrap gap-[10px]'>
