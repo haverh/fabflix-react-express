@@ -52,13 +52,14 @@ const SingleStar = () => {
 
       const updatedMovieList = await Promise.all(moviePromises);
       setStarInfo({...jsonData, starMoviesList: updatedMovieList});
-      setLoading(false);
 
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
         navigate("/login");
       }
+    } finally {
+      setLoading(false);
     }
   }, [fetchURL]);
 
@@ -71,7 +72,7 @@ const SingleStar = () => {
   return ( 
     loading ? <Loading /> :
     <div className="single-star-content">
-      <h1>{starInfo.starName} ({starInfo.starBirth || 'N/A'})</h1>
+      <h1 className='font-bold text-center'>{starInfo.starName} ({starInfo.starBirth || 'N/A'})</h1>
       {starInfo.starMoviesList && <MovieCards movieData={starInfo?.starMoviesList} currentPage={1} perPage={starInfo.starMoviesList.length} />}
     </div>
   )

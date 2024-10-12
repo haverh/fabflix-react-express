@@ -34,7 +34,6 @@ const Home = () => {
           status: response.status,
         }
       }
-      setLoading(false);
 
       console.log(jsonData)
       setGenres(jsonData.genreList);
@@ -43,6 +42,8 @@ const Home = () => {
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
         navigate("/login");
       }
+    } finally {
+      setLoading(false);
     }
   };
 

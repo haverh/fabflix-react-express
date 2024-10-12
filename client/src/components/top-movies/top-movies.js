@@ -44,14 +44,17 @@ const TopMovies = () => {
           status: response.status,
         }
       }
-      setLoading(false);
+
       setTop(jsonData)
     } catch (error) {
       console.error('Error fetching data:', error);
       if ( error.name === "TokenExpiredError" || error.name === "NoTokenError" ) {
         navigate("/login");
       }
+    } finally {
+      setLoading(false);
     }
+    
     console.timeEnd("fetchTime");
   }, [fetchURL]);
 
