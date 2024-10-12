@@ -4,7 +4,8 @@ import fetchURL from "../config";
 
 export const CartContext = createContext({
   items: [],
-  getQuantity: () => {},
+  getTotalQuantity: () => {},
+  getItemQuantity: () => {},
   addOne: () => {},
   removeOne: () => {},
   removeFromCart: () => {},
@@ -41,8 +42,18 @@ export function CartProvider ({ children }) {
     return title;
   }
 
+  const getTotalQuantity = () => {
+    const quantity = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+    if (quantity === undefined) {
+      return 0;
+    }
+
+    return quantity;
+  }
+
   // Return 0 if item not found, else return the quantity
-  const getQuantity = (id) => {
+  const getItemQuantity = (id) => {
     const quantity = cart.find( item => item.id === id)?.quantity;
 
     if ( quantity === undefined ){
@@ -54,7 +65,7 @@ export function CartProvider ({ children }) {
 
   // Add 1 quantity of an item to the cart
   const addOne = async (id, title, poster) => {
-    const quantity = getQuantity(id);
+    const quantity = getItemQuantity(id);
     
     if ( quantity === 0 ) { // item not in cart
       const fetchedPrice = await fetchPrice(id);
@@ -75,7 +86,7 @@ export function CartProvider ({ children }) {
 
   // Remove 1 quantity of an item in cart
   const removeOne = (id) => {
-    const quantity = getQuantity(id);
+    const quantity = getItemQuantity(id);
     
     if ( quantity === 1 ) { // 1 item in cart
       removeFromCart(id);
@@ -110,7 +121,8 @@ export function CartProvider ({ children }) {
 
   const contextValue = {
     items: cart,
-    getQuantity,
+    getTotalQuantity,
+    getItemQuantity,
     addOne,
     removeOne,
     removeFromCart,
