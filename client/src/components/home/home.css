@@ -10,7 +10,6 @@
 
 .link-style {
     text-decoration: none;
-    /* color: #2D9596; */
     padding: 5px;
 
     color: white;
@@ -37,34 +36,32 @@ section h1 {
     font-weight: bold;
 }
 
-.alphaBox {
+/* .alphaBox {
     display: grid;
     text-align: center;
     grid-template-columns: repeat(13, 1fr);
     gap: 5px;
     border-radius: 15px;
-    /* background-color: #041C32; */
 
     background-color: #172A46;
-}
+} */
 
 
-.genreBox {
-    /* width: 50%; */
+/* .genreBox {
     display: grid;
     text-align: center;
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
     border-radius: 15px;
-    /* background-color: #041C32; */
 
     background-color: #172A46;
-}
+} */
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 650px) {
     .alphaBox {
-        gap: 10px;
+        gap: 5px;
+        grid-template-columns: repeat(9, minmax(0, 1fr));
     }
     
     
@@ -78,7 +75,7 @@ section h1 {
 /* Large devices (laptops/desktops, 991px and up) */
 @media only screen and (min-width: 968px) {
     .alphaBox {
-        gap: 20px;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
     }
     
     
@@ -89,10 +86,6 @@ section h1 {
 
 /* Large devices (laptops/desktops, 991px and up) */
 @media only screen and (min-width: 1320px) {
-    .alphaBox {
-        gap: 25px;
-    }
-    
     
     .genreBox {
         grid-template-columns: repeat(6, 1fr);

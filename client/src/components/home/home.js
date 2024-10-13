@@ -57,17 +57,17 @@ const Home = () => {
 
     for (let i = 0; i < 26; i++) {
       const alpha = String.fromCharCode(65 + i);
-      elements.push(<Link key={`alpha-${i}`} className='link-style' to={`/movies?startCharacter=${alpha}`}>{alpha}</Link>);
+      elements.push(<Link key={`alpha-${i}`} className='link-style px-3' to={`/movies?startCharacter=${alpha}`}>{alpha}</Link>);
     }
 
     for (let i = 0; i < 10; i++) {
-      elements.push(<Link key={`number-${i}`} className='link-style' to={`/movies?startCharacter=${i}`}>{i}</Link>);
+      elements.push(<Link key={`number-${i}`} className='link-style px-3' to={`/movies?startCharacter=${i}`}>{i}</Link>);
     }
 
     return (
       <section className='w-full flex flex-col m-3 justify-center items-center text-center'>
         <h1>Browse by Movie Title</h1>
-        <div className="alphaBox grid text-center grid-cols-12 gap-[5px] text-bold rounded-[15px] bg-[#041C32] sm:gap-[10px] md:gap-[20px] lg:gap-[25px]">
+        <div className="alphaBox grid text-center grid-cols-6 gap-[5px] text-bold rounded-xl bg-[#172A46]">
           {elements}
         </div>
       </section>
@@ -85,7 +85,7 @@ const Home = () => {
     return (
       <section className='w-full flex flex-col m-3 justify-center items-center text-center'>
         <h1>Browse by Movie Genre</h1>
-        <div className="genreBox grid text-center grid-cols-3 gap-[5px] text-bold rounded-[15px] bg-[#041C32] sm:grid-cols-4 sm:gap-[5px] md:grid-cols-5 lg:grid-cols-6 lg:gap-[5px]">
+        <div className="genreBox grid text-center grid-cols-3 gap-[5px] text-bold rounded-xl bg-[#172A46]">
           {elements}
         </div>
       </section>
